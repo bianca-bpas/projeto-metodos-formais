@@ -1,0 +1,18 @@
+﻿UFPE – CENTRO DE INFORMÁTICA
+MÉTODOS FORMAIS
+REQUISITOS DE ALTO NÍVEL – CONTROLE DE ELEVADOR
+(Gustavo Carvalho – ghpc@cin.ufpe.br)
+
+
+
+
+* HLR-001. Em cada pavimento, existe um visor que indica o pavimento em que o elevador se encontra no momento, assim como a direção do movimento da cabine.
+* HLR-002: Em cada pavimento, existe um painel com dois botões. O botão superior (na forma de uma seta para cima) deve ser pressionado se o usuário quiser usar o elevador para subir. De forma análoga, o botão inferior (na forma de uma seta para baixo) deve ser pressionado se o usuário quiser usar o elevador para descer. No último pavimento, o painel possui somente o botão inferior. Já no primeiro pavimento, o painel possui somente o botão superior.
+* HLR-003: Dentro do elevador, tem-se um visor que indica o pavimento e a direção do movimento da cabine, similar ao visor posicionado em cada pavimento. Adicionalmente, existe um painel com vários botões: um para cada pavimento. Também fazem parte do painel dois outros botões: um para fechar imediatamente a porta da cabine e outro para abrir imediatamente; esses botões só fecham e abrem a porta se a cabine não estiver em movimento.
+* HLR-004: Ao apertar um botão do painel interno, ou dos painéis externos, uma luz de LED fica acesa indicando que o botão foi pressionado e que o pedido correspondente está sendo processado pelo sistema. Quando o pedido for atendido (ou cancelado), a luz de LED deve ser apagada.
+* HLR-005: Qualquer pedido acionado por um botão, seja do painel interno ou dos painéis externos, pode ser cancelado. Para tanto, basta o usuário pressionar o botão e segurá-lo por 3 segundos. A única exceção é se o cancelamento for de um botão do painel interno do elevador, referente a um pavimento, e não houver outro botão associado a um pavimento selecionado. Nesse caso, em que o cancelamento não pode ser feito, o LED associado ao botão pisca por duas vezes e continua aceso. Os botões de abrir e fechar imediatamente a porta possuem funcionalidade instantânea e, portanto, não podem ser cancelados.
+* HLR-006: Se a cabine estiver em movimento quando o pedido de um pavimento for cancelado, e não houver outro pedido de pavimento em curso, o elevador deve parar no próximo pavimento, considerando a sua direção de movimento.
+* HLR-007: Se a porta do elevador ficar aberta por mais de 2 minutos, um símbolo de elevador parado/quebrado acende nos visores (externos) dos pavimentos.
+* HLR-008: Para colocar o elevador em manutenção, um técnico deve inserir uma chave especial de manutenção no painel interno do elevador. Quando a cabine parar, ou se já estiver parada, todos os pedidos ativos são cancelados e o aviso de manutenção é exibido nos visores (interno, na cabine, e externos, nos pavimentos) do sistema. Adicionalmente, durante a manutenção, todos os painéis (internos e externos) do elevador ficam inoperantes. O elevador sai do estado de manutenção quando o técnico remove a chave especial de manutenção. Se, durante a manutenção, alguém acionar algum botão interno ou externo do elevador, o LED associado pisca por duas vezes e continua apagado, uma vez que o pedido em questão não pode ser atendido.
+* HLR-009: O elevador tem como capacidade máxima 450 kg, assumindo um máximo de 6 pessoas com média de 75 kg. Se a balança do elevador detectar que a capacidade atual é maior do que a capacidade máxima, o visor interno do elevador indica o excesso de peso. O elevador não se move se a capacidade máxima for excedida.
+* HLR-010: O algoritmo de controle da cabina deve atender os pedidos dos pavimentos de forma justa (i.e., todos os pedidos devem ser atendidos), e minimizando o deslocamento acumulado da cabine.
