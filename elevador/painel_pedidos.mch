@@ -47,5 +47,41 @@ OPERATIONS
                 pedidos_internos := pedidos_internos - {alvo}
             END
         END
-            
+    
+    cancelamento_externo_subida(alvo) =
+        PRE
+            alvo : pedidos_subida
+        THEN
+            pedidos_subida := pedidos_subida - {alvo}
+        END
+
+    cancelamento_externo_descida(alvo) =
+        PRE
+            alvo : pedidos_descida
+        THEN
+            pedidos_descida := pedidos_descida - {alvo}
+        END
+
+    pedir_interno(alvo) = 
+        PRE
+            alvo : min_andar..max_andar 
+        THEN
+            pedidos_internos := pedidos_internos + {alvo}
+        END
+
+    pedir_externo_descida(alvo) = 
+        PRE
+            alvo : min_andar+1..max_andar 
+        THEN
+            pedidos_descida := pedidos_descida + {alvo}
+        END
+
+    pedir_externo_subida(alvo) = 
+        PRE
+            alvo : min_andar..max_andar-1
+        THEN
+            pedidos_subida := pedidos_subida + {alvo}
+        END
+    
+               
 END
