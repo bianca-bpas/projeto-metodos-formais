@@ -115,39 +115,21 @@ OPERATIONS
             piscando_subida1 := piscando_subida1 \/ {alvo}
         END;
 
-    parar_piscar_interno(alvo) = 
-        PRE 
-            alvo : piscando_interno1 \/ piscando_interno2
-        THEN
-            IF alvo : piscando_interno1 THEN
-                piscando_interno1 := piscando_interno1 - {alvo} ||
-                piscando_interno2 := piscando_interno2 \/ {alvo}
-            ELSE
-                piscando_interno2 := piscando_interno2 - {alvo}
-            END
-        END;
-
-    parar_piscar_descida(alvo) =
+    parar_piscar_interno = 
         PRE
-            alvo : piscando_descida1 \/ piscando_descida2
+            /* executa se houver botão piscando em qualquer painel */
+            piscando_interno1 /= {} \/ piscando_interno2 /= {} \/
+            piscando_subida1 /= {}  \/ piscando_subida2 /= {}  \/
+            piscando_descida1 /= {} \/ piscando_descida2 /= {}
         THEN
-            IF alvo : piscando_descida1 THEN
-                piscando_descida1 := piscando_descida1 - {alvo} ||
-                piscando_descida2 := piscando_descida2 \/ {alvo}
-            ELSE
-                piscando_descida2 := piscando_descida2 - {alvo}
-            END
-        END;
+            /* no nível concreto teria que fazer piscando_*2 = {}, piscando_*2 = piscando_*1 e depois limpar o 1 (piscando_*1), para simular essa passagem de estados */
+            piscando_interno1 := {} ||
+            piscando_interno2 := piscando_interno1 ||
 
-    parar_piscar_subida(alvo) =
-        PRE
-            alvo : piscando_subida1 \/ piscando_subida2
-        THEN
-            IF alvo : piscando_subida1 THEN
-                piscando_subida1 := piscando_subida1 - {alvo} ||
-                piscando_subida2 := piscando_subida2 \/ {alvo}
-            ELSE
-                piscando_subida2 := piscando_subida2 - {alvo}
-            END
+            piscando_subida1 := {} ||
+            piscando_subida2 := piscando_subida1 ||
+
+            piscando_descida1 := {} ||
+            piscando_descida2 := piscando_descida1
         END
 END
