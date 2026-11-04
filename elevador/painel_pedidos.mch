@@ -115,7 +115,7 @@ OPERATIONS
             piscando_subida1 := piscando_subida1 \/ {alvo}
         END;
 
-    parar_piscar_interno = 
+    parar_piscar = 
         PRE
             /* executa se houver botão piscando em qualquer painel */
             piscando_interno1 /= {} \/ piscando_interno2 /= {} \/
