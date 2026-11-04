@@ -71,3 +71,11 @@ e de descida, pois a origem e a direção do pedido precisam ser preservadas.
 
 - Confirmar que o prédio possui cinco pavimentos, numerados de `0` a `4`, e
   que o pavimento `0` representa o térreo.
+
+andar = 1
+
+leds_interno = 4
+
+pedidos_subida = 0
+
+otimizar
