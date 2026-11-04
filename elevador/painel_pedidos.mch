@@ -4,6 +4,9 @@
  */
 MACHINE
     painel_pedidos
+    
+SEES
+    configuracao
 
 CONSTANTS
     min_andar, max_andar
@@ -56,6 +59,22 @@ OPERATIONS
                 piscando_interno1 := piscando_interno1 \/ {alvo}
             ELSE
                 pedidos_internos := pedidos_internos - {alvo}
+            END
+        END;
+/* Operação unificada para atender e limpar pedidos do andar ao abrir a porta */
+    atender_pedidos_andar(alvo, sentido) =
+        PRE
+            alvo : min_andar..max_andar &
+            sentido : DIRECOES
+        THEN
+            IF alvo : pedidos_internos THEN
+                pedidos_internos := pedidos_internos - {alvo}
+            END ||
+            IF (sentido = subindo or sentido = parado) & alvo : pedidos_subida THEN
+                pedidos_subida := pedidos_subida - {alvo}
+            END ||
+            IF (sentido = descendo or (sentido = parado & alvo /: pedidos_subida)) & alvo : pedidos_descida THEN
+                pedidos_descida := pedidos_descida - {alvo}
             END
         END;
 
@@ -117,12 +136,10 @@ OPERATIONS
 
     parar_piscar = 
         PRE
-            /* executa se houver botão piscando em qualquer painel */
-            piscando_interno1 /= {} \/ piscando_interno2 /= {} \/
-            piscando_subida1 /= {}  \/ piscando_subida2 /= {}  \/
-            piscando_descida1 /= {} \/ piscando_descida2 /= {}
+            piscando_interno1 /= {} or piscando_interno2 /= {} or
+            piscando_subida1 /= {}  or piscando_subida2 /= {}  or
+            piscando_descida1 /= {} or piscando_descida2 /= {}
         THEN
-            /* no nível concreto teria que fazer piscando_*2 = {}, piscando_*2 = piscando_*1 e depois limpar o 1 (piscando_*1), para simular essa passagem de estados */
             piscando_interno1 := {} ||
             piscando_interno2 := piscando_interno1 ||
 
