@@ -4,31 +4,32 @@
  */
 MACHINE
     painel_pedidos
-    
+
 CONSTANTS
     min_andar, max_andar
+
 PROPERTIES
     min_andar = 0 &
     max_andar = 4
-    
+
 VARIABLES
-    pedidos_internos, /* a cada andar fazer uma subtração de conjuntos */
+    pedidos_internos,
     pedidos_subida,
     pedidos_descida,
 
     piscando_interno,
     piscando_subida,
     piscando_descida
-    
+
 INVARIANT
     pedidos_internos <: min_andar..max_andar &
-    pedidos_subida <: min_andar..max_andar-1 &
-    pedidos_descida <: min_andar+1..max_andar &
+    pedidos_subida <: min_andar..(max_andar - 1) &
+    pedidos_descida <: (min_andar + 1)..max_andar &
 
     piscando_interno <: min_andar..max_andar &
     piscando_subida <: min_andar..(max_andar - 1) &
     piscando_descida <: (min_andar + 1)..max_andar
-    
+
 INITIALISATION
     pedidos_internos := {} ||
     pedidos_subida := {} ||
@@ -36,6 +37,7 @@ INITIALISATION
     piscando_interno := {} ||
     piscando_subida := {} ||
     piscando_descida := {}
+
 OPERATIONS
     cancelamento_interno(alvo) =
         PRE
@@ -46,42 +48,82 @@ OPERATIONS
             ELSE
                 pedidos_internos := pedidos_internos - {alvo}
             END
-        END
-    
+        END;
+
     cancelamento_externo_subida(alvo) =
         PRE
             alvo : pedidos_subida
         THEN
             pedidos_subida := pedidos_subida - {alvo}
-        END
+        END;
 
     cancelamento_externo_descida(alvo) =
         PRE
             alvo : pedidos_descida
         THEN
             pedidos_descida := pedidos_descida - {alvo}
-        END
+        END;
 
     pedir_interno(alvo) = 
         PRE
             alvo : min_andar..max_andar 
         THEN
-            pedidos_internos := pedidos_internos + {alvo}
-        END
+            pedidos_internos := pedidos_internos \/ {alvo}
+        END;
 
     pedir_externo_descida(alvo) = 
         PRE
-            alvo : min_andar+1..max_andar 
+            alvo : (min_andar + 1)..max_andar 
         THEN
-            pedidos_descida := pedidos_descida + {alvo}
-        END
+            pedidos_descida := pedidos_descida \/ {alvo}
+        END;
 
     pedir_externo_subida(alvo) = 
         PRE
-            alvo : min_andar..max_andar-1
+            alvo : min_andar..(max_andar - 1)
         THEN
-            pedidos_subida := pedidos_subida + {alvo}
+            pedidos_subida := pedidos_subida \/ {alvo}
+        END;
+
+    piscar_interno(alvo) = 
+        PRE 
+            alvo : pedidos_internos
+        THEN
+            piscando_interno := piscando_interno \/ {alvo}
+        END;
+
+    piscar_descida(alvo) =
+        PRE
+            alvo : pedidos_descida
+        THEN
+            piscando_descida := piscando_descida \/ {alvo}
+        END;
+
+    piscar_subida(alvo) =
+        PRE
+            alvo : pedidos_subida
+        THEN
+            piscando_subida := piscando_subida \/ {alvo}
+        END;
+
+    parar_piscar_interno(alvo) = 
+        PRE 
+            alvo : piscando_interno
+        THEN
+            piscando_interno := piscando_interno - {alvo}
+        END;
+
+    parar_piscar_descida(alvo) =
+        PRE
+            alvo : piscando_descida
+        THEN
+            piscando_descida := piscando_descida - {alvo}
+        END;
+
+    parar_piscar_subida(alvo) =
+        PRE
+            alvo : piscando_subida
+        THEN
+            piscando_subida := piscando_subida - {alvo}
         END
-    
-               
 END
