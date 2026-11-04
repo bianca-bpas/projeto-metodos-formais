@@ -17,26 +17,35 @@ VARIABLES
     pedidos_subida,
     pedidos_descida,
 
-    piscando_interno,
-    piscando_subida,
-    piscando_descida
+    piscando_interno1,
+    piscando_subida1,
+    piscando_descida1,
+    piscando_interno2,
+    piscando_subida2,
+    piscando_descida2
 
 INVARIANT
     pedidos_internos <: min_andar..max_andar &
     pedidos_subida <: min_andar..(max_andar - 1) &
     pedidos_descida <: (min_andar + 1)..max_andar &
 
-    piscando_interno <: min_andar..max_andar &
-    piscando_subida <: min_andar..(max_andar - 1) &
-    piscando_descida <: (min_andar + 1)..max_andar
+    piscando_interno1 <: min_andar..max_andar &
+    piscando_subida1 <: min_andar..(max_andar - 1) &
+    piscando_descida1 <: (min_andar + 1)..max_andar &
+    piscando_interno2 <: min_andar..max_andar &
+    piscando_subida2 <: min_andar..(max_andar - 1) &
+    piscando_descida2 <: (min_andar + 1)..max_andar
 
 INITIALISATION
     pedidos_internos := {} ||
     pedidos_subida := {} ||
     pedidos_descida := {} ||
-    piscando_interno := {} ||
-    piscando_subida := {} ||
-    piscando_descida := {}
+    piscando_interno1 := {} ||
+    piscando_subida1 := {} ||
+    piscando_descida1 := {} ||
+    piscando_interno2 := {} ||
+    piscando_subida2 := {} ||
+    piscando_descida2 := {}
 
 OPERATIONS
     cancelamento_interno(alvo) =
@@ -44,7 +53,7 @@ OPERATIONS
             alvo : pedidos_internos
         THEN
             IF card(pedidos_internos) = 1 THEN
-                piscando_interno := piscando_interno \/ {alvo}
+                piscando_interno1 := piscando_interno1 \/ {alvo}
             ELSE
                 pedidos_internos := pedidos_internos - {alvo}
             END
@@ -89,41 +98,56 @@ OPERATIONS
         PRE 
             alvo : pedidos_internos
         THEN
-            piscando_interno := piscando_interno \/ {alvo}
+            piscando_interno1 := piscando_interno1 \/ {alvo}
         END;
 
     piscar_descida(alvo) =
         PRE
-            alvo : pedidos_descida
+            alvo : (min_andar + 1)..max_andar
         THEN
-            piscando_descida := piscando_descida \/ {alvo}
+            piscando_descida1 := piscando_descida1 \/ {alvo}
         END;
 
     piscar_subida(alvo) =
         PRE
-            alvo : pedidos_subida
+            alvo : min_andar..(max_andar - 1)
         THEN
-            piscando_subida := piscando_subida \/ {alvo}
+            piscando_subida1 := piscando_subida1 \/ {alvo}
         END;
 
     parar_piscar_interno(alvo) = 
         PRE 
-            alvo : piscando_interno
+            alvo : piscando_interno1 \/ piscando_interno2
         THEN
-            piscando_interno := piscando_interno - {alvo}
+            IF alvo : piscando_interno1 THEN
+                piscando_interno1 := piscando_interno1 - {alvo} ||
+                piscando_interno2 := piscando_interno2 \/ {alvo}
+            ELSE
+                piscando_interno2 := piscando_interno2 - {alvo}
+            END
         END;
 
     parar_piscar_descida(alvo) =
         PRE
-            alvo : piscando_descida
+            alvo : piscando_descida1 \/ piscando_descida2
         THEN
-            piscando_descida := piscando_descida - {alvo}
+            IF alvo : piscando_descida1 THEN
+                piscando_descida1 := piscando_descida1 - {alvo} ||
+                piscando_descida2 := piscando_descida2 \/ {alvo}
+            ELSE
+                piscando_descida2 := piscando_descida2 - {alvo}
+            END
         END;
 
     parar_piscar_subida(alvo) =
         PRE
-            alvo : piscando_subida
+            alvo : piscando_subida1 \/ piscando_subida2
         THEN
-            piscando_subida := piscando_subida - {alvo}
+            IF alvo : piscando_subida1 THEN
+                piscando_subida1 := piscando_subida1 - {alvo} ||
+                piscando_subida2 := piscando_subida2 \/ {alvo}
+            ELSE
+                piscando_subida2 := piscando_subida2 - {alvo}
+            END
         END
 END
