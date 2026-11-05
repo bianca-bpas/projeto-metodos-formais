@@ -1,4 +1,10 @@
-MACHINE elevador_mestre
+
+/* painel_pedidos
+ * Author: win11
+ * Creation date: 04/11/2026
+ */
+
+MACHINE elevador
 
 SEES configuracao
 
@@ -27,25 +33,20 @@ OPERATIONS
 
     /* --- CANCELAMENTOS COM TRATAMENTO HLR-006 --- */
 
-    mestre_cancelar_interno(alvo) =
+    elevador_cancelar_interno(alvo) =
         PRE
             alvo : pedidos_internos
         THEN
-            cancelamento_interno(alvo) ||
-            IF direcao /= parado &
-               pedidos_internos = {alvo} &
-               pedidos_subida = {} &
-               pedidos_descida = {}
-            THEN
-                solicitar_parada_pendente
-            END
+            /* if card = 1, pisca e não remove */
+            cancelamento_interno(alvo)
         END;
 
-    mestre_cancelar_subida(alvo) =
+    elevador_cancelar_subida(alvo) =
         PRE
             alvo : pedidos_subida
         THEN
             cancelamento_externo_subida(alvo) ||
+            /* HLR-006: Ativa parada pendente APENAS se este era o UNICO pedido de todo o elevador */
             IF direcao /= parado &
                pedidos_subida = {alvo} &
                pedidos_internos = {} &
@@ -55,11 +56,12 @@ OPERATIONS
             END
         END;
 
-    mestre_cancelar_descida(alvo) =
+    elevador_cancelar_descida(alvo) =
         PRE
             alvo : pedidos_descida
         THEN
             cancelamento_externo_descida(alvo) ||
+            /* HLR-006: Ativa parada pendente APENAS se este era o UNICO pedido de todo o elevador */
             IF direcao /= parado &
                pedidos_descida = {alvo} &
                pedidos_internos = {} &
@@ -71,7 +73,7 @@ OPERATIONS
 
     /* --- CONTROLE DE MOVIMENTO (PREPROPRIADOS PARA AS POs) --- */
 
-    mestre_iniciar_subida =
+    elevador_iniciar_subida =
         PRE
             direcao = parado &
             porta = fechada &
@@ -84,7 +86,7 @@ OPERATIONS
             iniciar_subida(pedidos_internos \/ pedidos_subida \/ pedidos_descida)
         END;
 
-    mestre_iniciar_descida =
+    elevador_iniciar_descida =
         PRE
             direcao = parado &
             porta = fechada &
@@ -97,7 +99,7 @@ OPERATIONS
             iniciar_descida(pedidos_internos \/ pedidos_subida \/ pedidos_descida)
         END;
 
-    mestre_subir =
+    elevador_subir =
         PRE
             direcao = subindo &
             porta = fechada &
@@ -107,7 +109,7 @@ OPERATIONS
             subir(pedidos_internos, pedidos_subida, pedidos_descida)
         END;
 
-    mestre_descer =
+    elevador_descer =
         PRE
             direcao = descendo &
             porta = fechada &
@@ -117,7 +119,7 @@ OPERATIONS
             descer(pedidos_internos, pedidos_subida, pedidos_descida)
         END;
 
-    mestre_inverter_sentido =
+    elevador_inverter_sentido =
         PRE
             direcao = parado &
             porta = fechada &
@@ -139,7 +141,7 @@ OPERATIONS
 
     /* --- ATENDIMENTO E LIMPEZA DE PEDIDOS --- */
 
-    mestre_abrir_porta =
+    elevador_abrir_porta =
         PRE
             direcao = parado &
             porta = fechada &
@@ -155,14 +157,14 @@ OPERATIONS
             atender_pedidos_andar(andar, sentido_atendimento)
         END;
 
-    mestre_fechar_porta =
+    elevador_fechar_porta =
         PRE
             porta = aberta
         THEN
             fechar_porta
         END;
 
-    mestre_entrar_em_reposo =
+    elevador_entrar_em_reposo =
         PRE
             direcao = parado &
             porta = fechada &
@@ -173,7 +175,7 @@ OPERATIONS
             entrar_em_reposo(pedidos_internos, pedidos_subida, pedidos_descida)
         END;
 
-    mestre_parar_piscar =
+    elevador_parar_piscar =
         PRE
             piscando_interno1 /= {} or piscando_interno2 /= {} or
             piscando_subida1 /= {}  or piscando_subida2 /= {}  or
