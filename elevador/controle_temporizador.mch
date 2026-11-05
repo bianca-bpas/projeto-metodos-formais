@@ -21,9 +21,10 @@ OPERATIONS
             aviso_porta_aberta := FALSE
         END;
 
-    /* Garantir na main que passar_um_minuto só será chamado quando a porta está aberta. */
-    passar_um_minuto =
-        BEGIN
+    passar_um_minuto(porta_aberta) =
+        PRE
+            porta_aberta = TRUE
+        THEN
             minutos_porta_aberta := minutos_porta_aberta + 1 ||
             aviso_porta_aberta := bool(minutos_porta_aberta + 1 > 2)
         END;
