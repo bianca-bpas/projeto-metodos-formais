@@ -14,6 +14,6 @@ CONSTANTS
 
 PROPERTIES
     peso_maximo = 450 &
-    andar_maximo = 5
+    andar_maximo = 4
 
 END
