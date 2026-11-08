@@ -26,22 +26,31 @@ VARIABLES
     piscando_descida1,
     piscando_interno2,
     piscando_subida2,
-    piscando_descida2
+    piscando_descida2,
+    historico_paradas
 
 INVARIANT
     tempo_interno : (min_andar..max_andar) --> (-1..3) &
     tempo_subida : (min_andar..(max_andar - 1)) --> (-1..3) &
     tempo_descida : ((min_andar + 1)..max_andar) --> (-1..3) &
-    pedidos_internos <: min_andar..max_andar &
-    pedidos_subida <: min_andar..(max_andar - 1) &
-    pedidos_descida <: (min_andar + 1)..max_andar &
+    pedidos_internos : POW(min_andar..max_andar) &
+    pedidos_subida : POW(min_andar..(max_andar - 1)) &
+    pedidos_descida : POW((min_andar + 1)..max_andar) &
 
     piscando_interno1 <: min_andar..max_andar &
     piscando_subida1 <: min_andar..(max_andar - 1) &
     piscando_descida1 <: (min_andar + 1)..max_andar &
     piscando_interno2 <: min_andar..max_andar &
     piscando_subida2 <: min_andar..(max_andar - 1) &
-    piscando_descida2 <: (min_andar + 1)..max_andar
+    piscando_descida2 <: (min_andar + 1)..max_andar &
+
+    historico_paradas : seq(min_andar..max_andar) &
+    size(historico_paradas) <= 5 &
+
+    /* HLR-004: botao pressionado (tempo >= 0) implica pedido registrado (LED aceso) */
+    !aa.(aa : min_andar..max_andar & tempo_interno(aa) >= 0 => aa : pedidos_internos) &
+    !aa.(aa : min_andar..(max_andar - 1) & tempo_subida(aa) >= 0 => aa : pedidos_subida) &
+    !aa.(aa : (min_andar + 1)..max_andar & tempo_descida(aa) >= 0 => aa : pedidos_descida)
 
 INITIALISATION
     tempo_interno := (min_andar..max_andar) * {-1} ||
@@ -55,7 +64,8 @@ INITIALISATION
     piscando_descida1 := {} ||
     piscando_interno2 := {} ||
     piscando_subida2 := {} ||
-    piscando_descida2 := {}
+    piscando_descida2 := {} ||
+    historico_paradas := []
 
 OPERATIONS
     liberar_interno(alvo) =
@@ -70,15 +80,14 @@ OPERATIONS
         PRE alvo : (min_andar + 1)..max_andar
         THEN tempo_descida(alvo) := -1 END;
 
-    /* -1: solto; 0..3: pressao continua. So os valores 0..2 avancam. */
     avancar_tempo_botoes =
         BEGIN
             tempo_interno := tempo_interno <+
-                %pavimento.(pavimento : (min_andar..max_andar) & tempo_interno(pavimento) : 0..2 | tempo_interno(pavimento) + 1) ||
+                %pavimento.(pavimento : dom(tempo_interno |> (0..2)) | tempo_interno(pavimento) + 1) ||
             tempo_subida := tempo_subida <+
-                %pavimento.(pavimento : (min_andar..(max_andar - 1)) & tempo_subida(pavimento) : 0..2 | tempo_subida(pavimento) + 1) ||
+                %pavimento.(pavimento : dom(tempo_subida |> (0..2)) | tempo_subida(pavimento) + 1) ||
             tempo_descida := tempo_descida <+
-                %pavimento.(pavimento : ((min_andar + 1)..max_andar) & tempo_descida(pavimento) : 0..2 | tempo_descida(pavimento) + 1)
+                %pavimento.(pavimento : dom(tempo_descida |> (0..2)) | tempo_descida(pavimento) + 1)
         END;
 
     cancelar_todos =
@@ -107,7 +116,8 @@ OPERATIONS
                 tempo_interno(alvo) := -1
             END
         END;
-/* Operação unificada para atender e limpar pedidos do andar ao abrir pavimento porta */
+
+    /* Atende e limpa os pedidos do andar ao abrir a porta; registra a parada no historico  */
     atender_pedidos_andar(alvo, sentido) =
         PRE
             alvo : min_andar..max_andar &
@@ -130,6 +140,11 @@ OPERATIONS
                 piscando_descida1 := piscando_descida1 - {alvo} ||
                 piscando_descida2 := piscando_descida2 - {alvo} ||
                 tempo_descida(alvo) := -1
+            END ||
+            IF size(historico_paradas) < 5 THEN
+                historico_paradas := historico_paradas <- alvo
+            ELSE
+                historico_paradas := tail(historico_paradas) ^ [alvo]
             END
         END;
 
@@ -209,5 +224,42 @@ OPERATIONS
 
             piscando_descida1 := {} ||
             piscando_descida2 := piscando_descida1
+        END;
+
+    /* --- CONSULTAS (sem alteracao de estado) --- */
+
+    /* Botoes atualmente pressionados */
+    botoes_internos, botoes_subida, botoes_descida <-- consultar_botoes_pressionados =
+        BEGIN
+            botoes_internos := dom(tempo_interno |>> {-1}) ||
+            botoes_subida := dom(tempo_subida |>> {-1}) ||
+            botoes_descida := dom(tempo_descida |>> {-1})
+        END;
+
+    internos_com_tempo, subida_com_tempo, descida_com_tempo <-- consultar_botoes_com_tempo(tt) =
+        PRE tt : (-1..3)
+        THEN
+            internos_com_tempo := tempo_interno~[{tt}] ||
+            subida_com_tempo := tempo_subida~[{tt}] ||
+            descida_com_tempo := tempo_descida~[{tt}]
+        END;
+
+    historico, quantidade <-- consultar_historico_paradas =
+        BEGIN
+            historico := historico_paradas ||
+            quantidade := size(historico_paradas)
+        END;
+
+    primeira, ultima <-- consultar_extremos_historico =
+        PRE historico_paradas /= []
+        THEN
+            primeira := first(historico_paradas) ||
+            ultima := last(historico_paradas)
+        END;
+
+    alvo <-- sugerir_pedido_qualquer =
+        PRE (pedidos_internos \/ pedidos_subida \/ pedidos_descida) : POW1(min_andar..max_andar)
+        THEN
+            alvo :: (pedidos_internos \/ pedidos_subida \/ pedidos_descida)
         END
 END
