@@ -1,5 +1,5 @@
 
-/* painel_pedidos
+/* elevador
  * Author: win11
  * Creation date: 04/11/2026
  */
@@ -13,8 +13,12 @@ INCLUDES
     cabine_movimento,
     controle_manutencao
 
-PROMOTES atualizar_peso, consultar_peso, consultar_estado, consultar_deslocamento,
-         liberar_interno, liberar_subida, liberar_descida, consultar_estado_manutencao
+PROMOTES atualizar_peso, ajustar_peso, consultar_peso, consultar_folga,
+         consultar_estado, consultar_deslocamento, consultar_visitas,
+         liberar_interno, liberar_subida, liberar_descida, consultar_estado_manutencao,
+         consultar_botoes_pressionados, consultar_botoes_com_tempo,
+         consultar_historico_paradas, consultar_extremos_historico,
+         sugerir_pedido_qualquer
 
 VARIABLES piscando_abrir, piscando_fechar
 
@@ -76,11 +80,12 @@ OPERATIONS
             ELSE pedir_externo_descida(alvo) END
         END;
 
-    /* --- CANCELAMENTOS COM TRATAMENTO HLR-006 --- */
+    /* --- CANCELAMENTOS COM TRATAMENTO HLR-006 ---
+       alvo : dom((P <| tempo) |> {3})  equivale a  alvo : P & tempo(alvo) = 3 */
 
     elevador_cancelar_interno(alvo) =
         PRE
-            alvo : pedidos_internos & tempo_interno(alvo) = 3
+            alvo : dom((pedidos_internos <| tempo_interno) |> {3})
         THEN
             /* if card = 1, pisca e não remove */
             cancelamento_interno(alvo)
@@ -88,7 +93,7 @@ OPERATIONS
 
     elevador_cancelar_subida(alvo) =
         PRE
-            alvo : pedidos_subida & tempo_subida(alvo) = 3
+            alvo : dom((pedidos_subida <| tempo_subida) |> {3})
         THEN
             cancelamento_externo_subida(alvo) ||
             /* HLR-006: Ativa parada pendente APENAS se este era o UNICO pedido de todo o elevador */
@@ -103,7 +108,7 @@ OPERATIONS
 
     elevador_cancelar_descida(alvo) =
         PRE
-            alvo : pedidos_descida & tempo_descida(alvo) = 3
+            alvo : dom((pedidos_descida <| tempo_descida) |> {3})
         THEN
             cancelamento_externo_descida(alvo) ||
             /* HLR-006: Ativa parada pendente APENAS se este era o UNICO pedido de todo o elevador */
@@ -200,23 +205,27 @@ OPERATIONS
             inverter_sentido(pedidos_internos, pedidos_subida, pedidos_descida)
         END;
 
-    /* --- ATENDIMENTO E LIMPEZA DE PEDIDOS --- */
+    /* --- ATENDIMENTO E LIMPEZA DE PEDIDOS ---
+       HLR-003: botoes de abrir/fechar porta sao operacoes totais: sem efeito
+       quando a cabine esta em movimento (ELSE skip). */
 
     elevador_abrir_porta =
-        PRE manutencao = TRUE or (direcao = parado & porta = fechada)
-        THEN
-            IF manutencao = TRUE THEN piscando_abrir := 2
-            ELSE
-                abrir_porta(pedidos_internos, pedidos_subida, pedidos_descida) ||
-                atender_pedidos_andar(andar, sentido_atendimento)
-            END
+        SELECT manutencao = TRUE THEN
+            piscando_abrir := 2
+        WHEN manutencao = FALSE & direcao = parado & porta = fechada THEN
+            abrir_porta(pedidos_internos, pedidos_subida, pedidos_descida) ||
+            atender_pedidos_andar(andar, sentido_atendimento)
+        ELSE
+            skip
         END;
 
     elevador_fechar_porta =
-        PRE manutencao = TRUE or porta = aberta
-        THEN
-            IF manutencao = TRUE THEN piscando_fechar := 2
-            ELSE fechar_porta END
+        SELECT manutencao = TRUE THEN
+            piscando_fechar := 2
+        WHEN manutencao = FALSE & porta = aberta THEN
+            fechar_porta
+        ELSE
+            skip
         END;
 
     avancar_piscadas_porta =
@@ -244,5 +253,48 @@ OPERATIONS
             piscando_descida1 /= {} or piscando_descida2 /= {}
         THEN
             parar_piscar
+        END;
+
+    /* --- CONSULTAS (sem alteracao de estado) --- */
+    acima, abaixo, existe_acima <-- consultar_pedidos_ao_redor =
+        LET todos BE todos = pedidos_internos \/ pedidos_subida \/ pedidos_descida IN
+            acima := {pp | pp : todos & pp > andar} ||
+            abaixo := {pp | pp : todos & pp < andar} ||
+            existe_acima := bool(#pp.(pp : todos & pp > andar))
+        END;
+
+    /* HLR-010: escolhe (nao deterministicamente) um dos pedidos pendentes mais proximos da cabine */
+    alvo <-- sugerir_pedido_mais_proximo =
+        PRE (pedidos_internos \/ pedidos_subida \/ pedidos_descida) /= {}
+        THEN
+            ANY aa WHERE
+                aa : (pedidos_internos \/ pedidos_subida \/ pedidos_descida) &
+                !bb.(bb : (pedidos_internos \/ pedidos_subida \/ pedidos_descida) =>
+                    (aa - andar) * (aa - andar) <= (bb - andar) * (bb - andar))
+            THEN
+                alvo := aa
+            END
+        END;
+
+    trajeto <-- consultar_trajeto =
+        BEGIN
+            trajeto := andar -> rev(historico_paradas)
+        END;
+
+    /* HLR-002: botoes do painel externo de um pavimento */
+    botoes <-- consultar_botoes_painel(pav) =
+        PRE pav : 0..andar_maximo
+        THEN
+            botoes := painel_externo[{pav}]
+        END;
+
+    /* HLR-002: estrutura dos paineis externos */
+    andares_com_subida, andares_com_descida, paineis_intermediarios, painel_do_ultimo, so_botoes_subida <-- consultar_mapa_paineis =
+        BEGIN
+            andares_com_subida := painel_externo~[{subindo}] ||
+            andares_com_descida := dom(painel_externo |> {descendo}) ||
+            paineis_intermediarios := {0, andar_maximo} <<| painel_externo ||
+            painel_do_ultimo := {andar_maximo} <| painel_externo ||
+            so_botoes_subida := painel_externo |>> {descendo}
         END
 END
