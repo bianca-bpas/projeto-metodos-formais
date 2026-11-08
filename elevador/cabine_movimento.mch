@@ -15,7 +15,8 @@ VARIABLES
     parada_pendente,
     peso,
     limite_peso_atingido,
-    segundos_porta_aberta
+    segundos_porta_aberta,
+    ultima_visita
 
 INVARIANT
     segundos_porta_aberta : 0..121 &
@@ -32,7 +33,9 @@ INVARIANT
     (porta = aberta => direcao = parado) &
     (andar = andar_maximo => direcao /= subindo) &
     (andar = 0 => direcao /= descendo) &
-    (parada_pendente = TRUE => direcao /= parado)
+    (parada_pendente = TRUE => direcao /= parado) &
+    ultima_visita : (0..andar_maximo) +-> NATURAL &
+    !aa.(aa : dom(ultima_visita) => ultima_visita(aa) <= deslocamento)
 
 INITIALISATION
     andar := 0 ||
@@ -43,7 +46,8 @@ INITIALISATION
     parada_pendente := FALSE ||
     peso := 0 ||
     limite_peso_atingido := FALSE ||
-    segundos_porta_aberta := 0
+    segundos_porta_aberta := 0 ||
+    ultima_visita := {}
 
 OPERATIONS
 
@@ -72,6 +76,17 @@ OPERATIONS
             ELSE
                 limite_peso_atingido := FALSE
             END
+        END;
+
+    /* HLR-009: variacao de peso (delta : INTEGER; negativo = alguem saiu) */
+    ajustar_peso(delta) =
+        PRE
+            delta : INTEGER &
+            direcao = parado &
+            peso + delta : NATURAL
+        THEN
+            peso := peso + delta ||
+            limite_peso_atingido := bool(peso + delta > peso_maximo)
         END;
 
     iniciar_subida(todos_pedidos, pedidos_compativeis) =
@@ -168,10 +183,11 @@ OPERATIONS
                  (andar : p_sub or ((p_int \/ p_sub \/ p_des) /\ ((andar + 1)..andar_maximo)) /= {}))
             )
         THEN
-            IF sentido_atendimento = subindo THEN
-                sentido_atendimento := descendo
-            ELSE
-                sentido_atendimento := subindo
+            CASE sentido_atendimento OF
+                EITHER subindo THEN sentido_atendimento := descendo
+                OR descendo THEN sentido_atendimento := subindo
+                ELSE skip
+                END
             END
         END;
 
@@ -188,7 +204,8 @@ OPERATIONS
                 sentido_atendimento := subindo
             ELSIF sentido_atendimento = parado & andar : p_des THEN
                 sentido_atendimento := descendo
-            END
+            END ||
+            ultima_visita := ultima_visita <+ {andar |-> deslocamento}
         END;
 
     fechar_porta =
@@ -223,5 +240,18 @@ OPERATIONS
         BEGIN
             peso_atual := peso ||
             alerta_ativo := limite_peso_atingido
+        END;
+
+    folga <-- consultar_folga =
+        LET diferenca BE diferenca = peso_maximo - peso IN
+            folga := diferenca
+        END;
+
+    /* HLR-010: andares ja visitados, nunca visitados e marcas de visita */
+    visitados, nunca_visitados, marcas <-- consultar_visitas =
+        BEGIN
+            visitados := dom(ultima_visita) ||
+            nunca_visitados := (0..andar_maximo) - dom(ultima_visita) ||
+            marcas := ran(ultima_visita)
         END
 END
