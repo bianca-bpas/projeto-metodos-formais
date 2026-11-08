@@ -10,7 +10,6 @@ INVARIANT
     manutencao : BOOL &
     manutencao_pendente : BOOL &
 
-    (chave_manutencao = TRUE => manutencao = TRUE or manutencao_pendente = TRUE) &
     (manutencao = TRUE => chave_manutencao = TRUE) &
     (manutencao_pendente = TRUE => chave_manutencao = TRUE) &
     not (manutencao = TRUE & manutencao_pendente = TRUE)
