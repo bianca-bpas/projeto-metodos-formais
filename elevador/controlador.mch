@@ -1,12 +1,16 @@
-/* Escalonamento automatico: executar passo repetidamente enquanto habilitado.
-   Interacoes manuais permanecem na maquina elevador. */
 MACHINE controlador
 SEES configuracao
 INCLUDES elevador
 PROMOTES pressionar_interno, pressionar_externo_subida, pressionar_externo_descida,
          liberar_interno, liberar_subida, liberar_descida, passar_segundo,
-         atualizar_peso, consultar_peso, consultar_estado, consultar_deslocamento,
+         atualizar_peso, ajustar_peso, consultar_peso, consultar_folga,
+         consultar_estado, consultar_deslocamento, consultar_visitas,
          consultar_avisos, consultar_estado_manutencao,
+         consultar_botoes_pressionados, consultar_botoes_com_tempo,
+         consultar_historico_paradas, consultar_extremos_historico,
+         sugerir_pedido_qualquer, sugerir_pedido_mais_proximo,
+         consultar_pedidos_ao_redor, consultar_trajeto,
+         consultar_botoes_painel, consultar_mapa_paineis,
          elevador_cancelar_interno, elevador_cancelar_subida, elevador_cancelar_descida,
          elevador_parar_piscar, avancar_piscadas_porta,
          inserir_chave, remover_chave, elevador_abrir_porta,
@@ -39,10 +43,14 @@ OPERATIONS
             THEN elevador_iniciar_subida
             ELSIF ((pedidos_internos \/ pedidos_subida \/ pedidos_descida) /\ ((andar+1)..andar_maximo)) = {}
             THEN elevador_iniciar_descida
-            ELSIF max(pedidos_internos \/ pedidos_subida \/ pedidos_descida) - andar <=
+            ELSIF max(pedidos_internos \/ pedidos_subida \/ pedidos_descida) - andar <
                   andar - min(pedidos_internos \/ pedidos_subida \/ pedidos_descida)
             THEN elevador_iniciar_subida
-            ELSE elevador_iniciar_descida
+            ELSIF max(pedidos_internos \/ pedidos_subida \/ pedidos_descida) - andar >
+                  andar - min(pedidos_internos \/ pedidos_subida \/ pedidos_descida)
+            THEN elevador_iniciar_descida
+            ELSE
+                CHOICE elevador_iniciar_subida OR elevador_iniciar_descida END
             END
         END
 END
