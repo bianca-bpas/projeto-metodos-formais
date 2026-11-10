@@ -30,6 +30,14 @@ INVARIANT
     (porta = aberta => direcao = parado) &
     (andar = andar_maximo => direcao /= subindo) &
     (andar = 0 => direcao /= descendo) &
+
+    /* Formas diretas dos invariantes acima, usadas pelas precondições
+       de subir/descer no elevador */
+    (direcao = subindo => porta = fechada) &
+    (direcao = subindo => andar < andar_maximo) &
+    (direcao = descendo => porta = fechada) &
+    (direcao = descendo => andar > 0) &
+
     (parada_pendente = TRUE => direcao /= parado) &
     segundos_porta_aberta : 0..121 &
     (porta = fechada => segundos_porta_aberta = 0) &
@@ -106,48 +114,44 @@ OPERATIONS
             parada_pendente := TRUE
         END;
 
-    iniciar_subida(todos_pedidos, pedidos_compativeis) =
+    /* Início de movimento: sem parâmetros; a checagem de andar/sentido
+       fica num IF interno (se não valer, nada acontece). */
+    iniciar_subida =
         PRE
-            todos_pedidos <: 0..andar_maximo &
-            pedidos_compativeis <: todos_pedidos &
             direcao = parado & porta = fechada &
-            limite_peso_atingido = FALSE & manutencao = FALSE &
-            andar < andar_maximo &
-            (sentido_atendimento = parado or sentido_atendimento = subindo) &
-            andar /: pedidos_compativeis &
-            (todos_pedidos /\ ((andar + 1)..andar_maximo)) /= {}
+            limite_peso_atingido = FALSE & manutencao = FALSE
         THEN
-            direcao := subindo || sentido_atendimento := subindo
+            IF andar /= andar_maximo &
+               (sentido_atendimento = parado or sentido_atendimento = subindo)
+            THEN
+                direcao := subindo || sentido_atendimento := subindo
+            END
         END;
 
-    iniciar_descida(todos_pedidos, pedidos_compativeis) =
+    iniciar_descida =
         PRE
-            todos_pedidos <: 0..andar_maximo &
-            pedidos_compativeis <: todos_pedidos &
             direcao = parado & porta = fechada &
-            limite_peso_atingido = FALSE & manutencao = FALSE &
-            andar > 0 &
-            (sentido_atendimento = parado or sentido_atendimento = descendo) &
-            andar /: pedidos_compativeis &
-            (todos_pedidos /\ (0..(andar - 1))) /= {}
+            limite_peso_atingido = FALSE & manutencao = FALSE
         THEN
-            direcao := descendo || sentido_atendimento := descendo
+            IF andar /= 0 &
+               (sentido_atendimento = parado or sentido_atendimento = descendo)
+            THEN
+                direcao := descendo || sentido_atendimento := descendo
+            END
         END;
 
+    /* Com manutenção pendente, a cabine para no próximo andar (HLR-008) */
     subir(p_int, p_sub, p_des) =
         PRE
             p_int <: 0..andar_maximo & p_sub <: 0..(andar_maximo - 1) & p_des <: 1..andar_maximo &
             direcao = subindo & porta = fechada & limite_peso_atingido = FALSE & andar < andar_maximo
         THEN
             andar := andar + 1 || deslocamento := deslocamento + 1 ||
-            IF parada_pendente = TRUE or (andar + 1) : (p_int \/ p_sub) or
+            IF parada_pendente = TRUE or manutencao_pendente = TRUE or
+               andar + 1 = andar_maximo or (andar + 1) : (p_int \/ p_sub) or
                ((p_int \/ p_sub \/ p_des) /\ ((andar + 2)..andar_maximo)) = {}
             THEN
-                direcao := parado ||
-                IF manutencao_pendente = TRUE THEN
-                    manutencao := TRUE ||
-                    manutencao_pendente := FALSE
-                END
+                direcao := parado
             END ||
             parada_pendente := FALSE
         END;
@@ -158,14 +162,11 @@ OPERATIONS
             direcao = descendo & porta = fechada & limite_peso_atingido = FALSE & andar > 0
         THEN
             andar := andar - 1 || deslocamento := deslocamento + 1 ||
-            IF parada_pendente = TRUE or (andar - 1) : (p_int \/ p_des) or
+            IF parada_pendente = TRUE or manutencao_pendente = TRUE or
+               andar - 1 = 0 or (andar - 1) : (p_int \/ p_des) or
                ((p_int \/ p_sub \/ p_des) /\ (0..(andar - 2))) = {}
             THEN
-                direcao := parado ||
-                IF manutencao_pendente = TRUE THEN
-                    manutencao := TRUE ||
-                    manutencao_pendente := FALSE
-                END
+                direcao := parado
             END ||
             parada_pendente := FALSE
         END;
@@ -173,13 +174,18 @@ OPERATIONS
     inverter_sentido(p_int, p_sub, p_des) =
         PRE
             p_int <: 0..andar_maximo & p_sub <: 0..(andar_maximo - 1) & p_des <: 1..andar_maximo &
-            direcao = parado & porta = fechada & andar /: p_int &
-            (
-                (sentido_atendimento = subindo & andar /: p_sub & ((p_int \/ p_sub \/ p_des) /\ ((andar + 1)..andar_maximo)) = {} & (andar : p_des or ((p_int \/ p_sub \/ p_des) /\ (0..(andar - 1))) /= {})) or
-                (sentido_atendimento = descendo & andar /: p_des & ((p_int \/ p_sub \/ p_des) /\ (0..(andar - 1))) = {} & (andar : p_sub or ((p_int \/ p_sub \/ p_des) /\ ((andar + 1)..andar_maximo)) /= {}))
-            )
+            direcao = parado & porta = fechada &
+            (sentido_atendimento = subindo or sentido_atendimento = descendo)
         THEN
-            IF sentido_atendimento = subindo THEN sentido_atendimento := descendo ELSE sentido_atendimento := subindo END
+            CASE sentido_atendimento OF
+                EITHER subindo THEN
+                    sentido_atendimento := descendo
+                OR descendo THEN
+                    sentido_atendimento := subindo
+                ELSE
+                    skip
+                END
+            END
         END;
 
     abrir_porta(p_int, p_sub, p_des) =
@@ -191,6 +197,12 @@ OPERATIONS
             IF sentido_atendimento = parado & andar : p_sub THEN sentido_atendimento := subindo
             ELSIF sentido_atendimento = parado & andar : p_des THEN sentido_atendimento := descendo END ||
             ultima_visita := ultima_visita <+ {andar |-> deslocamento}
+        END;
+
+    /* Botão "abrir imediatamente" (HLR-003): só com a cabine parada */
+    abrir_porta_imediato =
+        PRE direcao = parado & porta = fechada THEN
+            porta := aberta
         END;
 
     fechar_porta =
@@ -206,7 +218,7 @@ OPERATIONS
             sentido_atendimento := parado
         END;
 
-    /* CONSULTAS (HLR-001 / HLR-009) */
+    /* CONSULTAS (HLR-001 / HLR-007 / HLR-008 / HLR-009) */
     pavimento_exibido, direcao_exibida <-- consultar_estado =
         BEGIN pavimento_exibido := andar || direcao_exibida := direcao END;
 
@@ -218,6 +230,17 @@ OPERATIONS
 
     folga <-- consultar_folga =
         BEGIN folga := peso_maximo - peso END;
+
+    /* Símbolo de elevador parado/quebrado: porta aberta há mais de 2 minutos */
+    alerta_porta_aberta <-- consultar_alerta_porta =
+        BEGIN alerta_porta_aberta := bool(segundos_porta_aberta > 120) END;
+
+    /* Aviso de manutenção nos visores */
+    aviso_manutencao, aviso_pendente <-- consultar_manutencao =
+        BEGIN
+            aviso_manutencao := manutencao ||
+            aviso_pendente := manutencao_pendente
+        END;
 
     visitados, nunca_visitados, marcas <-- consultar_visitas =
         BEGIN
