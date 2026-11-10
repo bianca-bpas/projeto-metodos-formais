@@ -1,73 +1,67 @@
 # Decisões do projeto
 
+## Limites do prédio
+
+- O prédio possui cinco pavimentos, numerados de `0` a `4`.
+- O pavimento `0` representa o térreo.
+- Há botão externo de subida nos pavimentos `0..3` e de descida nos
+  pavimentos `1..4`.
+
 ## Peso e sobrecarga
 
-### Questão
+- A capacidade máxima é 450 kg.
+- Acima desse limite, a cabine permanece parada até o peso ser reduzido.
+- O aviso de sobrecarga aparece somente no visor interno.
+- A alternativa de descer ao térreo com sobrecarga foi descartada porque
+  contradiz o HLR-009.
 
-Devemos conferir o peso das pessoas ao entrar no elevador?
+## Pedidos, LEDs e cancelamento
 
-### Decisões registradas
+- Os pedidos são mantidos em três conjuntos: cabine, subida e descida.
+- Um pedido ativo representa também o LED correspondente aceso. Assim, não é
+  necessário duplicar o estado em outro conjunto de LEDs.
+- Pressionar novamente um pedido ativo não cria uma cópia; conjuntos tornam a
+  operação idempotente.
+- O contador de pressão vai de zero a três segundos. Ao atingir três, a
+  operação de cancelamento fica habilitada.
+- Pedidos externos podem ser cancelados mesmo quando forem o único pedido.
+- O último pedido interno não pode ser cancelado: ele permanece ativo e passa
+  por duas fases de piscada.
+- Se o último pedido em curso for cancelado durante o movimento, a cabine para
+  no próximo pavimento.
 
-- Não deixar o elevador sair.
-- Descer até o último andar.
+## Atendimento e prioridade
 
-## Cancelamento de pedido
+- Enquanto existe uma direção de atendimento, a cabine atende primeiro os
+  pedidos compatíveis nessa direção e inverte quando não há pedidos adiante.
+- Quando está sem direção e existem pedidos dos dois lados, escolhe o lado cujo
+  pedido mais próximo exige o menor deslocamento. Em caso de empate, sobe.
+- A justiça é considerada sob as hipóteses de que o controlador continua
+  executando `passo`, a manutenção não permanece ativa para sempre, a
+  sobrecarga é eventualmente removida e há uma quantidade finita de novas
+  chamadas durante o atendimento. Sob essas hipóteses, o algoritmo LOOK
+  percorre o conjunto finito de pavimentos sem abandonar pedidos pendentes.
+- A minimização é uma política local: menor deslocamento para iniciar um novo
+  ciclo e continuidade na direção atual. Não se afirma ótimo global diante de
+  chamadas futuras desconhecidas.
 
-### Questão em aberto
+## Porta e visores
 
-O cancelamento de pedido só funciona quando existe um pedido ativo?
+- Os botões `pressionar_abrir` e `pressionar_fechar` só alteram a porta quando
+  a cabine está parada.
+- O próximo `passo` do controlador fecha uma porta aberta; o botão de fechar
+  permite antecipar essa ação.
+- Se o ambiente avançar o tempo por mais de 120 segundos antes do fechamento,
+  o aviso de porta aberta aparece somente nos visores externos.
+- Andar e direção aparecem nos visores internos e externos; manutenção aparece
+  em ambos.
 
-## Representação dos pedidos
+## Manutenção
 
-### Questão em aberto
-
-Podemos representar os pedidos do elevador como um conjunto (*set*)?
-
-### Direção sugerida
-
-Sim. Devem ser mantidos conjuntos separados para pedidos da cabine, de subida
-e de descida, pois a origem e a direção do pedido precisam ser preservadas.
-
-## Decisões pendentes
-
-### Sobrecarga
-
-- A decisão de descer até o último andar entra em conflito com o HLR-009, que
-  proíbe qualquer movimento acima de 450 kg.
-- Devemos decidir se a cabine fica parada, exibindo o aviso de sobrecarga, até
-  que o peso seja reduzido. Esta é a opção mais alinhada ao requisito.
-
-### Atendimento e prioridade dos pedidos
-
-- Qual será a prioridade entre pedidos internos, de subida e de descida?
-- A cabine deve continuar atendendo pedidos na direção atual antes de inverter
-  sua direção?
-- Como garantiremos que um pedido não fique esperando indefinidamente quando
-  novos pedidos continuam chegando?
-
-### Pedidos e cancelamento
-
-- O que acontece quando um botão correspondente a um pedido já ativo é
-  pressionado novamente?
-- Pedidos externos podem ser cancelados quando são o único pedido ativo?
-- Quando todos os pedidos são cancelados durante o movimento, a cabine deve
-  parar obrigatoriamente no próximo andar?
-- Ao chegar a um andar, devemos atender pedidos de cabine, subida e descida ao
-  mesmo tempo ou apenas os compatíveis com a direção da cabine?
-
-### Porta e avisos
-
-- Após ficar aberta por mais de dois minutos, a porta fecha automaticamente ou
-  apenas é exibido um aviso nos visores externos?
-- Em quais visores cada alerta deve aparecer: sobrecarga, porta aberta e
-  manutenção?
-
-### Manutenção
-
-- Se a chave de manutenção for inserida com a porta aberta e a cabine parada,
-  a manutenção começa imediatamente ou somente depois que a porta for fechada?
-
-### Limites do prédio
-
-- Confirmar que o prédio possui cinco pavimentos, numerados de `0` a `4`, e
-  que o pavimento `0` representa o térreo.
+- Se a chave for inserida com a cabine parada, inclusive com a porta aberta, a
+  manutenção começa imediatamente e todos os pedidos são cancelados.
+- Se a cabine estiver em movimento, ela para no próximo pavimento e só então
+  ativa a manutenção.
+- Durante a manutenção, os painéis não registram pedidos. Pressionar qualquer
+  botão inicia duas fases de piscada e o LED volta a permanecer apagado.
+- Inserir novamente uma chave já inserida não é uma operação válida.

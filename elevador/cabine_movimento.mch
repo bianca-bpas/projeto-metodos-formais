@@ -38,6 +38,7 @@ INVARIANT
     manutencao : BOOL &
     manutencao_pendente : BOOL &
     (manutencao = TRUE => chave_manutencao = TRUE) &
+    (manutencao = TRUE => direcao = parado) &
     (manutencao_pendente = TRUE => chave_manutencao = TRUE) &
     not (manutencao = TRUE & manutencao_pendente = TRUE)
 
@@ -65,7 +66,8 @@ OPERATIONS
             IF direcao = parado THEN
                 manutencao := TRUE || manutencao_pendente := FALSE
             ELSE
-                manutencao_pendente := TRUE
+                manutencao_pendente := TRUE ||
+                parada_pendente := TRUE
             END
         END;
 
@@ -137,7 +139,8 @@ OPERATIONS
     subir(p_int, p_sub, p_des) =
         PRE
             p_int <: 0..andar_maximo & p_sub <: 0..(andar_maximo - 1) & p_des <: 1..andar_maximo &
-            direcao = subindo & porta = fechada & limite_peso_atingido = FALSE & andar < andar_maximo
+            direcao = subindo & porta = fechada & limite_peso_atingido = FALSE &
+            manutencao = FALSE & andar < andar_maximo
         THEN
             andar := andar + 1 || deslocamento := deslocamento + 1 ||
             IF parada_pendente = TRUE or (andar + 1) : (p_int \/ p_sub) or
@@ -155,7 +158,8 @@ OPERATIONS
     descer(p_int, p_sub, p_des) =
         PRE
             p_int <: 0..andar_maximo & p_sub <: 0..(andar_maximo - 1) & p_des <: 1..andar_maximo &
-            direcao = descendo & porta = fechada & limite_peso_atingido = FALSE & andar > 0
+            direcao = descendo & porta = fechada & limite_peso_atingido = FALSE &
+            manutencao = FALSE & andar > 0
         THEN
             andar := andar - 1 || deslocamento := deslocamento + 1 ||
             IF parada_pendente = TRUE or (andar - 1) : (p_int \/ p_des) or
@@ -185,7 +189,7 @@ OPERATIONS
     abrir_porta(p_int, p_sub, p_des) =
         PRE
             p_int <: 0..andar_maximo & p_sub <: 0..(andar_maximo - 1) & p_des <: 1..andar_maximo &
-            direcao = parado & porta = fechada
+            direcao = parado & porta = fechada & manutencao = FALSE
         THEN
             porta := aberta ||
             IF sentido_atendimento = parado & andar : p_sub THEN sentido_atendimento := subindo
@@ -218,6 +222,19 @@ OPERATIONS
 
     folga <-- consultar_folga =
         BEGIN folga := peso_maximo - peso END;
+
+    estado_porta, tempo_aberta <-- consultar_porta =
+        BEGIN
+            estado_porta := porta ||
+            tempo_aberta := segundos_porta_aberta
+        END;
+
+    chave_inserida, manutencao_ativa, manutencao_aguardando <-- consultar_manutencao =
+        BEGIN
+            chave_inserida := chave_manutencao ||
+            manutencao_ativa := manutencao ||
+            manutencao_aguardando := manutencao_pendente
+        END;
 
     visitados, nunca_visitados, marcas <-- consultar_visitas =
         BEGIN

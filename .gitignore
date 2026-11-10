@@ -3,3 +3,10 @@ elevador/bdp/
 
 # Metadados locais do ambiente do Atelier B
 elevador/lang/
+
+# Workspace persistente deste repositório no Atelier B
+/bdp/
+/lang/
+
+# Workspace NG e executável local do provador externo
+/ng/

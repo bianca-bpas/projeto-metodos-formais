@@ -85,16 +85,17 @@ classDiagram
 | Controlador do elevador | Andar atual, direção, regra de deslocamento e atendimento dos pedidos. | `andar`, `direcao`, `deslocamento` e operações de movimento. |
 | Cabine | Posição, peso atual e limite de 450 kg; não pode mover-se em sobrecarga. | `andar`, `peso`, `peso_maximo`. |
 | Porta | Estado aberta/fechada, contador de minutos aberta e alerta após dois minutos. | `porta`, `minutos_porta_aberta`, `aviso_porta_aberta`. |
-| Painel interno | Botões dos andares, abrir, fechar e chave de manutenção. | Operações `chamar_cabine`, `abrir_porta`, `fechar_porta` e manutenção. |
-| Painel externo | Botão de subida nos andares 0 a 3 e de descida nos andares 1 a 4. | `chamar_subida` e `chamar_descida`. |
-| Pedido | Pavimento, origem, estado ativo, LED e possibilidade de cancelamento. | `pedidos_cabine`, `pedidos_subida`, `pedidos_descida` e conjuntos `leds_*`. |
-| Visor | Andar e direção; alertas de porta aberta, manutenção e sobrecarga conforme sua localização. | Andar/direção vêm de `andar`/`direcao`; `aviso_porta_aberta` já está modelado. |
+| Painel interno | Botões dos andares, abrir, fechar e chave de manutenção. | `pressionar_interno`, `pressionar_abrir`, `pressionar_fechar` e operações de manutenção. |
+| Painel externo | Botão de subida nos andares 0 a 3 e de descida nos andares 1 a 4. | `pressionar_externo_subida` e `pressionar_externo_descida`. |
+| Pedido | Pavimento, origem, estado ativo, LED e possibilidade de cancelamento. | `pedidos_internos`, `pedidos_subida` e `pedidos_descida`; os mesmos conjuntos representam os LEDs acesos. |
+| Visor | Andar e direção; alertas de porta aberta, manutenção e sobrecarga conforme sua localização. | `consultar_visores` retorna todas as informações e respeita a localização de cada alerta. |
 | Manutenção | Chave inserida, estado ativo ou pendente, cancelamento dos pedidos e bloqueio dos painéis. | `chave_manutencao`, `manutencao`, `manutencao_pendente`. |
 
 ## Regras essenciais
 
 - A cabine só se move com a porta fechada, fora de manutenção e sem sobrecarga.
-- Todo pedido deve manter seu LED aceso até ser atendido ou cancelado.
+- Todo pedido deve manter seu LED aceso até ser atendido ou cancelado; pedido
+  ativo e LED aceso são o mesmo estado abstrato.
 - O pedido interno final não pode ser cancelado: seu LED deve piscar e continuar aceso.
 - Em manutenção, pedidos ativos são cancelados e os novos pedidos não são aceitos.
 - Cada visor deve refletir o andar e a direção atuais da cabine.
