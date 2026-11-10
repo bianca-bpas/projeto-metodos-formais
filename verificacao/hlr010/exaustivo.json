@@ -1,0 +1,16 @@
+{
+  "estados_iniciais": 311296,
+  "transicoes_verificadas": 7591528,
+  "maximo_passos_ate_reposo": 38,
+  "caso_mais_longo": [
+    0,
+    0,
+    -1,
+    true,
+    17,
+    15,
+    30
+  ],
+  "falhas": 0,
+  "escopo": "projecao Python finita, pedidos fixos, sem bloqueios ambientais"
+}

@@ -1,0 +1,15 @@
+op reconciliacao_elevador
+ip reconciliacao_elevador
+po configuracao 0
+pr configuracao 3
+po painel_pedidos 0
+pr painel_pedidos 3
+po cabine_movimento 0
+pr cabine_movimento 3
+po elevador 0
+pr elevador 3
+sg
+us painel_pedidos
+us cabine_movimento
+us elevador
+q

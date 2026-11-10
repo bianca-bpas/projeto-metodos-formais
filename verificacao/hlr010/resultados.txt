@@ -1,0 +1,15 @@
+subida_nao_inverte_por_pedido_atras: OK
+subida_atende_intermediario: OK
+subida_continua_apos_parada: OK
+subida_inverte_no_ultimo_pedido: OK
+subida_atende_retorno: OK
+descida_nao_inverte_por_pedido_atras: OK
+descida_atende_intermediario: OK
+descida_continua_apos_parada: OK
+descida_inverte_no_ultimo_pedido: OK
+descida_atende_retorno: OK
+chamada_oposta_aguarda_retorno: OK
+chamada_oposta_atendida_no_retorno: OK
+inversao_antes_do_topo: OK
+inversao_antes_do_terreo: OK
+14/14 cenarios aprovados.

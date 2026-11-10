@@ -27,9 +27,10 @@ INVARIANT
     peso : NATURAL &
     limite_peso_atingido : BOOL &
     (limite_peso_atingido = TRUE <=> peso > peso_maximo) &
-    (porta = aberta => direcao = parado) &
-    (andar = andar_maximo => direcao /= subindo) &
-    (andar = 0 => direcao /= descendo) &
+    (direcao /= parado => porta = fechada) &
+    (direcao /= parado => limite_peso_atingido = FALSE) &
+    (direcao = subindo => andar < andar_maximo) &
+    (direcao = descendo => andar > 0) &
     (parada_pendente = TRUE => direcao /= parado) &
     segundos_porta_aberta : 0..121 &
     (porta = fechada => segundos_porta_aberta = 0) &
@@ -95,11 +96,12 @@ OPERATIONS
         END;
 
     /* TEMPORIZADOR DE PORTA (HLR-007) */
-    avancar_tempo_porta =
-        BEGIN
+    avancar_tempo_porta(parar) =
+        PRE parar : BOOL & (parar = TRUE => direcao /= parado) THEN
             IF porta = aberta & segundos_porta_aberta < 121 THEN
                 segundos_porta_aberta := segundos_porta_aberta + 1
-            END
+            END ||
+            IF parar = TRUE THEN parada_pendente := TRUE END
         END;
 
     /* MOVIMENTAÇÃO E SEGURANÇA (HLR-006) */
@@ -108,30 +110,24 @@ OPERATIONS
             parada_pendente := TRUE
         END;
 
-    iniciar_subida(todos_pedidos, pedidos_compativeis) =
+    /* A politica de pedidos pertence ao controlador; aqui ficam as segurancas. */
+    iniciar_subida =
         PRE
-            todos_pedidos <: 0..andar_maximo &
-            pedidos_compativeis <: todos_pedidos &
             direcao = parado & porta = fechada &
             limite_peso_atingido = FALSE & manutencao = FALSE &
             andar < andar_maximo &
-            (sentido_atendimento = parado or sentido_atendimento = subindo) &
-            andar /: pedidos_compativeis &
-            (todos_pedidos /\ ((andar + 1)..andar_maximo)) /= {}
+            (sentido_atendimento = parado or sentido_atendimento = subindo)
         THEN
             direcao := subindo || sentido_atendimento := subindo
         END;
 
-    iniciar_descida(todos_pedidos, pedidos_compativeis) =
+    /* A politica de pedidos pertence ao controlador; aqui ficam as segurancas. */
+    iniciar_descida =
         PRE
-            todos_pedidos <: 0..andar_maximo &
-            pedidos_compativeis <: todos_pedidos &
             direcao = parado & porta = fechada &
             limite_peso_atingido = FALSE & manutencao = FALSE &
             andar > 0 &
-            (sentido_atendimento = parado or sentido_atendimento = descendo) &
-            andar /: pedidos_compativeis &
-            (todos_pedidos /\ (0..(andar - 1))) /= {}
+            (sentido_atendimento = parado or sentido_atendimento = descendo)
         THEN
             direcao := descendo || sentido_atendimento := descendo
         END;
@@ -143,7 +139,7 @@ OPERATIONS
             manutencao = FALSE & andar < andar_maximo
         THEN
             andar := andar + 1 || deslocamento := deslocamento + 1 ||
-            IF parada_pendente = TRUE or (andar + 1) : (p_int \/ p_sub) or
+            IF andar + 1 = andar_maximo or parada_pendente = TRUE or (andar + 1) : (p_int \/ p_sub) or
                ((p_int \/ p_sub \/ p_des) /\ ((andar + 2)..andar_maximo)) = {}
             THEN
                 direcao := parado ||
@@ -174,14 +170,10 @@ OPERATIONS
             parada_pendente := FALSE
         END;
 
-    inverter_sentido(p_int, p_sub, p_des) =
+    inverter_sentido =
         PRE
-            p_int <: 0..andar_maximo & p_sub <: 0..(andar_maximo - 1) & p_des <: 1..andar_maximo &
-            direcao = parado & porta = fechada & andar /: p_int &
-            (
-                (sentido_atendimento = subindo & andar /: p_sub & ((p_int \/ p_sub \/ p_des) /\ ((andar + 1)..andar_maximo)) = {} & (andar : p_des or ((p_int \/ p_sub \/ p_des) /\ (0..(andar - 1))) /= {})) or
-                (sentido_atendimento = descendo & andar /: p_des & ((p_int \/ p_sub \/ p_des) /\ (0..(andar - 1))) = {} & (andar : p_sub or ((p_int \/ p_sub \/ p_des) /\ ((andar + 1)..andar_maximo)) /= {}))
-            )
+            direcao = parado & porta = fechada &
+            sentido_atendimento : {subindo, descendo}
         THEN
             IF sentido_atendimento = subindo THEN sentido_atendimento := descendo ELSE sentido_atendimento := subindo END
         END;
@@ -209,6 +201,10 @@ OPERATIONS
         THEN
             sentido_atendimento := parado
         END;
+
+    /* Consulta para observar a parada solicitada pelo HLR-006. */
+    pendente <-- consultar_parada_pendente =
+        BEGIN pendente := parada_pendente END;
 
     /* CONSULTAS (HLR-001 / HLR-009) */
     pavimento_exibido, direcao_exibida <-- consultar_estado =

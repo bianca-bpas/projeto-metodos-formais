@@ -1,94 +1,103 @@
 # Validação do modelo
 
-Validação executada com Atelier B Community 24.04.2 e ProB 1.16.1.
+## Resultado histórico da instância de cinco pavimentos — 2026-11-10
 
-O projeto está registrado no Atelier B como `projeto_metodos_formais`, usando
-`elevador/` como diretório-fonte, `bdp/` como base de provas e `lang/` como
-diretório de linguagem. O log integral da última execução está em
-`bdp/provas.log`.
+Este resultado foi gerado quando `andar_maximo = 4`. Após a generalização para
+`andar_maximo : NATURAL1`, as obrigações de prova devem ser regeneradas e
+provadas novamente; portanto, os totais abaixo não certificam ainda a revisão
+paramétrica.
 
-## Atelier B
+Atelier B Community 24.04.2, geração completa (`po … 0`) e provador nativo
+em força 3, sem Z3. Workspace reconstruído: `reconciliacao_elevador`, base
+`native/bdp/`, linguagem `native/lang/`, fontes `elevador/`.
 
-As quatro máquinas passam pela análise sintática e semântica.
-
-| Máquina | Obrigações | Provadas automaticamente | Pendentes |
+| Máquina | Obrigações | Provadas nativamente | Pendentes |
 |---|---:|---:|---:|
 | `configuracao` | 0 | 0 | 0 |
-| `painel_pedidos` | 236 | 197 | 39 |
-| `cabine_movimento` | 56 | 54 | 2 |
-| `elevador` | 372 | 363 | 9 |
-| **Total** | **664** | **614** | **50** |
+| `painel_pedidos` | 444 | 444 | 0 |
+| `cabine_movimento` | 55 | 55 | 0 |
+| `elevador` | 344 | 344 | 0 |
+| **Total** | **843** | **843** | **0** |
 
-A prova automática em força 3 concluiu aproximadamente 92% das obrigações.
-Uma obrigação pendente não representa automaticamente um contraexemplo; as
-pendências concentram-se nas funções de tempo, no atendimento composto e em
-aritmética de movimento. Devem ser tratadas por prova interativa ou por lemas
-auxiliares antes de se afirmar prova integral.
+### Inventário de obrigações pendentes por máquina/operação
 
-### Pendências iniciais do workspace original
+Nenhuma: `configuracao`, `painel_pedidos`, `cabine_movimento` e `elevador`
+têm zero obrigações pendentes em todas as operações. O log contém os totais
+por operação e as consultas `us` com listas vazias. Não se aplicam ao modelo
+atual as seis pendências da antiga representação por funções temporizadoras.
 
-- `painel_pedidos`: 24 obrigações em `atender_pedidos_andar`, 6 em
-  `avancar_tempo_botoes` e 9 nas operações de registrar, liberar e cancelar.
-  Todas envolvem a preservação da relação entre o tempo de pressão e o
-  conjunto de pedidos ativos.
-- `cabine_movimento`: uma obrigação em `iniciar_subida` e uma em `subir`.
-- `elevador`: sete obrigações de preservação do invariante em `passo` e duas
-  de boa definição da escolha da direção nesse mesmo passo.
+Evidências: [log nativo](../provas/atelier-reconciliacao.log),
+[lote executável](../provas/reconciliar.batch), [fontes e hashes](../provas/fontes.sha256)
+e cópias dos arquivos `.pmi`/`.pog` em `provas/nativas/`.
+Em uma instalação nova, crie no Atelier B o projeto `reconciliacao_elevador`,
+com diretórios de base `native/bdp/` e linguagem `native/lang/`, e adicione as
+quatro máquinas de `elevador/`. Os diretórios antigos `bdp/` e `elevador/bdp/`
+eram bases duplicadas e foram removidos. O workspace nativo atual foi mantido.
 
-O workspace original usa obrigações no formato legado (`.pos` convertido de
-`.pmi`), incompatível com `extprove`. Ele foi preservado.
+Para repetir no workspace registrado, a partir da raiz:
 
-### Workspace NG e Z3
+```sh
+/opt/atelierb-free-24.04.2/bin/bbatch -r=/opt/atelierb-free-24.04.2/etc/AtelierB -i="$PWD/provas/reconciliar.batch" > provas/atelier-reconciliacao.log 2>&1
+python3 verificacao/hlr005_008/verificar.py /opt/ProB/probcli
+```
 
-Criei o projeto `projeto_metodos_formais_ng` em `ng/bdp/` e `ng/lang/`, migrei-o
-para o gerador NG do Atelier B e gerei novamente as 664 obrigações. O Z3
-4.13.3 está instalado localmente em `ng/usr/bin/z3`. As máquinas-fonte em
-`elevador/` são compartilhadas pelos dois projetos.
+O ProB concluiu **18/18 cenários**, após regeneração do cache `elevador/elevador.prob`. O cache é descartável,
+foi removido na limpeza e será recriado pelo ProB; não é uma evidência versionada.
+O verificador usa `segurando_*` e `interno_recusado`, sem os campos removidos
+`tempo_*`. Logs individuais em `verificacao/hlr005_008/` e
+[resumo da execução](../provas/prob-reconciliacao.log).
+Os cenários conferem cancelamento no terceiro tick, liberação, preservação do
+último interno, manutenção e os retornos dos LEDs em todas as quatro fases e
+no estado estável. Cada tick representa um segundo. A recusa permanece em
+`interno_recusado` até a liberação, sem reiniciar automaticamente a piscada.
 
-Após a prova automática nativa em força 3 e o mecanismo externo `z3_pp` com
-limite de 10 segundos por obrigação, o resultado do workspace NG é:
+**Limites:** são cenários, não exploração exaustiva. As provas nativas atestam
+as obrigações geradas do modelo, não a completude dos requisitos.
+HLR-010 permanece pendente quanto à justiça temporal e minimização global;
+não há prova de atendimento eventual e a política local não garante percurso
+ótimo. A interpretação da exceção de cancelamento permanece restrita ao último
+pedido interno.
 
-| Máquina | Provadas pelo Atelier B | Resolvidas pelo Z3, não confiáveis | Pendentes |
-|---|---:|---:|---:|
-| `painel_pedidos` | 197 | 31 | 8 |
-| `cabine_movimento` | 54 | 2 | 0 |
-| `elevador` | 363 | 2 | 7 |
-| **Total** | **614** | **35** | **15** |
+## Cenários da política HLR-010 — 2026-11-10
 
-O mecanismo distribuído pelo Atelier B tem `trust="never"`. Assim, as 35
-obrigações resolvidas pelo Z3 aparecem como *Unreliably proved* no Atelier B;
-não são contabilizadas como provas confiáveis. Nenhuma obrigação foi marcada
-como refutada. O log da execução está em `ng/bdp/z3-10s.log`.
+**14/14 cenários adicionais aprovados** com o ProB, definidos em
+[cenarios.py](../verificacao/hlr010/cenarios.py) e executados por
+[verificar.py](../verificacao/hlr010/verificar.py). O
+[resumo](../verificacao/hlr010/resultados.txt), traces e logs individuais
+estão em `verificacao/hlr010/`.
 
-As 15 pendências restantes são oito no painel (uma em
-`registrar_externo_descida`, seis em `avancar_tempo_botoes`, uma em
-`cancelamento_externo_subida`) e sete em `elevador.passo` (cinco de preservação
-do invariante e duas de boa definição). Elas ainda exigem lemas, ajustes na
-especificação ou prova interativa.
+A política solicitada mantém o sentido atual enquanto houver pedidos adiante,
+invertendo ao fim da rodada. Os testes verificam subida e descida, pedidos
+novos atrás da cabine, paradas intermediárias, retomada, atendimento no retorno,
+chamada externa oposta e inversão antes dos limites do prédio. Eles conferem
+estados intermediários e a ordem de atendimento, além dos pedidos restantes.
 
-## ProB
+Esses 14 cenários são adicionais aos 18 de HLR-005/008. As fontes B não foram
+alteradas; seus hashes continuam iguais aos registrados nas provas nativas.
+Testar a política não prova justiça temporal nem minimização global.
 
-Uma exploração limitada de estados processou 1.349 estados e 1.249.004
-transições sem encontrar violação de invariante ou pré-condição. A exploração
-foi encerrada pelo limite de 15 segundos, portanto não constitui enumeração
-exaustiva do espaço de estados.
+## Fronteiras e interações — 2026-11-10
 
-As operações de peso usam `NATURAL` e `INTEGER`, de modo que o espaço completo
-é infinito. Por isso, a verificação exaustiva exige limitar explicitamente o
-domínio de teste sem alterar o domínio abstrato usado para avaliação.
+| Execução | Cobertura | Resultado |
+|---|---|---|
+| `hlr010/bordas.py` | Porta, repouso, chamadas locais opostas, empate, manutenção, sobrecarga e cancelamento em movimento | **13/13 aprovados no ProB** |
+| `hlr010/interacoes.py` | Todos os 13 botões válidos de pavimento em manutenção, cancelamento e liberação; abrir/fechar e ciclos de recusa | **47/47 aprovados no ProB** |
+| `hlr010/exaustivo.py` | Projeção finita da política com pedidos fixos | **311.296 estados iniciais, 7.591.528 transições, zero falhas** |
 
-### Cenários simbólicos confirmados
+Esses 60 cenários ProB são adicionais aos 18 de HLR-005/008 e 14 de HLR-010
+já registrados: 92 cenários aprovados no conjunto das execuções. Logs e traces
+novos ficam em `verificacao/hlr010/bordas/` e `verificacao/hlr010/interacoes/`.
+A enumeração Python registra os números em
+[exaustivo.json](../verificacao/hlr010/exaustivo.json); o maior percurso exigiu
+38 passos até repouso sem pedidos. A ordem de atendimento de chamadas opostas
+no mesmo andar prioriza subida quando o sentido anterior é parado.
 
-- Inserir a chave durante uma subida faz a cabine parar no pavimento seguinte,
-  ficar com `direcao = parado`, ativar a manutenção e cancelar os pedidos.
-- Pressionar um botão durante a manutenção não cria pedido; após dois avanços
-  de tempo, as duas fases de piscada terminam e o LED permanece apagado.
-- Um pedido externo mantido pressionado por três segundos pode ser cancelado;
-  ao final, o pedido e sua marca de tempo são removidos.
-
-## Cobertura sintática da avaliação
-
-O modelo utiliza relações e funções, sobrescrita, restrição de imagem,
-inversão, imagem relacional, sequências, naturais e inteiros, compreensão de
-conjuntos, operações sobre conjuntos, quantificadores universal e existencial,
-`IF`, `SELECT`, `ANY`, `LET` e operações com e sem retorno.
+A exaustividade vale somente para a projeção Python documentada no
+[guia dos testes](../verificacao/hlr010/README.md): todos os conjuntos válidos
+de pedidos, andares, sentidos, portas e movimentos coerentes com os limites,
+sem novas chamadas ou interferências durante cada percurso. A projeção é uma
+tradução manual, não um refinamento formalmente provado do B. As matrizes ProB
+são cenários finitos: não enumeram todas as sequências ou interações ambientais.
+Peso, deslocamento e marcas de visita tornam o modelo completo infinito.
+Não se afirma verificação exaustiva do modelo completo nem justiça temporal.
+As fontes B permaneceram idênticas aos hashes das 843 provas nativas.

@@ -13,19 +13,29 @@ VARIABLES
     piscando_subida1,
     piscando_descida1,
     piscando_interno2,
+    piscando_interno3,
+    piscando_interno4,
     piscando_subida2,
+    piscando_subida3,
+    piscando_subida4,
     piscando_descida2,
+    piscando_descida3,
+    piscando_descida4,
 
-    tempo_interno,
-    tempo_subida,
-    tempo_descida,
+    segurando_interno,
+    segurando_interno_1,
+    segurando_interno_2,
+    interno_recusado,
+    segurando_subida,
+    segurando_subida_1,
+    segurando_subida_2,
+    segurando_descida,
+    segurando_descida_1,
+    segurando_descida_2,
 
     historico_paradas
 
 INVARIANT
-    tempo_interno : (0..andar_maximo) --> (-1..3) &
-    tempo_subida : (0..(andar_maximo - 1)) --> (-1..3) &
-    tempo_descida : (1..andar_maximo) --> (-1..3) &
     pedidos_internos <: 0..andar_maximo &
     pedidos_subida <: 0..(andar_maximo - 1) &
     pedidos_descida <: 1..andar_maximo &
@@ -34,15 +44,47 @@ INVARIANT
     piscando_subida1 <: 0..(andar_maximo - 1) &
     piscando_descida1 <: 1..andar_maximo &
     piscando_interno2 <: 0..andar_maximo &
+    piscando_interno3 <: 0..andar_maximo &
+    piscando_interno4 <: 0..andar_maximo &
     piscando_subida2 <: 0..(andar_maximo - 1) &
+    piscando_subida3 <: 0..(andar_maximo - 1) &
+    piscando_subida4 <: 0..(andar_maximo - 1) &
     piscando_descida2 <: 1..andar_maximo &
+    piscando_descida3 <: 1..andar_maximo &
+    piscando_descida4 <: 1..andar_maximo &
 
     historico_paradas : seq(0..andar_maximo) &
     size(historico_paradas) <= 5 &
 
-    !aa.(aa : 0..andar_maximo & tempo_interno(aa) >= 0 => aa : pedidos_internos) &
-    !aa.(aa : 0..(andar_maximo - 1) & tempo_subida(aa) >= 0 => aa : pedidos_subida) &
-    !aa.(aa : 1..andar_maximo & tempo_descida(aa) >= 0 => aa : pedidos_descida)
+    /* Tipagem explicita: em B, inclusoes entre variaveis nao bastam
+       para inferir o tipo de todos os conjuntos aninhados. */
+    segurando_interno : POW(0..andar_maximo) &
+    segurando_interno_1 : POW(0..andar_maximo) &
+    segurando_interno_2 : POW(0..andar_maximo) &
+    interno_recusado : POW(0..andar_maximo) &
+    segurando_subida : POW(0..(andar_maximo - 1)) &
+    segurando_subida_1 : POW(0..(andar_maximo - 1)) &
+    segurando_subida_2 : POW(0..(andar_maximo - 1)) &
+    segurando_descida : POW(1..andar_maximo) &
+    segurando_descida_1 : POW(1..andar_maximo) &
+    segurando_descida_2 : POW(1..andar_maximo) &
+
+    /* Contagem por conjuntos aninhados: segurando_2 <: segurando_1
+       <: segurando <: pedidos. A terceira passagem do tempo cancela.
+       Botao interno recusado permanece como pedido, mas sem contagem. */
+    segurando_interno_2 <: segurando_interno_1 &
+    segurando_interno_1 <: segurando_interno &
+    segurando_interno <: pedidos_internos &
+    interno_recusado <: pedidos_internos &
+    segurando_interno /\ interno_recusado = {} &
+
+    segurando_subida_2 <: segurando_subida_1 &
+    segurando_subida_1 <: segurando_subida &
+    segurando_subida <: pedidos_subida &
+
+    segurando_descida_2 <: segurando_descida_1 &
+    segurando_descida_1 <: segurando_descida &
+    segurando_descida <: pedidos_descida
 
 INITIALISATION
     pedidos_internos := {} ||
@@ -51,111 +93,173 @@ INITIALISATION
     piscando_interno1 := {} ||
     piscando_subida1 := {} ||
     piscando_descida1 := {} ||
-    piscando_interno2 := {} ||
-    piscando_subida2 := {} ||
-    piscando_descida2 := {} ||
-    tempo_interno := (0..andar_maximo) * {-1} ||
-    tempo_subida := (0..(andar_maximo - 1)) * {-1} ||
-    tempo_descida := (1..andar_maximo) * {-1} ||
+    piscando_interno2 := {} || piscando_interno3 := {} || piscando_interno4 := {} ||
+    piscando_subida2 := {} || piscando_subida3 := {} || piscando_subida4 := {} ||
+    piscando_descida2 := {} || piscando_descida3 := {} || piscando_descida4 := {} ||
+    segurando_interno := {} ||
+    segurando_interno_1 := {} ||
+    segurando_interno_2 := {} ||
+    interno_recusado := {} ||
+    segurando_subida := {} ||
+    segurando_subida_1 := {} ||
+    segurando_subida_2 := {} ||
+    segurando_descida := {} ||
+    segurando_descida_1 := {} ||
+    segurando_descida_2 := {} ||
     historico_paradas := []
 
 OPERATIONS
 
-    /* REGISTRO DE PEDIDOS COM INICIALIZAÇÃO DE TEMPO (HLR-004 / HLR-005) */
+    /* REGISTRO E REINICIO DE CONTAGEM AO PRESSIONAR (HLR-004 / HLR-005).
+       Cada nova pressao inicia uma nova tentativa de segurar por 3 s.
+       Uma pressao valida encerra qualquer piscada anterior desse LED. */
     registrar_interno(alvo) =
         PRE alvo : 0..andar_maximo THEN
             pedidos_internos := pedidos_internos \/ {alvo} ||
-            IF tempo_interno(alvo) = -1 THEN
-                tempo_interno(alvo) := 0
-            END
+            segurando_interno := segurando_interno \/ {alvo} ||
+            segurando_interno_1 := segurando_interno_1 - {alvo} ||
+            segurando_interno_2 := segurando_interno_2 - {alvo} ||
+            interno_recusado := interno_recusado - {alvo} ||
+            piscando_interno1 := piscando_interno1 - {alvo} ||
+            piscando_interno2 := piscando_interno2 - {alvo} ||
+            piscando_interno3 := piscando_interno3 - {alvo} ||
+            piscando_interno4 := piscando_interno4 - {alvo}
         END;
 
     registrar_externo_subida(alvo) =
         PRE alvo : 0..(andar_maximo - 1) & alvo |-> subindo : painel_externo THEN
             pedidos_subida := pedidos_subida \/ {alvo} ||
-            IF tempo_subida(alvo) = -1 THEN
-                tempo_subida(alvo) := 0
-            END
+            segurando_subida := segurando_subida \/ {alvo} ||
+            segurando_subida_1 := segurando_subida_1 - {alvo} ||
+            segurando_subida_2 := segurando_subida_2 - {alvo} ||
+            piscando_subida1 := piscando_subida1 - {alvo} ||
+            piscando_subida2 := piscando_subida2 - {alvo} ||
+            piscando_subida3 := piscando_subida3 - {alvo} ||
+            piscando_subida4 := piscando_subida4 - {alvo}
         END;
 
     registrar_externo_descida(alvo) =
         PRE alvo : 1..andar_maximo & alvo |-> descendo : painel_externo THEN
             pedidos_descida := pedidos_descida \/ {alvo} ||
-            IF tempo_descida(alvo) = -1 THEN
-                tempo_descida(alvo) := 0
-            END
+            segurando_descida := segurando_descida \/ {alvo} ||
+            segurando_descida_1 := segurando_descida_1 - {alvo} ||
+            segurando_descida_2 := segurando_descida_2 - {alvo} ||
+            piscando_descida1 := piscando_descida1 - {alvo} ||
+            piscando_descida2 := piscando_descida2 - {alvo} ||
+            piscando_descida3 := piscando_descida3 - {alvo} ||
+            piscando_descida4 := piscando_descida4 - {alvo}
         END;
 
-    /* GESTÃO DE TEMPO DOS BOTÕES (HLR-005) */
+    /* O botao pode ser solto antes dos tres segundos.
+       O pedido continua ativo, mas sua contagem de retencao termina. */
     liberar_interno(alvo) =
-        PRE alvo : 0..andar_maximo
-        THEN tempo_interno(alvo) := -1 END;
+        PRE alvo : 0..andar_maximo THEN
+            segurando_interno := segurando_interno - {alvo} ||
+            segurando_interno_1 := segurando_interno_1 - {alvo} ||
+            segurando_interno_2 := segurando_interno_2 - {alvo} ||
+            interno_recusado := interno_recusado - {alvo}
+        END;
 
     liberar_subida(alvo) =
-        PRE alvo : 0..(andar_maximo - 1)
-        THEN tempo_subida(alvo) := -1 END;
+        PRE alvo : 0..(andar_maximo - 1) THEN
+            segurando_subida := segurando_subida - {alvo} ||
+            segurando_subida_1 := segurando_subida_1 - {alvo} ||
+            segurando_subida_2 := segurando_subida_2 - {alvo}
+        END;
 
     liberar_descida(alvo) =
-        PRE alvo : 1..andar_maximo
-        THEN tempo_descida(alvo) := -1 END;
+        PRE alvo : 1..andar_maximo THEN
+            segurando_descida := segurando_descida - {alvo} ||
+            segurando_descida_1 := segurando_descida_1 - {alvo} ||
+            segurando_descida_2 := segurando_descida_2 - {alvo}
+        END;
 
+    /* Um tick equivale a um segundo.
+       segurando_2: pressionado ha dois ticks, vence agora.
+       A atualizacao simultanea usa valores do estado ANTERIOR.
+       Sem lambda, composicao relacional ou funcao parcial. */
     avancar_tempo_botoes =
         BEGIN
-            tempo_interno := tempo_interno <+
-                %pavimento.(pavimento : dom(tempo_interno |> (0..2)) | tempo_interno(pavimento) + 1) ||
-            tempo_subida := tempo_subida <+
-                %pavimento.(pavimento : dom(tempo_subida |> (0..2)) | tempo_subida(pavimento) + 1) ||
-            tempo_descida := tempo_descida <+
-                %pavimento.(pavimento : dom(tempo_descida |> (0..2)) | tempo_descida(pavimento) + 1) ||
-            piscando_interno1 := {} ||
-            piscando_interno2 := piscando_interno1 ||
+            IF pedidos_internos /= {} & pedidos_internos = segurando_interno_2 THEN
+                /* Todos os internos vencem juntos: so o menor permanece. */
+                pedidos_internos := {min(pedidos_internos)} ||
+                segurando_interno := {} ||
+                segurando_interno_1 := {} ||
+                segurando_interno_2 := {} ||
+                interno_recusado := {min(pedidos_internos)} ||
+                piscando_interno1 := {min(pedidos_internos)} ||
+                piscando_interno2 := piscando_interno1 - {min(pedidos_internos)} ||
+                piscando_interno3 := piscando_interno2 - {min(pedidos_internos)} ||
+                piscando_interno4 := piscando_interno3 - {min(pedidos_internos)}
+            ELSE
+                pedidos_internos := pedidos_internos - segurando_interno_2 ||
+                segurando_interno := segurando_interno - segurando_interno_2 ||
+                segurando_interno_1 := segurando_interno - segurando_interno_2 ||
+                segurando_interno_2 := segurando_interno_1 - segurando_interno_2 ||
+                interno_recusado := interno_recusado - segurando_interno_2 ||
+                piscando_interno1 := {} ||
+                piscando_interno2 := piscando_interno1 ||
+                piscando_interno3 := piscando_interno2 ||
+                piscando_interno4 := piscando_interno3
+            END ||
+            pedidos_subida := pedidos_subida - segurando_subida_2 ||
+            segurando_subida := segurando_subida - segurando_subida_2 ||
+            segurando_subida_1 := segurando_subida - segurando_subida_2 ||
+            segurando_subida_2 := segurando_subida_1 - segurando_subida_2 ||
             piscando_subida1 := {} ||
             piscando_subida2 := piscando_subida1 ||
+            piscando_subida3 := piscando_subida2 ||
+            piscando_subida4 := piscando_subida3 ||
+            pedidos_descida := pedidos_descida - segurando_descida_2 ||
+            segurando_descida := segurando_descida - segurando_descida_2 ||
+            segurando_descida_1 := segurando_descida - segurando_descida_2 ||
+            segurando_descida_2 := segurando_descida_1 - segurando_descida_2 ||
             piscando_descida1 := {} ||
-            piscando_descida2 := piscando_descida1
+            piscando_descida2 := piscando_descida1 ||
+            piscando_descida3 := piscando_descida2 ||
+            piscando_descida4 := piscando_descida3
+        END;
+
+    /* Durante a manutencao todos os pedidos estao vazios.
+       Avanca apenas as quatro fases dos LEDs, sem expandir a
+       logica de cancelamento da operacao avancar_tempo_botoes. */
+    avancar_piscadas_manutencao =
+        BEGIN
+            piscando_interno1 := {} ||
+            piscando_interno2 := piscando_interno1 ||
+            piscando_interno3 := piscando_interno2 ||
+            piscando_interno4 := piscando_interno3 ||
+            piscando_subida1 := {} ||
+            piscando_subida2 := piscando_subida1 ||
+            piscando_subida3 := piscando_subida2 ||
+            piscando_subida4 := piscando_subida3 ||
+            piscando_descida1 := {} ||
+            piscando_descida2 := piscando_descida1 ||
+            piscando_descida3 := piscando_descida2 ||
+            piscando_descida4 := piscando_descida3
         END;
 
     cancelar_todos =
         BEGIN
-            tempo_interno := (0..andar_maximo) * {-1} ||
-            tempo_subida := (0..(andar_maximo - 1)) * {-1} ||
-            tempo_descida := (1..andar_maximo) * {-1} ||
+            segurando_interno := {} ||
+            segurando_interno_1 := {} ||
+            segurando_interno_2 := {} ||
+            interno_recusado := {} ||
+            segurando_subida := {} ||
+            segurando_subida_1 := {} ||
+            segurando_subida_2 := {} ||
+            segurando_descida := {} ||
+            segurando_descida_1 := {} ||
+            segurando_descida_2 := {} ||
             pedidos_internos := {} || pedidos_subida := {} || pedidos_descida := {} ||
-            piscando_interno1 := {} || piscando_interno2 := {} ||
-            piscando_subida1 := {} || piscando_subida2 := {} ||
-            piscando_descida1 := {} || piscando_descida2 := {}
+            piscando_interno1 := {} || piscando_interno2 := {} || piscando_interno3 := {} || piscando_interno4 := {} ||
+            piscando_subida1 := {} || piscando_subida2 := {} || piscando_subida3 := {} || piscando_subida4 := {} ||
+            piscando_descida1 := {} || piscando_descida2 := {} || piscando_descida3 := {} || piscando_descida4 := {}
         END;
 
-    /* CANCELAMENTO INTERNO COM REGRA DE RECUSA DE ÚNICO PEDIDO (HLR-005) */
-    cancelamento_interno(alvo) =
-        PRE
-            alvo : pedidos_internos
-        THEN
-            IF card(pedidos_internos) = 1 THEN
-                piscando_interno1 := piscando_interno1 \/ {alvo}
-            ELSE
-                pedidos_internos := pedidos_internos - {alvo} ||
-                piscando_interno1 := piscando_interno1 - {alvo} ||
-                piscando_interno2 := piscando_interno2 - {alvo} ||
-                tempo_interno(alvo) := -1
-            END
-        END;
-
-    cancelamento_externo_subida(alvo) =
-        PRE
-            alvo : pedidos_subida
-        THEN
-            pedidos_subida := pedidos_subida - {alvo} ||
-            tempo_subida(alvo) := -1
-        END;
-
-    cancelamento_externo_descida(alvo) =
-        PRE
-            alvo : pedidos_descida
-        THEN
-            pedidos_descida := pedidos_descida - {alvo} ||
-            tempo_descida(alvo) := -1
-        END;
+    /* Cancelamentos por retencao nao sao operacoes diretas.
+       O terceiro tick de avancar_tempo_botoes cancela atomicamente
+       pedidos externos e internos elegiveis, evitando cancelar antes de 3s. */
 
     /* ATENDIMENTO EM PARADA DE PORTA (HLR-010) */
     atender_pedidos_andar(alvo, sentido) =
@@ -167,19 +271,29 @@ OPERATIONS
                 pedidos_internos := pedidos_internos - {alvo} ||
                 piscando_interno1 := piscando_interno1 - {alvo} ||
                 piscando_interno2 := piscando_interno2 - {alvo} ||
-                tempo_interno(alvo) := -1
+                piscando_interno3 := piscando_interno3 - {alvo} || piscando_interno4 := piscando_interno4 - {alvo} ||
+                segurando_interno := segurando_interno - {alvo} ||
+                segurando_interno_1 := segurando_interno_1 - {alvo} ||
+                segurando_interno_2 := segurando_interno_2 - {alvo} ||
+                interno_recusado := interno_recusado - {alvo}
             END ||
             IF (sentido = subindo or sentido = parado) & alvo : pedidos_subida THEN
                 pedidos_subida := pedidos_subida - {alvo} ||
                 piscando_subida1 := piscando_subida1 - {alvo} ||
                 piscando_subida2 := piscando_subida2 - {alvo} ||
-                tempo_subida(alvo) := -1
+                piscando_subida3 := piscando_subida3 - {alvo} || piscando_subida4 := piscando_subida4 - {alvo} ||
+                segurando_subida := segurando_subida - {alvo} ||
+                segurando_subida_1 := segurando_subida_1 - {alvo} ||
+                segurando_subida_2 := segurando_subida_2 - {alvo}
             END ||
             IF (sentido = descendo or (sentido = parado & alvo /: pedidos_subida)) & alvo : pedidos_descida THEN
                 pedidos_descida := pedidos_descida - {alvo} ||
                 piscando_descida1 := piscando_descida1 - {alvo} ||
                 piscando_descida2 := piscando_descida2 - {alvo} ||
-                tempo_descida(alvo) := -1
+                piscando_descida3 := piscando_descida3 - {alvo} || piscando_descida4 := piscando_descida4 - {alvo} ||
+                segurando_descida := segurando_descida - {alvo} ||
+                segurando_descida_1 := segurando_descida_1 - {alvo} ||
+                segurando_descida_2 := segurando_descida_2 - {alvo}
             END ||
             IF size(historico_paradas) < 5 THEN
                 historico_paradas := historico_paradas <- alvo
@@ -191,41 +305,31 @@ OPERATIONS
     /* ANIMACAO DE PISCA */
     piscar_interno(alvo) =
         PRE alvo : 0..andar_maximo THEN
-            piscando_interno1 := piscando_interno1 \/ {alvo}
+            piscando_interno1 := piscando_interno1 \/ {alvo} ||
+                piscando_interno2 := piscando_interno2 - {alvo} ||
+                piscando_interno3 := piscando_interno3 - {alvo} || piscando_interno4 := piscando_interno4 - {alvo}
         END;
 
     piscar_subida(alvo) =
         PRE alvo : 0..(andar_maximo - 1) & alvo |-> subindo : painel_externo THEN
-            piscando_subida1 := piscando_subida1 \/ {alvo}
+            piscando_subida1 := piscando_subida1 \/ {alvo} ||
+                piscando_subida2 := piscando_subida2 - {alvo} ||
+                piscando_subida3 := piscando_subida3 - {alvo} || piscando_subida4 := piscando_subida4 - {alvo}
         END;
 
     piscar_descida(alvo) =
         PRE alvo : 1..andar_maximo & alvo |-> descendo : painel_externo THEN
-            piscando_descida1 := piscando_descida1 \/ {alvo}
-        END;
-
-    parar_piscar =
-        PRE
-            piscando_interno1 /= {} or piscando_interno2 /= {} or
-            piscando_subida1 /= {}  or piscando_subida2 /= {}  or
-            piscando_descida1 /= {} or piscando_descida2 /= {}
-        THEN
-            piscando_interno1 := {} ||
-            piscando_interno2 := piscando_interno1 ||
-
-            piscando_subida1 := {} ||
-            piscando_subida2 := piscando_subida1 ||
-
-            piscando_descida1 := {} ||
-            piscando_descida2 := piscando_descida1
+            piscando_descida1 := piscando_descida1 \/ {alvo} ||
+                piscando_descida2 := piscando_descida2 - {alvo} ||
+                piscando_descida3 := piscando_descida3 - {alvo} || piscando_descida4 := piscando_descida4 - {alvo}
         END;
 
     /* CONSULTAS */
     leds_internos, leds_subida, leds_descida <-- consultar_leds =
         BEGIN
-            leds_internos := pedidos_internos ||
-            leds_subida := pedidos_subida ||
-            leds_descida := pedidos_descida
+            leds_internos := (pedidos_internos - (piscando_interno1 \/ piscando_interno2 \/ piscando_interno3 \/ piscando_interno4)) \/ piscando_interno1 \/ piscando_interno3 ||
+            leds_subida := (pedidos_subida - (piscando_subida1 \/ piscando_subida2 \/ piscando_subida3 \/ piscando_subida4)) \/ piscando_subida1 \/ piscando_subida3 ||
+            leds_descida := (pedidos_descida - (piscando_descida1 \/ piscando_descida2 \/ piscando_descida3 \/ piscando_descida4)) \/ piscando_descida1 \/ piscando_descida3
         END;
 
     internos_fase1, internos_fase2,
@@ -242,17 +346,35 @@ OPERATIONS
 
     botoes_internos, botoes_subida, botoes_descida <-- consultar_botoes_pressionados =
         BEGIN
-            botoes_internos := dom(tempo_interno |>> {-1}) ||
-            botoes_subida := dom(tempo_subida |>> {-1}) ||
-            botoes_descida := dom(tempo_descida |>> {-1})
+            botoes_internos := segurando_interno \/ interno_recusado ||
+            botoes_subida := segurando_subida ||
+            botoes_descida := segurando_descida
         END;
 
     internos_com_tempo, subida_com_tempo, descida_com_tempo <-- consultar_botoes_com_tempo(tt) =
         PRE tt : (-1..3)
         THEN
-            internos_com_tempo := tempo_interno~[{tt}] ||
-            subida_com_tempo := tempo_subida~[{tt}] ||
-            descida_com_tempo := tempo_descida~[{tt}]
+            IF tt = -1 THEN
+                internos_com_tempo := (0..andar_maximo) - (segurando_interno \/ interno_recusado) ||
+                subida_com_tempo := (0..(andar_maximo - 1)) - segurando_subida ||
+                descida_com_tempo := (1..andar_maximo) - segurando_descida
+            ELSIF tt = 0 THEN
+                internos_com_tempo := segurando_interno - segurando_interno_1 ||
+                subida_com_tempo := segurando_subida - segurando_subida_1 ||
+                descida_com_tempo := segurando_descida - segurando_descida_1
+            ELSIF tt = 1 THEN
+                internos_com_tempo := segurando_interno_1 - segurando_interno_2 ||
+                subida_com_tempo := segurando_subida_1 - segurando_subida_2 ||
+                descida_com_tempo := segurando_descida_1 - segurando_descida_2
+            ELSIF tt = 2 THEN
+                internos_com_tempo := segurando_interno_2 ||
+                subida_com_tempo := segurando_subida_2 ||
+                descida_com_tempo := segurando_descida_2
+            ELSE
+                internos_com_tempo := interno_recusado ||
+                subida_com_tempo := {} ||
+                descida_com_tempo := {}
+            END
         END;
 
     historico, quantidade <-- consultar_historico_paradas =

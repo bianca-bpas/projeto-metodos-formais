@@ -1,0 +1,14 @@
+repouso_inicial: OK
+pedido_no_andar_atual: OK
+chamadas_opostas_no_andar_atual: OK
+prioridade_subida_com_chamadas_opostas: OK
+empate_inicial_escolhe_subida: OK
+porta_aberta_fecha_antes_de_mover: OK
+manutencao_cancela_pedidos: OK
+retoma_apos_sobrecarga: OK
+todos_externos_cancelados_em_movimento: OK
+peso_0: OK
+peso_449: OK
+peso_450: OK
+peso_451: OK
+13/13 cenarios aprovados.

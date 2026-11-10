@@ -1,0 +1,17 @@
+Resultados históricos no ProB 1.16.1, anteriores à reconciliação.
+Não integram a contagem atual de 18 cenários.
+
+deslocamento
+Trace checking successful !
+eval(1): deslocamento = 8 & andar = 0 & pedidos_internos = {}
+Predicate is TRUE
+
+porta_121
+Trace checking successful !
+eval(1): segundos_porta_aberta = 121 & porta = aberta
+Predicate is TRUE
+
+sobrecarga
+Trace checking successful !
+eval(1): limite_peso_atingido = TRUE & direcao = parado
+Predicate is TRUE
