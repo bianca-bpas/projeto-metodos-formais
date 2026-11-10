@@ -57,15 +57,20 @@ OPERATIONS
             END
         END;
 
-    /* Botões "abrir" e "fechar" imediatamente (HLR-003): só com a cabine parada */
+    /* Botões "abrir" e "fechar" imediatamente (HLR-003): sem efeito quando
+       a cabine está em movimento, a porta já está no estado pedido, ou em manutenção */
     apertar_abrir_porta =
-        PRE direcao = parado & porta = fechada & manutencao = FALSE THEN
-            abrir_porta_imediato
+        BEGIN
+            IF direcao = parado & porta = fechada & manutencao = FALSE THEN
+                abrir_porta_imediato
+            END
         END;
 
     apertar_fechar_porta =
-        PRE porta = aberta & manutencao = FALSE THEN
-            fechar_porta
+        BEGIN
+            IF porta = aberta & manutencao = FALSE THEN
+                fechar_porta
+            END
         END;
 
     /* GERENCIAMENTO DE CHAVE DE MANUTENÇÃO (HLR-008) */
@@ -77,25 +82,27 @@ OPERATIONS
             END
         END;
 
-    /* Cabine parou com a chave pendente: entra em manutenção e cancela os pedidos */
-    elevador_confirmar_manutencao =
-        SELECT manutencao_pendente = TRUE & direcao = parado THEN
-            confirmar_parada_manutencao ||
-            cancelar_todos
-        END;
-
-    /* LOOP DE EXECUÇÃO PRINCIPAL (HLR-010: Atendimento e limpeza ao abrir porta) */
+    /* LOOP DE EXECUÇÃO PRINCIPAL (HLR-010: Atendimento e limpeza ao abrir porta)
+       Em movimento, mantém a direção: subindo só abre para pedido interno ou
+       de subida; descendo só abre para pedido interno ou de descida.
+       Com manutenção pendente, subir/descer param a cabine e o cancelamento
+       de todos os pedidos ocorre na mesma etapa (HLR-008). */
     passo =
         PRE
             manutencao = FALSE & limite_peso_atingido = FALSE &
-            (manutencao_pendente = FALSE or direcao /= parado) &
             (pedidos_internos \/ pedidos_subida \/ pedidos_descida /= {} or direcao /= parado or
              porta = aberta or sentido_atendimento /= parado)
         THEN
             IF direcao = subindo THEN
-                subir(pedidos_internos, pedidos_subida, pedidos_descida)
+                subir(pedidos_internos, pedidos_subida, pedidos_descida) ||
+                IF manutencao_pendente = TRUE THEN
+                    cancelar_todos
+                END
             ELSIF direcao = descendo THEN
-                descer(pedidos_internos, pedidos_subida, pedidos_descida)
+                descer(pedidos_internos, pedidos_subida, pedidos_descida) ||
+                IF manutencao_pendente = TRUE THEN
+                    cancelar_todos
+                END
             ELSIF porta = aberta THEN
                 fechar_porta
             ELSIF pedidos_internos \/ pedidos_subida \/ pedidos_descida = {} THEN
@@ -119,10 +126,23 @@ OPERATIONS
             ELSIF ((pedidos_internos \/ pedidos_subida \/ pedidos_descida) /\ ((andar+1)..andar_maximo)) = {} THEN
                 iniciar_descida
             ELSE
-                CHOICE
-                    iniciar_subida
-                OR
-                    iniciar_descida
+                /* Há pedidos dos dois lados e a cabine está sem sentido:
+                   vai ao pedido mais próximo e depois mantém a direção.
+                   Empate de distâncias: escolha livre. */
+                LET todos BE todos = pedidos_internos \/ pedidos_subida \/ pedidos_descida IN
+                    IF min(todos /\ ((andar+1)..andar_maximo)) - andar <
+                       andar - max(todos /\ (0..(andar-1))) THEN
+                        iniciar_subida
+                    ELSIF min(todos /\ ((andar+1)..andar_maximo)) - andar >
+                          andar - max(todos /\ (0..(andar-1))) THEN
+                        iniciar_descida
+                    ELSE
+                        CHOICE
+                            iniciar_subida
+                        OR
+                            iniciar_descida
+                        END
+                    END
                 END
             END
         END;
@@ -150,9 +170,9 @@ OPERATIONS
         END;
 
     elevador_parar_piscar =
-        PRE piscando_interno1 /= {} or piscando_interno2 /= {} or
-            piscando_subida1 /= {}  or piscando_subida2 /= {}  or
-            piscando_descida1 /= {} or piscando_descida2 /= {}
+        SELECT piscando_interno1 /= {} or piscando_interno2 /= {} or
+               piscando_subida1 /= {}  or piscando_subida2 /= {}  or
+               piscando_descida1 /= {} or piscando_descida2 /= {}
         THEN
             parar_piscar
         END;
