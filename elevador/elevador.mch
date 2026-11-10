@@ -134,6 +134,14 @@ OPERATIONS
                 IF manutencao_pendente = TRUE THEN
                     cancelar_todos
                 END
+            ELSIF porta = aberta &
+                  (andar : pedidos_internos or
+                   (andar : pedidos_subida & sentido_atendimento /= descendo) or
+                   (andar : pedidos_descida & sentido_atendimento /= subindo)) THEN
+                manter_porta(pedidos_internos, pedidos_subida, pedidos_descida) ||
+                atender_pedidos_andar(andar, sentido_atendimento)
+            ELSIF porta = aberta THEN
+                fechar_porta
             ELSIF porta = aberta THEN
                 fechar_porta
             ELSIF pedidos_internos \/ pedidos_subida \/ pedidos_descida = {} THEN

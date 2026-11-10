@@ -78,7 +78,7 @@ OPERATIONS
         END;
 
     remover_chave_manutencao =
-        PRE chave_manutencao = TRUE & manutencao = TRUE & direcao = parado THEN
+        PRE chave_manutencao = TRUE & ((manutencao = TRUE & direcao = parado) or manutencao_pendente = TRUE) THEN
             chave_manutencao := FALSE || manutencao := FALSE || manutencao_pendente := FALSE
         END;
 
@@ -192,6 +192,17 @@ OPERATIONS
     fechar_porta =
         PRE porta = aberta THEN
             porta := fechada || segundos_porta_aberta := 0
+        END;
+
+    /* caso onde o pedido é no andar atual e a porta está aberta*/
+    manter_porta(p_int, p_sub, p_des) =
+        PRE
+            p_int <: 0..andar_maximo & p_sub <: 0..(andar_maximo - 1) & p_des <: 1..andar_maximo &
+            direcao = parado & porta = aberta & manutencao = FALSE
+        THEN
+            segundos_porta_aberta := 0 ||
+            IF sentido_atendimento = parado & andar : p_sub THEN sentido_atendimento := subindo
+            ELSIF sentido_atendimento = parado & andar : p_des THEN sentido_atendimento := descendo END
         END;
 
     entrar_em_reposo(p_int, p_sub, p_des) =

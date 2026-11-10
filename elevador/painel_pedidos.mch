@@ -180,7 +180,9 @@ OPERATIONS
        Sem lambda, composicao relacional ou funcao parcial. */
     avancar_tempo_botoes =
         BEGIN
-            IF pedidos_internos /= {} & pedidos_internos = segurando_interno_2 THEN
+            IF pedidos_internos /= {} & pedidos_internos = segurando_interno_2 &
+               pedidos_subida - segurando_subida_2 = {} &
+               pedidos_descida - segurando_descida_2 = {} THEN
                 /* Todos os internos vencem juntos: so o menor permanece. */
                 pedidos_internos := {min(pedidos_internos)} ||
                 segurando_interno := {} ||
