@@ -36,7 +36,7 @@ OPERATIONS
                invariante do controlador. Resta apenas a animacao. */
             IF manutencao = TRUE THEN
                 avancar_piscadas_manutencao ||
-                avancar_tempo_porta(FALSE)
+                zerar_tempo_porta
             ELSE
                 avancar_tempo_botoes ||
                 IF direcao /= parado &

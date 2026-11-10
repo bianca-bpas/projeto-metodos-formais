@@ -65,7 +65,7 @@ OPERATIONS
         PRE chave_manutencao = FALSE THEN
             chave_manutencao := TRUE ||
             IF direcao = parado THEN
-                manutencao := TRUE || manutencao_pendente := FALSE
+                manutencao := TRUE || manutencao_pendente := FALSE || segundos_porta_aberta := 0
             ELSE
                 manutencao_pendente := TRUE ||
                 parada_pendente := TRUE
@@ -102,6 +102,11 @@ OPERATIONS
                 segundos_porta_aberta := segundos_porta_aberta + 1
             END ||
             IF parar = TRUE THEN parada_pendente := TRUE END
+        END;
+
+    zerar_tempo_porta =
+        PRE manutencao = TRUE THEN
+            segundos_porta_aberta := 0
         END;
 
     /* MOVIMENTAÇÃO E SEGURANÇA (HLR-006) */
