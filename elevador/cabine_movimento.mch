@@ -23,6 +23,8 @@ INVARIANT
     deslocamento : NATURAL &
     porta : PORTAS &
     sentido_atendimento : DIRECOES &
+    (direcao = subindo => sentido_atendimento = subindo) &
+    (direcao = descendo => sentido_atendimento = descendo) &
     parada_pendente : BOOL &
     peso : NATURAL &
     limite_peso_atingido : BOOL &
@@ -35,13 +37,15 @@ INVARIANT
     segundos_porta_aberta : 0..121 &
     (porta = fechada => segundos_porta_aberta = 0) &
     ultima_visita : (0..andar_maximo) +-> NATURAL &
+    ran(ultima_visita) <: 0..deslocamento &
     chave_manutencao : BOOL &
     manutencao : BOOL &
     manutencao_pendente : BOOL &
     (manutencao = TRUE => chave_manutencao = TRUE) &
     (manutencao = TRUE => direcao = parado) &
     (manutencao_pendente = TRUE => chave_manutencao = TRUE) &
-    not (manutencao = TRUE & manutencao_pendente = TRUE)
+    not (manutencao = TRUE & manutencao_pendente = TRUE) &
+    (manutencao_pendente = TRUE => direcao /= parado)
 
 INITIALISATION
     andar := 0 ||
