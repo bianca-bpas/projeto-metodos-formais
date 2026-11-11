@@ -16,8 +16,9 @@ painel_pedidos      cabine_movimento
              interface pública e controlador
 ```
 
-- `configuracao.mch` parametriza o prédio por `andar_maximo : NATURAL1`: os
-  andares são `0..andar_maximo`, com pelo menos dois pavimentos. O peso máximo
+- `configuracao.mch` parametriza o prédio por `andar_maximo : NATURAL`, com
+  `andar_maximo > 0`: os andares são `0..andar_maximo`, com pelo menos dois
+  pavimentos. O peso máximo
   é `450 kg`; as direções são `subindo`, `descendo`, `parado`; e as portas são
   `aberta` e `fechada`. As chamadas externas válidas são subir em
   `0..(andar_maximo - 1)` e descer em `1..andar_maximo`.
@@ -195,10 +196,11 @@ python3 verificacao/hlr010/verificar.py /opt/ProB/probcli
 
 ## Limites do que foi demonstrado
 
-Na antiga instância de cinco pavimentos (`andar_maximo = 4`), as invariantes e
-843 obrigações geradas foram provadas no Atelier B; os scripts ProB validam
+Na execução histórica da instância de cinco pavimentos (`andar_maximo = 4`),
+as invariantes e 843 obrigações geradas foram provadas no Atelier B; os scripts ProB validam
 cenários concretos nessa instância. A revisão paramétrica deve ter as provas
 regeneradas. Isto não constitui prova de que todo pedido será atendido ao longo
 de execuções infinitas, nem que o percurso é globalmente mínimo. Esses são os
-limites conhecidos do HLR-010. Consulte `docs/validacao.md` para resultados e
+limites conhecidos do HLR-010. As fontes atuais incluem alterações posteriores,
+portanto as provas nativas precisam ser regeneradas. Consulte `docs/validacao.md` para resultados e
 reprodução, e `docs/decisões.md` para as hipóteses de modelagem.

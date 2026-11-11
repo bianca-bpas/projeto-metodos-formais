@@ -7,14 +7,19 @@ sem abandonar esse sentido. Não é necessário chegar ao limite do prédio.
 Na raiz do projeto (Python 3 e ProB instalados):
 
 ```sh
-python3 verificacao/hlr010/verificar.py /opt/ProB/probcli
+python3 verificacao/hlr010/verificar.py /opt/ProB/probcli --andar-maximo 4
 ```
 
 Para executar somente um cenário:
 
 ```sh
-python3 verificacao/hlr010/verificar.py /opt/ProB/probcli --cenario inversao_antes_do_topo
+python3 verificacao/hlr010/verificar.py /opt/ProB/probcli --cenario inversao_antes_do_topo --andar-maximo 4
 ```
+
+`--andar-maximo` fixa a instância usada pelos traces (padrão: `4`). O script
+cria uma cópia temporária das máquinas com essa propriedade adicional; as
+fontes do projeto não são modificadas. Use um valor compatível com os
+pavimentos usados nos cenários executados.
 
 `cenarios.py` define 14 traces e seus predicados esperados. `verificar.py`
 reproduz cada trace no modelo B, verifica sucesso do replay e verdade do
@@ -42,8 +47,8 @@ garantia de percurso globalmente mínimo. As provas nativas permanecem separadas
 
 ```sh
 python3 verificacao/hlr010/exaustivo.py
-python3 verificacao/hlr010/bordas.py /opt/ProB/probcli
-python3 verificacao/hlr010/interacoes.py /opt/ProB/probcli
+python3 verificacao/hlr010/bordas.py /opt/ProB/probcli --andar-maximo 4
+python3 verificacao/hlr010/interacoes.py /opt/ProB/probcli --andar-maximo 4
 ```
 
 `exaustivo.py` enumera a projeção Python da política: todos os 32 conjuntos de

@@ -1,18 +1,19 @@
 # Auditoria dos requisitos — controle de elevador
 
-## Estado atual — 2026-11-10
+## Estado da auditoria — 2026-11-11
 
-**18/18 cenários ProB aprovados; 843/843 obrigações nativas provadas**, sem Z3:
+Em 2026-11-11, passaram **18/18 cenários HLR-005/008, 14/14 HLR-010,
+13/13 de borda e 47/47 de interação no ProB**, todos com
+`andar_maximo = 4`. Os runners fixam a constante em cópias temporárias do
+modelo. As **843/843 obrigações nativas** pertencem à execução histórica de
+2026-11-10, sem Z3:
 `configuracao` 0/0, `painel_pedidos` 444/444, `cabine_movimento` 55/55 e
 `elevador` 344/344. Nenhuma obrigação pendente por máquina/operação.
-A política de manter o sentido e inverter ao fim dos pedidos adiante também
-passou em **14/14 cenários adicionais** de HLR-010, em `verificacao/hlr010/`.
-Há ainda **13/13 cenários de borda** e **47/47 de interação** aprovados no
-ProB, abrangendo manutenção, cancelamento, botões, porta e sobrecarga. A
-enumeração de 311.296 estados é restrita à projeção Python de pedidos fixos;
+A enumeração de 311.296 estados é restrita à projeção Python de pedidos fixos;
 não demonstra justiça do modelo completo.
-Evidências e reprodução em [validacao.md](validacao.md), com logs em `provas/`
-e `verificacao/hlr005_008/`.
+Evidências históricas e reprodução em [validacao.md](validacao.md). Os hashes
+das provas não correspondem às fontes atuais após as alterações recentes em
+`cabine_movimento.mch`; a prova nativa atual está pendente de regeneração.
 
 HLR-005/008 foram implementados na abstração atual. Os cenários atuais conferem o cancelamento automático e as quatro fases de LED.
 **Não há cumprimento total de HLR-010:** justiça temporal e minimização global

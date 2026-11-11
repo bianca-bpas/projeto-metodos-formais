@@ -1,8 +1,20 @@
 """Cenarios ProB para HLR-005/008. Executar na raiz do repositorio."""
+import argparse
 from pathlib import Path
+import shutil
 import subprocess
 import sys
-prob = sys.argv[1] if len(sys.argv) > 1 else '/opt/ProB/probcli'
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from prob_instancia import instancia_prob
+
+ROOT = Path(__file__).resolve().parents[2]
+OUTPUT = Path(__file__).resolve().parent
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('probcli', nargs='?', default='/opt/ProB/probcli')
+parser.add_argument('--andar-maximo', type=int, default=4,
+                    help='fixar a constante andar_maximo na instância ProB (padrão: 4)')
+args = parser.parse_args()
+prob = shutil.which(args.probcli) or args.probcli
 base = "machine('elevador').\n'$setup_constants'.\n'$initialise_machine'.\n"
 tick = ['passar_tempo.']
 cases = [
@@ -32,11 +44,11 @@ for maintenance in [False, True]:
    booleano = 'bool_true' if ligado else 'bool_false'
    ops += [f'consultar_leds_porta --> [{booleano}, {booleano}].']
   cases.append((f'pisca_{maintenance}_{phase}',ops,pred))
-root=Path('verificacao/hlr005_008')
-for name, ops, pred in cases:
- trace=root/(name+'.trace');trace.write_text(base+'\n'.join(ops)+'\n')
- r=subprocess.run([prob,'elevador/elevador.mch','-trace_replay','prolog',str(trace),'-eval',pred],capture_output=True,text=True,timeout=60)
- (root/(name+'.log')).write_text(r.stdout+r.stderr)
- if r.returncode or 'Trace checking successful !' not in r.stdout or 'Predicate is TRUE' not in r.stdout: raise RuntimeError(name)
- print(name+': OK',flush=True)
-print(f'{len(cases)} cenarios aprovados.')
+with instancia_prob(args.andar_maximo) as (instance_root, machine):
+ for name, ops, pred in cases:
+  trace=OUTPUT/(name+'.trace');trace.write_text(base+'\n'.join(ops)+'\n')
+  r=subprocess.run([prob,str(machine),'-trace_replay','prolog',str(trace.resolve()),'-eval',pred],cwd=instance_root,capture_output=True,text=True,timeout=60)
+  (OUTPUT/(name+'.log')).write_text(r.stdout+r.stderr)
+  if r.returncode or 'Trace checking successful !' not in r.stdout or 'Predicate is TRUE' not in r.stdout: raise RuntimeError(name)
+  print(name+': OK',flush=True)
+print(f'{len(cases)} cenarios aprovados para andar_maximo={args.andar_maximo}.')

@@ -76,11 +76,6 @@ OPERATIONS
             END
         END;
 
-    confirmar_parada_manutencao =
-        PRE chave_manutencao = TRUE & manutencao_pendente = TRUE & direcao = parado THEN
-            manutencao := TRUE || manutencao_pendente := FALSE
-        END;
-
     remover_chave_manutencao =
         PRE chave_manutencao = TRUE & ((manutencao = TRUE & direcao = parado) or manutencao_pendente = TRUE) THEN
             chave_manutencao := FALSE || manutencao := FALSE || manutencao_pendente := FALSE
@@ -114,11 +109,6 @@ OPERATIONS
         END;
 
     /* MOVIMENTAÇÃO E SEGURANÇA (HLR-006) */
-    solicitar_parada_pendente =
-        PRE direcao /= parado THEN
-            parada_pendente := TRUE
-        END;
-
     /* A politica de pedidos pertence ao controlador; aqui ficam as segurancas. */
     iniciar_subida =
         PRE

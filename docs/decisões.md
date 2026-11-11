@@ -2,8 +2,8 @@
 
 ## Limites do prédio
 
-- O número de pavimentos é parametrizado por `andar_maximo : NATURAL1`; os
-  pavimentos são numerados de `0` a `andar_maximo`.
+- O número de pavimentos é parametrizado por `andar_maximo : NATURAL`, com
+  `andar_maximo > 0`; os pavimentos são numerados de `0` a `andar_maximo`.
 - O pavimento `0` representa o térreo.
 - Há botão externo de subida nos pavimentos `0..(andar_maximo - 1)` e de
   descida nos pavimentos `1..andar_maximo`.
@@ -12,6 +12,8 @@
 
 - A capacidade máxima é 450 kg.
 - Acima desse limite, a cabine permanece parada até o peso ser reduzido.
+- `atualizar_peso` e `ajustar_peso` exigem somente que a cabine esteja parada;
+  a porta pode estar aberta ou fechada.
 - O aviso de sobrecarga aparece somente no visor interno.
 - A alternativa de descer ao térreo com sobrecarga foi descartada porque
   contradiz o HLR-009.
@@ -66,6 +68,9 @@
   manutenção começa imediatamente e todos os pedidos são cancelados.
 - Se a cabine estiver em movimento, ela para no próximo pavimento e só então
   ativa a manutenção.
+- Se a chave for removida enquanto a manutenção está pendente, a manutenção é
+  cancelada, mas `parada_pendente` permanece ativa: a cabine ainda para no
+  próximo pavimento.
 - Durante a manutenção, os painéis não registram pedidos. Pressionar qualquer
   botão inicia quatro fases de piscada (ligado, desligado, ligado, desligado) e o LED
   volta a permanecer apagado.

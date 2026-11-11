@@ -142,8 +142,6 @@ OPERATIONS
                 atender_pedidos_andar(andar, sentido_atendimento)
             ELSIF porta = aberta THEN
                 fechar_porta
-            ELSIF porta = aberta THEN
-                fechar_porta
             ELSIF pedidos_internos \/ pedidos_subida \/ pedidos_descida = {} THEN
                 entrar_em_reposo(pedidos_internos, pedidos_subida, pedidos_descida)
             ELSIF andar : pedidos_internos or
