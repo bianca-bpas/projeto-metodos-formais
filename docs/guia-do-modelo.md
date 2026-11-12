@@ -41,6 +41,7 @@ operação se sua `PRE` não for satisfeita.
 |---|---|---|
 | Cabine | `andar`, `direcao`, `deslocamento` | Posição atual, movimento e quantidade acumulada de andares percorridos. |
 | Cabine | `sentido_atendimento`, `parada_pendente` | Memória da varredura e pedido para cessar movimento no próximo andar. |
+| Cabine | `parada_por_cancelamento` | Motivo de parada do HLR-006, preservado ao remover a chave; `parada_pendente` reúne esse motivo e `manutencao_pendente`. |
 | Porta | `porta`, `segundos_porta_aberta` | Estado físico e contador usado no alerta após dois minutos. |
 | Carga | `peso`, `limite_peso_atingido` | Peso lido e alerta derivado de `peso > 450`. |
 | Manutenção | `chave_manutencao`, `manutencao`, `manutencao_pendente` | Chave inserida, modo ativo e solicitação aguardando a próxima parada. |
@@ -127,12 +128,13 @@ e fechar a porta.
 | Operação | Quando usar | Resultado |
 |---|---|---|
 | `inserir_chave` | chave ainda ausente | Se parada, entra imediatamente em manutenção e cancela os pedidos; em movimento, marca manutenção pendente e solicita parada. |
-| `remover_chave_manutencao` | manutenção ativa, cabine parada | Remove a chave e sai de manutenção. |
+| `remover_chave_manutencao` | chave inserida e manutenção ativa com cabine parada, ou manutenção pendente | Remove a chave e cancela a manutenção e sua parada pendente; preserva a parada por cancelamento de pedidos. |
 
 Se a chave for inserida em movimento, execute `passo` até a cabine parar. O
-controlador cancela todos os pedidos quando a manutenção é efetivada. A chave
-não pode ser removida enquanto a manutenção estiver pendente ou a cabine não
-estiver parada.
+controlador cancela todos os pedidos quando a manutenção é efetivada. Remover
+a chave antes desse passo cancela a entrada em manutenção e a parada causada
+pela chave. Uma parada já solicitada por cancelamento do último pedido
+continua válida, mesmo que um novo pedido seja registrado.
 
 ## Consultas disponíveis
 

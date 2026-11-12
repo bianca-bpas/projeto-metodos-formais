@@ -10,8 +10,15 @@ pendente, e eliminado um ramo repetido em `passo`. As provas nativas precisam
 ser regeneradas antes de serem usadas como evidência da revisão atual. Os logs
 completos são gerados localmente e não fazem parte do repositório.
 
+A remoção da chave agora cancela somente a parada por manutenção.
+`parada_por_cancelamento` preserva o motivo do HLR-006; um novo invariante
+relaciona `parada_pendente` à disjunção desse motivo com `manutencao_pendente`.
+Dez cenários adicionais verificam remoção/reinserção da chave em ambos os
+sentidos e a preservação do HLR-006, inclusive com novo pedido após cancelar
+o último pedido externo.
+
 As suítes ProB foram executadas novamente em 2026-11-11 na instância
-`andar_maximo = 4`: 18/18 cenários HLR-005/008, 14/14 HLR-010, 13/13 bordas e
+`andar_maximo = 4`: 28/28 cenários HLR-005/008, 14/14 HLR-010, 13/13 bordas e
 47/47 interações passaram. Cada runner cria uma cópia temporária do modelo
 com a constante fixada; as fontes B versionadas permanecem genéricas.
 
@@ -54,7 +61,7 @@ Para repetir no workspace registrado, a partir da raiz:
 python3 verificacao/hlr005_008/verificar.py /opt/ProB/probcli --andar-maximo 4
 ```
 
-Na execução atual com `andar_maximo = 4`, o ProB concluiu **18/18 cenários**.
+Na execução atual com `andar_maximo = 4`, o ProB concluiu **28/28 cenários**.
 O cache é descartável e não é uma evidência versionada.
 O verificador usa `segurando_*` e `interno_recusado`, sem os campos removidos
 `tempo_*`. Logs individuais são gerados localmente em
@@ -86,7 +93,7 @@ novos atrás da cabine, paradas intermediárias, retomada, atendimento no retorn
 chamada externa oposta e inversão antes dos limites do prédio. Eles conferem
 estados intermediários e a ordem de atendimento, além dos pedidos restantes.
 
-Esses 14 cenários são adicionais aos 18 de HLR-005/008. Testar a política não
+Esses 14 cenários são adicionais aos 28 de HLR-005/008. Testar a política não
 prova justiça temporal nem minimização global.
 
 ## Fronteiras e interações — 2026-11-11
@@ -97,8 +104,8 @@ prova justiça temporal nem minimização global.
 | `hlr010/interacoes.py` | Todos os 13 botões válidos de pavimento em manutenção, cancelamento e liberação; abrir/fechar e ciclos de recusa | **47/47 aprovados no ProB**, andar máximo 4 |
 | `hlr010/exaustivo.py` | Projeção finita da política com pedidos fixos | **311.296 estados iniciais, 7.591.528 transições, zero falhas** |
 
-Esses 60 cenários ProB são adicionais aos 18 de HLR-005/008 e 14 de HLR-010
-já registrados: 92 cenários aprovados no conjunto das execuções. Logs e traces
+Esses 60 cenários ProB são adicionais aos 28 de HLR-005/008 e 14 de HLR-010
+já registrados: 102 cenários aprovados no conjunto das execuções. Logs e traces
 novos ficam em `verificacao/hlr010/bordas/` e `verificacao/hlr010/interacoes/`.
 A enumeração Python registra os números em
 [exaustivo.json](../verificacao/hlr010/exaustivo.json); o maior percurso exigiu

@@ -9,6 +9,7 @@ VARIABLES
     porta,
     sentido_atendimento,
     parada_pendente,
+    parada_por_cancelamento,
     peso,
     limite_peso_atingido,
     segundos_porta_aberta,
@@ -26,6 +27,7 @@ INVARIANT
     (direcao = subindo => sentido_atendimento = subindo) &
     (direcao = descendo => sentido_atendimento = descendo) &
     parada_pendente : BOOL &
+    parada_por_cancelamento : BOOL &
     peso : NATURAL &
     limite_peso_atingido : BOOL &
     (limite_peso_atingido = TRUE <=> peso > peso_maximo) &
@@ -45,7 +47,11 @@ INVARIANT
     (manutencao = TRUE => direcao = parado) &
     (manutencao_pendente = TRUE => chave_manutencao = TRUE) &
     not (manutencao = TRUE & manutencao_pendente = TRUE) &
-    (manutencao_pendente = TRUE => direcao /= parado)
+    (manutencao_pendente = TRUE => direcao /= parado) &
+    (parada_pendente = TRUE =>
+        (parada_por_cancelamento = TRUE or manutencao_pendente = TRUE)) &
+    (parada_por_cancelamento = TRUE => parada_pendente = TRUE) &
+    (manutencao_pendente = TRUE => parada_pendente = TRUE)
 
 INITIALISATION
     andar := 0 ||
@@ -54,6 +60,7 @@ INITIALISATION
     porta := fechada ||
     sentido_atendimento := parado ||
     parada_pendente := FALSE ||
+    parada_por_cancelamento := FALSE ||
     peso := 0 ||
     limite_peso_atingido := FALSE ||
     segundos_porta_aberta := 0 ||
@@ -78,7 +85,9 @@ OPERATIONS
 
     remover_chave_manutencao =
         PRE chave_manutencao = TRUE & ((manutencao = TRUE & direcao = parado) or manutencao_pendente = TRUE) THEN
-            chave_manutencao := FALSE || manutencao := FALSE || manutencao_pendente := FALSE
+            chave_manutencao := FALSE || manutencao := FALSE || manutencao_pendente := FALSE ||
+            /* Preserva a parada do HLR-006, independente da chave. */
+            parada_pendente := parada_por_cancelamento
         END;
 
     /* CONTROLE DE PESO (HLR-009) */
@@ -100,7 +109,9 @@ OPERATIONS
             IF porta = aberta & segundos_porta_aberta < 121 THEN
                 segundos_porta_aberta := segundos_porta_aberta + 1
             END ||
-            IF parar = TRUE THEN parada_pendente := TRUE END
+            IF parar = TRUE THEN
+                parada_por_cancelamento := TRUE || parada_pendente := TRUE
+            END
         END;
 
     zerar_tempo_porta =
@@ -147,7 +158,7 @@ OPERATIONS
                     manutencao_pendente := FALSE
                 END
             END ||
-            parada_pendente := FALSE
+            parada_pendente := FALSE || parada_por_cancelamento := FALSE
         END;
 
     descer(p_int, p_sub, p_des) =
@@ -166,7 +177,7 @@ OPERATIONS
                     manutencao_pendente := FALSE
                 END
             END ||
-            parada_pendente := FALSE
+            parada_pendente := FALSE || parada_por_cancelamento := FALSE
         END;
 
     inverter_sentido =

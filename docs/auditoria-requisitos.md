@@ -2,7 +2,7 @@
 
 ## Estado da auditoria — 2026-11-11
 
-Em 2026-11-11, passaram **18/18 cenários HLR-005/008, 14/14 HLR-010,
+Em 2026-11-11, passaram **28/28 cenários HLR-005/008, 14/14 HLR-010,
 13/13 de borda e 47/47 de interação no ProB**, todos com
 `andar_maximo = 4`. Os runners fixam a constante em cópias temporárias do
 modelo. As **843/843 obrigações nativas** pertencem à execução histórica de
@@ -30,9 +30,9 @@ interpretação documentada dos requisitos.
 | HLR-003 — painel interno e porta | Atendido na abstração | Botões internos em `0..andar_maximo`; abrir/fechar só atuam com cabine parada. `direcao /= parado => porta = fechada` é invariante. |
 | HLR-004 — LED do pedido | Atendido como estado lógico | `consultar_leds` incorpora as quatro fases ligado/desligado/ligado/desligado e o estado estável, conferidos pelos cenários. |
 | HLR-005 — cancelamento após três segundos | Implementado na abstração | Cancelamento automático no terceiro tick, usando conjuntos `segurando_*`; recusa do último interno em `interno_recusado`. Interpretação restrita a pedidos internos permanece uma ressalva. |
-| HLR-006 — parar no próximo andar após último cancelamento | Atendido quando o cancelamento é executado | Cancelamentos externos marcam `parada_pendente`; `subir`/`descer` avançam um andar e param. O último pedido interno não pode ser cancelado pela interpretação adotada. |
+| HLR-006 — parar no próximo andar após último cancelamento | Atendido quando o cancelamento é executado | Cancelamentos externos marcam `parada_por_cancelamento` e `parada_pendente`; `subir`/`descer` avançam um andar e param. A remoção da chave preserva essa parada, mesmo com novo pedido. O último pedido interno não pode ser cancelado pela interpretação adotada. |
 | HLR-007 — aviso após dois minutos | Atendido com relógio abstrato | Tempo satura em 121; aviso é `segundos_porta_aberta > 120`; fechamento zera o contador. Depende de cada `passar_tempo` corresponder a um segundo. |
-| HLR-008 — manutenção | Implementado na abstração | Chave com cabine parada cancela imediatamente; em movimento, para no próximo andar e cancela. Novos pedidos são recusados, avisos são expostos e a remoção libera manutenção. As quatro fases e os LEDs de porta são conferidos pelos cenários ProB. |
+| HLR-008 — manutenção | Implementado na abstração | Chave com cabine parada cancela imediatamente; em movimento, para no próximo andar e cancela. Remover a chave antes da parada cancela a manutenção pendente e somente seu motivo de parada. Durante a manutenção, novos pedidos são recusados, avisos são expostos e a remoção libera manutenção. As quatro fases e os LEDs de porta são conferidos pelos cenários ProB. |
 | HLR-009 — limite de 450 kg | Atendido na abstração | Sobrecarga somente se peso > 450; iniciar movimento e avançar exigem ausência de sobrecarga. Alterações de peso só são aceitas com cabine parada. Não há contagem de pessoas; seis pessoas é tratado como justificativa dos 450 kg. |
 | HLR-010 — justiça e minimização | Não demonstrado integralmente; ótimo global refutado | Há política de varredura e escolha inicial pelo pedido mais próximo. Não há prova de vivacidade. Existe percurso não mínimo mesmo sem novas chamadas. |
 

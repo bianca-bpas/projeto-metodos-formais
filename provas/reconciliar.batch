@@ -1,5 +1,6 @@
-op reconciliacao_elevador
-ip reconciliacao_elevador
+op elevador_atual
+ip elevador_atual
+cd elevador
 po configuracao 0
 pr configuracao 3
 po painel_pedidos 0
@@ -9,6 +10,7 @@ pr cabine_movimento 3
 po elevador 0
 pr elevador 3
 sg
+us configuracao
 us painel_pedidos
 us cabine_movimento
 us elevador

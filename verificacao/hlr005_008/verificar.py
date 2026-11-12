@@ -25,8 +25,41 @@ cases = [
  ('simultaneos', ['pressionar_interno(int(1)).','pressionar_interno(int(3)).']+tick*3, 'pedidos_internos = {1} & 1 : piscando_interno1 & interno_recusado = {1}'),
  ('outro_interno', ['pressionar_interno(int(1)).','liberar_interno(int(1)).','pressionar_interno(int(3)).']+tick*3, 'pedidos_internos = {1}'),
  ('manutencao_movimento', ['pressionar_interno(int(4)).','passo.','inserir_chave.','passo.'], 'manutencao = TRUE & andar = 1 & pedidos_internos = {}'),
- ('saida_manutencao', ['inserir_chave.','remover_chave_manutencao.','pressionar_interno(int(2)).'], 'manutencao = FALSE & pedidos_internos = {2}'),
+ ('saida_manutencao', ['inserir_chave.','remover_chave_manutencao.','pressionar_interno(int(2)).'], 'chave_manutencao = FALSE & manutencao = FALSE & manutencao_pendente = FALSE & parada_pendente = FALSE & parada_por_cancelamento = FALSE & pedidos_internos = {2}'),
 ]
+
+# A consulta confere a parada antes do proximo passo. Um novo pedido distante
+# impede que a politica normal de fim de percurso mascare a perda do HLR-006.
+pendente = 'consultar_parada_pendente --> [bool_true].'
+sem_parada = 'consultar_parada_pendente --> [bool_false].'
+remover = ['remover_chave_manutencao.']
+sem_manutencao = 'chave_manutencao = FALSE & manutencao = FALSE & manutencao_pendente = FALSE'
+for sentido, destino, proximo, preparo in [
+ ('subindo', 4, 1, []),
+ ('descendo', 0, 3, ['pressionar_interno(int(4)).', 'liberar_interno(int(4)).'] + ['passo.']*8),
+]:
+ pedido = [f'pressionar_interno(int({destino})).', f'liberar_interno(int({destino})).']
+ movimento = preparo + pedido + ['passo.']
+ continuou = (sem_manutencao + f' & andar = {proximo} & direcao = {sentido}'
+              f' & pedidos_internos = {{{destino}}} & parada_pendente = FALSE & parada_por_cancelamento = FALSE')
+ cases.append((f'remover_chave_em_{sentido}',
+               movimento + ['inserir_chave.', pendente] + remover + [sem_parada, 'passo.'], continuou))
+ cases.append((f'reinserir_chave_em_{sentido}',
+               movimento + ['inserir_chave.'] + remover + [sem_parada, 'inserir_chave.', pendente, 'passo.', sem_parada],
+               f'andar = {proximo} & direcao = parado & manutencao = TRUE & manutencao_pendente = FALSE'
+               ' & pedidos_internos = {} & parada_pendente = FALSE & parada_por_cancelamento = FALSE'))
+ cases.append((f'remover_chave_duas_vezes_em_{sentido}',
+               movimento + (['inserir_chave.', pendente] + remover + [sem_parada])*2 + ['passo.'], continuou))
+ # Ambos os destinos possuem botao externo de subida na instancia (0 e 3).
+ externo = 3 if sentido == 'subindo' else 0
+ movimento_externo = preparo + [f'pressionar_externo_subida(int({externo})).', 'passo.']
+ for ordem in ('antes', 'depois'):
+  causas = tick*3 + [pendente, 'inserir_chave.'] if ordem == 'antes' else ['inserir_chave.'] + tick*3
+  cases.append((f'cancelamento_{ordem}_da_chave_em_{sentido}',
+                movimento_externo + causas + remover + [pendente] + pedido + ['passo.', sem_parada],
+                sem_manutencao + f' & andar = {proximo} & direcao = parado & pedidos_internos = {{{destino}}}'
+                ' & pedidos_subida = {} & parada_pendente = FALSE & parada_por_cancelamento = FALSE'))
+
 for maintenance in [False, True]:
  prefix = ['inserir_chave.','pressionar_interno(int(2)).','pressionar_externo_subida(int(1)).','pressionar_externo_descida(int(3)).','pressionar_abrir.','pressionar_fechar.'] if maintenance else ['pressionar_interno(int(2)).']+tick*3
  for phase in range(5):

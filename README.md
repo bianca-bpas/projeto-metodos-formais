@@ -14,7 +14,7 @@ uso.
 - `docs/decisões.md`: hipóteses e decisões de modelagem.
 - `docs/diagrama-entidades.md`: entidades e correspondência com B.
 - `provas/`: lote nativo, arquivos de prova e hashes versionados.
-- `verificacao/hlr005_008/`: 18 cenários de cancelamento, manutenção e LEDs.
+- `verificacao/hlr005_008/`: 28 cenários de cancelamento, manutenção e LEDs.
 - `verificacao/hlr010/`: 14 cenários da política de manter o sentido e inverter ao fim da rodada.
 
 ## Validação e estado das evidências — 2026-11-11
@@ -25,7 +25,7 @@ Eles se referem à instância em que `andar_maximo = 4` e não certificam o
 estado atual das fontes. As obrigações precisam ser regeneradas e provadas
 novamente no Atelier B.
 
-**ProB: 18/18 cenários HLR-005/008 aprovados na execução atual com
+**ProB: 28/28 cenários HLR-005/008 aprovados na execução atual com
 `andar_maximo = 4`. Atelier B: 843/843 obrigações provadas nativamente
 em força 3, sem Z3 e sem obrigações pendentes na execução histórica.** São 0 de
 `configuracao`, 444 de `painel_pedidos`, 55 de `cabine_movimento` e 344 de

@@ -69,8 +69,11 @@
 - Se a cabine estiver em movimento, ela para no próximo pavimento e só então
   ativa a manutenção.
 - Se a chave for removida enquanto a manutenção está pendente, a manutenção é
-  cancelada, mas `parada_pendente` permanece ativa: a cabine ainda para no
-  próximo pavimento.
+  cancelada junto com a parada motivada pela chave. `parada_pendente` passa a
+  `FALSE`, salvo se houver uma parada por cancelamento do último pedido
+  (HLR-006), registrada separadamente em `parada_por_cancelamento`. Nesse
+  caso, a cabine ainda para no próximo pavimento, mesmo se receber novo pedido.
+  A chegada ao próximo pavimento consome a parada por cancelamento.
 - Durante a manutenção, os painéis não registram pedidos. Pressionar qualquer
   botão inicia quatro fases de piscada (ligado, desligado, ligado, desligado) e o LED
   volta a permanecer apagado.
