@@ -256,7 +256,7 @@ OPERATIONS
     visitados, nunca_visitados, marcas <-- consultar_visitas =
         BEGIN
             visitados := dom(ultima_visita) ||
-            nunca_visitados := (0..andar_maximo) - dom(ultima_visita) ||
+            nunca_visitados := {aa | aa : 0..andar_maximo & aa /: dom(ultima_visita)} ||
             marcas := ran(ultima_visita)
         END
 END
