@@ -84,7 +84,10 @@ INVARIANT
 
     segurando_descida_2 <: segurando_descida_1 &
     segurando_descida_1 <: segurando_descida &
-    segurando_descida <: pedidos_descida
+    segurando_descida <: pedidos_descida &
+    
+    !aa.(aa : pedidos_subida  => aa |-> subindo  : painel_externo) & 
+    !aa.(aa : pedidos_descida => aa |-> descendo : painel_externo)
 
 INITIALISATION
     pedidos_internos := {} ||
