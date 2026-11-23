@@ -1,5 +1,8 @@
 MACHINE elevador
 
+DEFINITIONS
+    VISB_JSON_FILE == "elevador_visb.json"
+
 SEES configuracao
 
 INCLUDES

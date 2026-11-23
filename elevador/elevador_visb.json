@@ -1,0 +1,755 @@
+{
+ "svg": "elevador.svg",
+ "items": [
+  {
+   "id": "vnum_0",
+   "attr": "text",
+   "value": "andar"
+  },
+  {
+   "id": "vdir_0",
+   "attr": "text",
+   "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
+  },
+  {
+   "id": "ext_up_0",
+   "attr": "fill",
+   "value": "IF (0 : pedidos_subida & 0 /: (piscando_subida1 \\/ piscando_subida2 \\/ piscando_subida3 \\/ piscando_subida4)) or 0 : piscando_subida1 or 0 : piscando_subida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "ext_up_0",
+   "attr": "stroke",
+   "value": "IF 0 : segurando_subida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "vnum_1",
+   "attr": "text",
+   "value": "andar"
+  },
+  {
+   "id": "vdir_1",
+   "attr": "text",
+   "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
+  },
+  {
+   "id": "ext_up_1",
+   "attr": "fill",
+   "value": "IF (1 : pedidos_subida & 1 /: (piscando_subida1 \\/ piscando_subida2 \\/ piscando_subida3 \\/ piscando_subida4)) or 1 : piscando_subida1 or 1 : piscando_subida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "ext_up_1",
+   "attr": "stroke",
+   "value": "IF 1 : segurando_subida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "ext_dn_1",
+   "attr": "fill",
+   "value": "IF (1 : pedidos_descida & 1 /: (piscando_descida1 \\/ piscando_descida2 \\/ piscando_descida3 \\/ piscando_descida4)) or 1 : piscando_descida1 or 1 : piscando_descida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "ext_dn_1",
+   "attr": "stroke",
+   "value": "IF 1 : segurando_descida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "vnum_2",
+   "attr": "text",
+   "value": "andar"
+  },
+  {
+   "id": "vdir_2",
+   "attr": "text",
+   "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
+  },
+  {
+   "id": "ext_up_2",
+   "attr": "fill",
+   "value": "IF (2 : pedidos_subida & 2 /: (piscando_subida1 \\/ piscando_subida2 \\/ piscando_subida3 \\/ piscando_subida4)) or 2 : piscando_subida1 or 2 : piscando_subida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "ext_up_2",
+   "attr": "stroke",
+   "value": "IF 2 : segurando_subida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "ext_dn_2",
+   "attr": "fill",
+   "value": "IF (2 : pedidos_descida & 2 /: (piscando_descida1 \\/ piscando_descida2 \\/ piscando_descida3 \\/ piscando_descida4)) or 2 : piscando_descida1 or 2 : piscando_descida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "ext_dn_2",
+   "attr": "stroke",
+   "value": "IF 2 : segurando_descida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "vnum_3",
+   "attr": "text",
+   "value": "andar"
+  },
+  {
+   "id": "vdir_3",
+   "attr": "text",
+   "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
+  },
+  {
+   "id": "ext_up_3",
+   "attr": "fill",
+   "value": "IF (3 : pedidos_subida & 3 /: (piscando_subida1 \\/ piscando_subida2 \\/ piscando_subida3 \\/ piscando_subida4)) or 3 : piscando_subida1 or 3 : piscando_subida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "ext_up_3",
+   "attr": "stroke",
+   "value": "IF 3 : segurando_subida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "ext_dn_3",
+   "attr": "fill",
+   "value": "IF (3 : pedidos_descida & 3 /: (piscando_descida1 \\/ piscando_descida2 \\/ piscando_descida3 \\/ piscando_descida4)) or 3 : piscando_descida1 or 3 : piscando_descida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "ext_dn_3",
+   "attr": "stroke",
+   "value": "IF 3 : segurando_descida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "vnum_4",
+   "attr": "text",
+   "value": "andar"
+  },
+  {
+   "id": "vdir_4",
+   "attr": "text",
+   "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
+  },
+  {
+   "id": "ext_dn_4",
+   "attr": "fill",
+   "value": "IF (4 : pedidos_descida & 4 /: (piscando_descida1 \\/ piscando_descida2 \\/ piscando_descida3 \\/ piscando_descida4)) or 4 : piscando_descida1 or 4 : piscando_descida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "ext_dn_4",
+   "attr": "stroke",
+   "value": "IF 4 : segurando_descida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "cab",
+   "attr": "y",
+   "value": "448 - andar * 92"
+  },
+  {
+   "id": "porta_e",
+   "attr": "y",
+   "value": "448 - andar * 92"
+  },
+  {
+   "id": "porta_d",
+   "attr": "y",
+   "value": "448 - andar * 92"
+  },
+  {
+   "id": "porta_e",
+   "attr": "width",
+   "value": "IF porta = aberta THEN 6 ELSE 53 END"
+  },
+  {
+   "id": "porta_d",
+   "attr": "width",
+   "value": "IF porta = aberta THEN 6 ELSE 53 END"
+  },
+  {
+   "id": "porta_d",
+   "attr": "x",
+   "value": "IF porta = aberta THEN 232 ELSE 185 END"
+  },
+  {
+   "id": "peso_ico",
+   "attr": "cy",
+   "value": "460 - andar * 92"
+  },
+  {
+   "id": "peso_ico",
+   "attr": "fill",
+   "value": "IF limite_peso_atingido = TRUE THEN \"#ff3b30\" ELSE IF manutencao = TRUE THEN \"#ff9500\" ELSE \"#2d3a55\" END END"
+  },
+  {
+   "id": "vi_num",
+   "attr": "text",
+   "value": "andar"
+  },
+  {
+   "id": "vi_dir",
+   "attr": "text",
+   "value": "IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END"
+  },
+  {
+   "id": "vi_alerta",
+   "attr": "text",
+   "value": "IF manutencao = TRUE THEN \"MANUTENÇÃO\" ELSE IF limite_peso_atingido = TRUE THEN \"EXCESSO DE PESO\" ELSE IF manutencao_pendente = TRUE THEN \"MANUT. PENDENTE\" ELSE \"\" END END END"
+  },
+  {
+   "id": "int_0",
+   "attr": "fill",
+   "value": "IF (0 : pedidos_internos & 0 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 0 : piscando_interno1 or 0 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "int_0",
+   "attr": "stroke",
+   "value": "IF 0 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "int_1",
+   "attr": "fill",
+   "value": "IF (1 : pedidos_internos & 1 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 1 : piscando_interno1 or 1 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "int_1",
+   "attr": "stroke",
+   "value": "IF 1 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "int_2",
+   "attr": "fill",
+   "value": "IF (2 : pedidos_internos & 2 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 2 : piscando_interno1 or 2 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "int_2",
+   "attr": "stroke",
+   "value": "IF 2 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "int_3",
+   "attr": "fill",
+   "value": "IF (3 : pedidos_internos & 3 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 3 : piscando_interno1 or 3 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "int_3",
+   "attr": "stroke",
+   "value": "IF 3 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "int_4",
+   "attr": "fill",
+   "value": "IF (4 : pedidos_internos & 4 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 4 : piscando_interno1 or 4 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "int_4",
+   "attr": "stroke",
+   "value": "IF 4 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "btn_abrir",
+   "attr": "fill",
+   "value": "IF piscando_abrir = 4 or piscando_abrir = 2 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "btn_fechar",
+   "attr": "fill",
+   "value": "IF piscando_fechar = 4 or piscando_fechar = 2 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "btn_chave",
+   "attr": "fill",
+   "value": "IF chave_manutencao = TRUE THEN \"#ff9500\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "peso_txt",
+   "attr": "text",
+   "value": "peso"
+  },
+  {
+   "id": "s_porta",
+   "attr": "text",
+   "value": "porta"
+  },
+  {
+   "id": "s_seg",
+   "attr": "text",
+   "value": "segundos_porta_aberta"
+  },
+  {
+   "id": "s_sent",
+   "attr": "text",
+   "value": "sentido_atendimento"
+  },
+  {
+   "id": "s_desl",
+   "attr": "text",
+   "value": "deslocamento"
+  },
+  {
+   "id": "s_parada",
+   "attr": "text",
+   "value": "parada_pendente"
+  },
+  {
+   "id": "s_ped",
+   "attr": "text",
+   "value": "card(pedidos_internos \\/ pedidos_subida \\/ pedidos_descida)"
+  },
+  {
+   "id": "s_hist",
+   "attr": "text",
+   "value": "historico_paradas"
+  }
+ ],
+ "events": [
+  {
+   "id": "ext_up_0",
+   "event": "pressionar_externo_subida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=0"
+   ]
+  },
+  {
+   "id": "lib_up_0",
+   "event": "liberar_subida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=0"
+   ]
+  },
+  {
+   "id": "ext_up_1",
+   "event": "pressionar_externo_subida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=1"
+   ]
+  },
+  {
+   "id": "lib_up_1",
+   "event": "liberar_subida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=1"
+   ]
+  },
+  {
+   "id": "ext_dn_1",
+   "event": "pressionar_externo_descida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=1"
+   ]
+  },
+  {
+   "id": "lib_dn_1",
+   "event": "liberar_descida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=1"
+   ]
+  },
+  {
+   "id": "ext_up_2",
+   "event": "pressionar_externo_subida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=2"
+   ]
+  },
+  {
+   "id": "lib_up_2",
+   "event": "liberar_subida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=2"
+   ]
+  },
+  {
+   "id": "ext_dn_2",
+   "event": "pressionar_externo_descida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=2"
+   ]
+  },
+  {
+   "id": "lib_dn_2",
+   "event": "liberar_descida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=2"
+   ]
+  },
+  {
+   "id": "ext_up_3",
+   "event": "pressionar_externo_subida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=3"
+   ]
+  },
+  {
+   "id": "lib_up_3",
+   "event": "liberar_subida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=3"
+   ]
+  },
+  {
+   "id": "ext_dn_3",
+   "event": "pressionar_externo_descida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=3"
+   ]
+  },
+  {
+   "id": "lib_dn_3",
+   "event": "liberar_descida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=3"
+   ]
+  },
+  {
+   "id": "ext_dn_4",
+   "event": "pressionar_externo_descida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=4"
+   ]
+  },
+  {
+   "id": "lib_dn_4",
+   "event": "liberar_descida",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=4"
+   ]
+  },
+  {
+   "id": "int_0",
+   "event": "pressionar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=0"
+   ]
+  },
+  {
+   "id": "lib_int_0",
+   "event": "liberar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=0"
+   ]
+  },
+  {
+   "id": "int_1",
+   "event": "pressionar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=1"
+   ]
+  },
+  {
+   "id": "lib_int_1",
+   "event": "liberar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=1"
+   ]
+  },
+  {
+   "id": "int_2",
+   "event": "pressionar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=2"
+   ]
+  },
+  {
+   "id": "lib_int_2",
+   "event": "liberar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=2"
+   ]
+  },
+  {
+   "id": "int_3",
+   "event": "pressionar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=3"
+   ]
+  },
+  {
+   "id": "lib_int_3",
+   "event": "liberar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=3"
+   ]
+  },
+  {
+   "id": "int_4",
+   "event": "pressionar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=4"
+   ]
+  },
+  {
+   "id": "lib_int_4",
+   "event": "liberar_interno",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "alvo=4"
+   ]
+  },
+  {
+   "id": "btn_abrir",
+   "event": "pressionar_abrir",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ]
+  },
+  {
+   "id": "btn_fechar",
+   "event": "pressionar_fechar",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ]
+  },
+  {
+   "id": "btn_chave",
+   "event": "inserir_chave",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ]
+  },
+  {
+   "id": "btn_chave2",
+   "event": "remover_chave_manutencao",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ]
+  },
+  {
+   "id": "btn_peso0",
+   "event": "ajustar_peso",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "delta=75"
+   ]
+  },
+  {
+   "id": "btn_peso1",
+   "event": "ajustar_peso",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ],
+   "predicates": [
+    "delta=-75"
+   ]
+  },
+  {
+   "id": "btn_tick",
+   "event": "passar_tempo",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ]
+  },
+  {
+   "id": "btn_passo",
+   "event": "passo",
+   "hovers": [
+    {
+     "attr": "stroke-width",
+     "enter": "3.5",
+     "leave": "1.5"
+    }
+   ]
+  }
+ ]
+}

@@ -7,7 +7,8 @@ Para entender o funcionamento e simular o sistema, comece pelo
 o estado, todas as operações públicas, pré-condições, consultas e exemplos de
 uso.
 
-- `elevador/`: máquinas `configuracao`, `painel_pedidos`, `cabine_movimento` e `elevador`.
+- `elevador/`: máquinas `configuracao`, `painel_pedidos`, `cabine_movimento` e `elevador`,
+  além dos recursos VisB (`elevador.svg`, `elevador_visb.json`) e do gerador `gerar.py`.
 - `Controle Elevador.md`: requisitos.
 - `docs/validacao.md`: resultados, reprodução e limites.
 - `docs/auditoria-requisitos.md`: cobertura dos requisitos e pendências.
