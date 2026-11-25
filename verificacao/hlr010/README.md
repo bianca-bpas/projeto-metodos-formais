@@ -26,6 +26,8 @@ reproduz cada trace no modelo B, verifica sucesso do replay e verdade do
 predicado, salva `.trace`/`.log` e retorna código diferente de zero se houver
 falha. O resumo completo fica em `resultados.txt`; execuções isoladas geram
 `resultado-<cenario>.txt`. O script também funciona fora da raiz do projeto.
+O ProB é chamado com `-no_color` para que códigos ANSI de cor não interfiram
+na leitura das mensagens de sucesso e do resultado do predicado.
 
 Cobertura:
 

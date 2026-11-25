@@ -11,7 +11,7 @@ cria uma cópia temporária das máquinas com essa propriedade adicional; as
 fontes do projeto não são modificadas. Para a suíte completa, use um valor
 compatível com os pavimentos dos cenários.
 
-O script gera e reproduz 28 traces no ProB. Cada cenário verifica um predicado
+O script gera e reproduz 30 traces no ProB. Cada cenário verifica um predicado
 final; os cenários de piscada também verificam os valores de retorno de
 `consultar_leds` e, na manutenção, de `consultar_leds_porta`.
 

@@ -7,6 +7,7 @@ INCLUDES
     cabine_movimento
 
 PROMOTES
+    segurar_porta , liberar_porta ,
     liberar_interno , liberar_subida , liberar_descida ,
     atualizar_peso , ajustar_peso , consultar_peso , consultar_folga ,
     consultar_estado , consultar_deslocamento , consultar_visitas , consultar_porta ,
@@ -33,10 +34,10 @@ OPERATIONS
     passar_tempo =
         BEGIN
             /* Durante a manutencao, os pedidos estao vazios pelo
-               invariante do controlador. Resta apenas a animacao. */
+               invariante do controlador. O tempo de porta continua contando. */
             IF manutencao = TRUE THEN
                 avancar_piscadas_manutencao ||
-                zerar_tempo_porta
+                avancar_tempo_porta ( FALSE )
             ELSE
                 avancar_tempo_botoes ||
                 IF direcao /= parado &
@@ -111,7 +112,7 @@ OPERATIONS
     pressionar_fechar =
         SELECT manutencao = TRUE THEN
             piscando_fechar := 4
-        WHEN manutencao = FALSE & direcao = parado & porta = aberta THEN
+        WHEN manutencao = FALSE & direcao = parado & porta = aberta & porta_retida = FALSE THEN
             fechar_porta
         ELSE
             skip
@@ -141,7 +142,7 @@ OPERATIONS
                 manter_porta ( pedidos_internos , pedidos_subida , pedidos_descida ) ||
                 atender_pedidos_andar ( andar , sentido_atendimento )
             ELSIF porta = aberta THEN
-                fechar_porta
+                IF porta_retida = FALSE THEN fechar_porta END
             ELSIF pedidos_internos \/ pedidos_subida \/ pedidos_descida = {} THEN
                 entrar_em_reposo ( pedidos_internos , pedidos_subida , pedidos_descida )
             ELSIF andar : pedidos_internos or

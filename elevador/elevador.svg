@@ -8,95 +8,181 @@
 <rect id="visor_0" x="62" y="464" width="52" height="34" rx="3" fill="#000" stroke="#555" stroke-width="1.5" />
 <text id="vnum_0" x="76" y="488" font-size="18" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">0</text>
 <text id="vdir_0" x="100" y="488" font-size="14" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">■</text>
-<circle id="ext_up_0" cx="290" cy="468" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<svg id="aviso_manut_0" x="347" y="465" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Elevador em manutenção</title><circle cx="10" cy="10" r="9" fill="#3b2c14" stroke="#ffae32"/><path d="M14.8 3.5a4.5 4.5 0 0 0-5.2 5.2L4.2 14a1.5 1.5 0 0 0 2.1 2.1l5.3-5.4a4.5 4.5 0 0 0 5.2-5.2l-3 3-2.2-2.2z" fill="#ffae32"/></svg>
+<svg id="aviso_peso_0" x="374" y="465" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Excesso de peso</title><circle cx="10" cy="10" r="9" fill="#321c28" stroke="#ff453a"/><path d="M7 6V4a3 3 0 0 1 6 0v2M8.5 6V4a1.5 1.5 0 0 1 3 0v2" fill="none" stroke="#ff453a" stroke-width="1.5"/><path d="M5 6h10l2.5 11H2.5z" fill="#4a2020" stroke="#ff453a" stroke-width="1.5"/><path d="M10 9v4m0 2v.1" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+<text id="aviso_porta_0" x="347" y="511" font-size="11" text-anchor="start" fill="#ff453a" font-weight="normal" font-family="monospace"></text>
+<g display="none"><g id="pressionar_ext_up_0"/><g id="lib_up_0"/></g>
+<circle id="ext_up_0" data-liberar="lib_up_0" cx="290" cy="468" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="ut_0" x="290" y="473" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▲</text>
-<circle id="lib_up_0" cx="290" cy="500" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_up_0"/><g id="lib_up_0"/></g>
+<circle id="lib_up_0" data-liberar="lib_up_0" cx="290" cy="500" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_ext_up_0"/></g>
+<g display="none"><g id="evento_lib_up_0"/></g>
 <line x1="20" y1="438" x2="440" y2="438" stroke="#444"/>
 <text id="andar_1" x="28" y="398" font-size="20" text-anchor="start" fill="#8fb8ff" font-weight="bold" font-family="monospace">P1</text>
 <rect id="visor_1" x="62" y="372" width="52" height="34" rx="3" fill="#000" stroke="#555" stroke-width="1.5" />
 <text id="vnum_1" x="76" y="396" font-size="18" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">0</text>
 <text id="vdir_1" x="100" y="396" font-size="14" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">■</text>
-<circle id="ext_up_1" cx="290" cy="376" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<svg id="aviso_manut_1" x="347" y="373" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Elevador em manutenção</title><circle cx="10" cy="10" r="9" fill="#3b2c14" stroke="#ffae32"/><path d="M14.8 3.5a4.5 4.5 0 0 0-5.2 5.2L4.2 14a1.5 1.5 0 0 0 2.1 2.1l5.3-5.4a4.5 4.5 0 0 0 5.2-5.2l-3 3-2.2-2.2z" fill="#ffae32"/></svg>
+<svg id="aviso_peso_1" x="374" y="373" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Excesso de peso</title><circle cx="10" cy="10" r="9" fill="#321c28" stroke="#ff453a"/><path d="M7 6V4a3 3 0 0 1 6 0v2M8.5 6V4a1.5 1.5 0 0 1 3 0v2" fill="none" stroke="#ff453a" stroke-width="1.5"/><path d="M5 6h10l2.5 11H2.5z" fill="#4a2020" stroke="#ff453a" stroke-width="1.5"/><path d="M10 9v4m0 2v.1" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+<text id="aviso_porta_1" x="347" y="419" font-size="11" text-anchor="start" fill="#ff453a" font-weight="normal" font-family="monospace"></text>
+<g display="none"><g id="pressionar_ext_up_1"/><g id="lib_up_1"/></g>
+<circle id="ext_up_1" data-liberar="lib_up_1" cx="290" cy="376" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="ut_1" x="290" y="381" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▲</text>
-<circle id="lib_up_1" cx="290" cy="408" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
-<circle id="ext_dn_1" cx="330" cy="376" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_up_1"/><g id="lib_up_1"/></g>
+<circle id="lib_up_1" data-liberar="lib_up_1" cx="290" cy="408" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_ext_up_1"/></g>
+<g display="none"><g id="evento_lib_up_1"/></g>
+<g display="none"><g id="pressionar_ext_dn_1"/><g id="lib_dn_1"/></g>
+<circle id="ext_dn_1" data-liberar="lib_dn_1" cx="330" cy="376" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="dt_1" x="330" y="381" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▼</text>
-<circle id="lib_dn_1" cx="330" cy="408" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_dn_1"/><g id="lib_dn_1"/></g>
+<circle id="lib_dn_1" data-liberar="lib_dn_1" cx="330" cy="408" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_ext_dn_1"/></g>
+<g display="none"><g id="evento_lib_dn_1"/></g>
 <line x1="20" y1="346" x2="440" y2="346" stroke="#444"/>
 <text id="andar_2" x="28" y="306" font-size="20" text-anchor="start" fill="#8fb8ff" font-weight="bold" font-family="monospace">P2</text>
 <rect id="visor_2" x="62" y="280" width="52" height="34" rx="3" fill="#000" stroke="#555" stroke-width="1.5" />
 <text id="vnum_2" x="76" y="304" font-size="18" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">0</text>
 <text id="vdir_2" x="100" y="304" font-size="14" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">■</text>
-<circle id="ext_up_2" cx="290" cy="284" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<svg id="aviso_manut_2" x="347" y="281" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Elevador em manutenção</title><circle cx="10" cy="10" r="9" fill="#3b2c14" stroke="#ffae32"/><path d="M14.8 3.5a4.5 4.5 0 0 0-5.2 5.2L4.2 14a1.5 1.5 0 0 0 2.1 2.1l5.3-5.4a4.5 4.5 0 0 0 5.2-5.2l-3 3-2.2-2.2z" fill="#ffae32"/></svg>
+<svg id="aviso_peso_2" x="374" y="281" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Excesso de peso</title><circle cx="10" cy="10" r="9" fill="#321c28" stroke="#ff453a"/><path d="M7 6V4a3 3 0 0 1 6 0v2M8.5 6V4a1.5 1.5 0 0 1 3 0v2" fill="none" stroke="#ff453a" stroke-width="1.5"/><path d="M5 6h10l2.5 11H2.5z" fill="#4a2020" stroke="#ff453a" stroke-width="1.5"/><path d="M10 9v4m0 2v.1" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+<text id="aviso_porta_2" x="347" y="327" font-size="11" text-anchor="start" fill="#ff453a" font-weight="normal" font-family="monospace"></text>
+<g display="none"><g id="pressionar_ext_up_2"/><g id="lib_up_2"/></g>
+<circle id="ext_up_2" data-liberar="lib_up_2" cx="290" cy="284" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="ut_2" x="290" y="289" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▲</text>
-<circle id="lib_up_2" cx="290" cy="316" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
-<circle id="ext_dn_2" cx="330" cy="284" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_up_2"/><g id="lib_up_2"/></g>
+<circle id="lib_up_2" data-liberar="lib_up_2" cx="290" cy="316" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_ext_up_2"/></g>
+<g display="none"><g id="evento_lib_up_2"/></g>
+<g display="none"><g id="pressionar_ext_dn_2"/><g id="lib_dn_2"/></g>
+<circle id="ext_dn_2" data-liberar="lib_dn_2" cx="330" cy="284" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="dt_2" x="330" y="289" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▼</text>
-<circle id="lib_dn_2" cx="330" cy="316" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_dn_2"/><g id="lib_dn_2"/></g>
+<circle id="lib_dn_2" data-liberar="lib_dn_2" cx="330" cy="316" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_ext_dn_2"/></g>
+<g display="none"><g id="evento_lib_dn_2"/></g>
 <line x1="20" y1="254" x2="440" y2="254" stroke="#444"/>
 <text id="andar_3" x="28" y="214" font-size="20" text-anchor="start" fill="#8fb8ff" font-weight="bold" font-family="monospace">P3</text>
 <rect id="visor_3" x="62" y="188" width="52" height="34" rx="3" fill="#000" stroke="#555" stroke-width="1.5" />
 <text id="vnum_3" x="76" y="212" font-size="18" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">0</text>
 <text id="vdir_3" x="100" y="212" font-size="14" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">■</text>
-<circle id="ext_up_3" cx="290" cy="192" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<svg id="aviso_manut_3" x="347" y="189" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Elevador em manutenção</title><circle cx="10" cy="10" r="9" fill="#3b2c14" stroke="#ffae32"/><path d="M14.8 3.5a4.5 4.5 0 0 0-5.2 5.2L4.2 14a1.5 1.5 0 0 0 2.1 2.1l5.3-5.4a4.5 4.5 0 0 0 5.2-5.2l-3 3-2.2-2.2z" fill="#ffae32"/></svg>
+<svg id="aviso_peso_3" x="374" y="189" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Excesso de peso</title><circle cx="10" cy="10" r="9" fill="#321c28" stroke="#ff453a"/><path d="M7 6V4a3 3 0 0 1 6 0v2M8.5 6V4a1.5 1.5 0 0 1 3 0v2" fill="none" stroke="#ff453a" stroke-width="1.5"/><path d="M5 6h10l2.5 11H2.5z" fill="#4a2020" stroke="#ff453a" stroke-width="1.5"/><path d="M10 9v4m0 2v.1" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+<text id="aviso_porta_3" x="347" y="235" font-size="11" text-anchor="start" fill="#ff453a" font-weight="normal" font-family="monospace"></text>
+<g display="none"><g id="pressionar_ext_up_3"/><g id="lib_up_3"/></g>
+<circle id="ext_up_3" data-liberar="lib_up_3" cx="290" cy="192" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="ut_3" x="290" y="197" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▲</text>
-<circle id="lib_up_3" cx="290" cy="224" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
-<circle id="ext_dn_3" cx="330" cy="192" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_up_3"/><g id="lib_up_3"/></g>
+<circle id="lib_up_3" data-liberar="lib_up_3" cx="290" cy="224" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_ext_up_3"/></g>
+<g display="none"><g id="evento_lib_up_3"/></g>
+<g display="none"><g id="pressionar_ext_dn_3"/><g id="lib_dn_3"/></g>
+<circle id="ext_dn_3" data-liberar="lib_dn_3" cx="330" cy="192" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="dt_3" x="330" y="197" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▼</text>
-<circle id="lib_dn_3" cx="330" cy="224" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_dn_3"/><g id="lib_dn_3"/></g>
+<circle id="lib_dn_3" data-liberar="lib_dn_3" cx="330" cy="224" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_ext_dn_3"/></g>
+<g display="none"><g id="evento_lib_dn_3"/></g>
 <line x1="20" y1="162" x2="440" y2="162" stroke="#444"/>
 <text id="andar_4" x="28" y="122" font-size="20" text-anchor="start" fill="#8fb8ff" font-weight="bold" font-family="monospace">P4</text>
 <rect id="visor_4" x="62" y="96" width="52" height="34" rx="3" fill="#000" stroke="#555" stroke-width="1.5" />
 <text id="vnum_4" x="76" y="120" font-size="18" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">0</text>
 <text id="vdir_4" x="100" y="120" font-size="14" text-anchor="middle" fill="#7CFC00" font-weight="normal" font-family="monospace">■</text>
-<circle id="ext_dn_4" cx="330" cy="100" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<svg id="aviso_manut_4" x="347" y="97" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Elevador em manutenção</title><circle cx="10" cy="10" r="9" fill="#3b2c14" stroke="#ffae32"/><path d="M14.8 3.5a4.5 4.5 0 0 0-5.2 5.2L4.2 14a1.5 1.5 0 0 0 2.1 2.1l5.3-5.4a4.5 4.5 0 0 0 5.2-5.2l-3 3-2.2-2.2z" fill="#ffae32"/></svg>
+<svg id="aviso_peso_4" x="374" y="97" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Excesso de peso</title><circle cx="10" cy="10" r="9" fill="#321c28" stroke="#ff453a"/><path d="M7 6V4a3 3 0 0 1 6 0v2M8.5 6V4a1.5 1.5 0 0 1 3 0v2" fill="none" stroke="#ff453a" stroke-width="1.5"/><path d="M5 6h10l2.5 11H2.5z" fill="#4a2020" stroke="#ff453a" stroke-width="1.5"/><path d="M10 9v4m0 2v.1" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+<text id="aviso_porta_4" x="347" y="143" font-size="11" text-anchor="start" fill="#ff453a" font-weight="normal" font-family="monospace"></text>
+<g display="none"><g id="pressionar_ext_dn_4"/><g id="lib_dn_4"/></g>
+<circle id="ext_dn_4" data-liberar="lib_dn_4" cx="330" cy="100" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="dt_4" x="330" y="105" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▼</text>
-<circle id="lib_dn_4" cx="330" cy="132" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_dn_4"/><g id="lib_dn_4"/></g>
+<circle id="lib_dn_4" data-liberar="lib_dn_4" cx="330" cy="132" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_ext_dn_4"/></g>
+<g display="none"><g id="evento_lib_dn_4"/></g>
 <text id="legenda_lib" x="360" y="90" font-size="10" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">○ pequeno = soltar botão</text>
+<g id="cabine_animada" data-delta="0">
 <rect id="cab" x="132" y="448" width="106" height="72" rx="3" fill="#2d3a55" stroke="#8fb8ff" stroke-width="1.5" />
 <rect id="porta_e" x="132" y="448" width="53" height="72" rx="0" fill="#9aa7bd" stroke="#9aa7bd" stroke-width="1.5" />
 <rect id="porta_d" x="185" y="448" width="53" height="72" rx="0" fill="#9aa7bd" stroke="#9aa7bd" stroke-width="1.5" />
 <circle id="peso_ico" cx="185" cy="460" r="5" fill="#2d3a55"/>
+</g>
 <rect id="painel" x="540" y="60" width="360" height="590" rx="8" fill="#242831" stroke="#555" stroke-width="1.5" />
 <text id="p_tit" x="560" y="84" font-size="13" text-anchor="start" fill="#8fb8ff" font-weight="bold" font-family="monospace">PAINEL INTERNO / ESTADO</text>
 <rect id="vi" x="560" y="96" width="320" height="44" rx="4" fill="#000" stroke="#555" stroke-width="1.5" />
 <text id="vi_num" x="574" y="128" font-size="26" text-anchor="start" fill="#7CFC00" font-weight="normal" font-family="monospace">0</text>
 <text id="vi_dir" x="620" y="128" font-size="22" text-anchor="start" fill="#7CFC00" font-weight="normal" font-family="monospace">■</text>
-<text id="vi_alerta" x="660" y="126" font-size="15" text-anchor="start" fill="#ff453a" font-weight="bold" font-family="monospace"></text>
+<svg id="vi_manutencao" x="668" y="109" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Elevador em manutenção</title><circle cx="10" cy="10" r="9" fill="#3b2c14" stroke="#ffae32"/><path d="M14.8 3.5a4.5 4.5 0 0 0-5.2 5.2L4.2 14a1.5 1.5 0 0 0 2.1 2.1l5.3-5.4a4.5 4.5 0 0 0 5.2-5.2l-3 3-2.2-2.2z" fill="#ffae32"/></svg>
+<svg id="vi_peso" x="700" y="109" width="20" height="20" viewBox="0 0 20 20" visibility="hidden" pointer-events="none"><title>Excesso de peso</title><circle cx="10" cy="10" r="9" fill="#321c28" stroke="#ff453a"/><path d="M7 6V4a3 3 0 0 1 6 0v2M8.5 6V4a1.5 1.5 0 0 1 3 0v2" fill="none" stroke="#ff453a" stroke-width="1.5"/><path d="M5 6h10l2.5 11H2.5z" fill="#4a2020" stroke="#ff453a" stroke-width="1.5"/><path d="M10 9v4m0 2v.1" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
 <text id="ib_t" x="560" y="162" font-size="11" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">Destinos</text>
-<circle id="int_0" cx="578" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_int_0"/><g id="lib_int_0"/></g>
+<circle id="int_0" data-liberar="lib_int_0" cx="578" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_0" x="578" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">0</text>
-<circle id="lib_int_0" cx="578" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
-<circle id="int_1" cx="618" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_int_0"/><g id="lib_lib_int_0"/></g>
+<circle id="lib_int_0" data-liberar="lib_lib_int_0" cx="578" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_int_0"/></g>
+<g display="none"><g id="evento_lib_int_0"/></g>
+<g display="none"><g id="pressionar_int_1"/><g id="lib_int_1"/></g>
+<circle id="int_1" data-liberar="lib_int_1" cx="618" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_1" x="618" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">1</text>
-<circle id="lib_int_1" cx="618" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
-<circle id="int_2" cx="658" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_int_1"/><g id="lib_lib_int_1"/></g>
+<circle id="lib_int_1" data-liberar="lib_lib_int_1" cx="618" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_int_1"/></g>
+<g display="none"><g id="evento_lib_int_1"/></g>
+<g display="none"><g id="pressionar_int_2"/><g id="lib_int_2"/></g>
+<circle id="int_2" data-liberar="lib_int_2" cx="658" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_2" x="658" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">2</text>
-<circle id="lib_int_2" cx="658" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
-<circle id="int_3" cx="698" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_int_2"/><g id="lib_lib_int_2"/></g>
+<circle id="lib_int_2" data-liberar="lib_lib_int_2" cx="658" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_int_2"/></g>
+<g display="none"><g id="evento_lib_int_2"/></g>
+<g display="none"><g id="pressionar_int_3"/><g id="lib_int_3"/></g>
+<circle id="int_3" data-liberar="lib_int_3" cx="698" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_3" x="698" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">3</text>
-<circle id="lib_int_3" cx="698" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
-<circle id="int_4" cx="738" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_int_3"/><g id="lib_lib_int_3"/></g>
+<circle id="lib_int_3" data-liberar="lib_lib_int_3" cx="698" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_int_3"/></g>
+<g display="none"><g id="evento_lib_int_3"/></g>
+<g display="none"><g id="pressionar_int_4"/><g id="lib_int_4"/></g>
+<circle id="int_4" data-liberar="lib_int_4" cx="738" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_4" x="738" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">4</text>
-<circle id="lib_int_4" cx="738" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
+<g display="none"><g id="pressionar_lib_int_4"/><g id="lib_lib_int_4"/></g>
+<circle id="lib_int_4" data-liberar="lib_lib_int_4" cx="738" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
+<g display="none"><g id="evento_pressionar_int_4"/></g>
+<g display="none"><g id="evento_lib_int_4"/></g>
 <rect id="btn_abrir" x="560" y="226" width="96" height="28" rx="6" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
 <text id="bt_abrir" x="608" y="245" font-size="12" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">◀▶ abrir</text>
+<g display="none"><g id="evento_btn_abrir"/></g>
 <rect id="btn_fechar" x="670" y="226" width="96" height="28" rx="6" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
 <text id="bt_fechar" x="718" y="245" font-size="12" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▶◀ fechar</text>
+<g display="none"><g id="evento_btn_fechar"/></g>
 <rect id="btn_chave" x="560" y="270" width="150" height="28" rx="6" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
 <text id="bt_chave" x="635" y="289" font-size="12" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">inserir chave</text>
 <rect id="btn_chave2" x="720" y="270" width="160" height="28" rx="6" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
 <text id="bt_chave2" x="800" y="289" font-size="12" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">remover chave</text>
+<g display="none"><g id="evento_btn_chave"/></g>
+<g display="none"><g id="evento_btn_chave2"/></g>
 <rect id="btn_peso0" x="560" y="310" width="96" height="28" rx="6" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
 <text id="bt_peso0" x="608" y="329" font-size="12" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">+75 kg</text>
+<g display="none"><g id="evento_btn_peso0"/></g>
 <rect id="btn_peso1" x="670" y="310" width="96" height="28" rx="6" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>
 <text id="bt_peso1" x="718" y="329" font-size="12" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">−75 kg</text>
+<g display="none"><g id="evento_btn_peso1"/></g>
 <text id="peso_txt" x="785" y="329" font-size="12" text-anchor="start" fill="#e8e8e8" font-weight="normal" font-family="monospace"></text>
 <text id="peso_kg" x="822" y="329" font-size="12" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">/ 450 kg</text>
-<rect id="btn_tick" x="560" y="354" width="150" height="32" rx="6" fill="#2d5a3a" stroke="#7CFC00" stroke-width="1.5" style="cursor:pointer"/>
-<text id="bt_tick" x="635" y="375" font-size="12" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">passar_tempo (+1 s)</text>
-<rect id="btn_passo" x="730" y="354" width="150" height="32" rx="6" fill="#2d3a5a" stroke="#8fb8ff" stroke-width="1.5" style="cursor:pointer"/>
-<text id="bt_passo" x="805" y="375" font-size="12" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">passo (controlador)</text>
+<g id="simulacao" display="none"><g id="btn_tick"/><g id="btn_passo"/></g>
+<rect id="alternar_tempo" x="560" y="354" width="155" height="32" rx="6" fill="#295842" stroke="#8ad6a3" stroke-width="1.5" style="cursor:pointer"/>
+<text id="tempo_retencao" x="700" y="215" font-size="14" text-anchor="start" fill="#ffd400" font-weight="bold" font-family="monospace">—</text>
+<text id="acao_tempo" x="637" y="375" font-size="13" text-anchor="middle" fill="#e8e8e8" font-weight="normal" font-family="monospace">▶ Passar tempo</text>
+<text id="estado_tempo" x="729" y="375" font-size="12" text-anchor="start" fill="#b7c7da" font-weight="normal" font-family="monospace">Pausado</text>
+<text id="tempos_simulados" x="560" y="399" font-size="11" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">Tempos de simulação • trecho: 6 s</text>
+<g display="none"><g id="evento_btn_tick"/></g>
+<g display="none"><g id="evento_btn_passo"/></g>
+<rect id="segurar_porta" x="350" y="558" width="170" height="30" rx="6" fill="#3a3a3a" stroke="#888" stroke-width="1.5" data-liberar="lib_porta" style="cursor:pointer;touch-action:none"/>
+<text id="ambiente" x="350" y="547" font-size="11" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">AMBIENTE DE SIMULAÇÃO</text>
+<text id="segurar_rotulo" x="435" y="578" font-size="13" text-anchor="middle" fill="#e8e8e8" font-weight="normal" font-family="monospace">Segurar porta</text>
+<text id="retencao_ritmo" x="350" y="604" font-size="11" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">Pressionado: 10 s simulados / s</text>
+<g display="none"><g id="evento_pressionar_segurar_porta"/></g>
+<g display="none"><g id="evento_lib_porta"/></g>
 <text id="s_porta_l" x="560" y="412" font-size="11" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">porta:</text>
 <text id="s_porta" x="690" y="412" font-size="11" text-anchor="start" fill="#e8e8e8" font-weight="normal" font-family="monospace"></text>
 <text id="s_seg_l" x="560" y="430" font-size="11" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">porta aberta (s):</text>
@@ -111,4 +197,148 @@
 <text id="s_ped" x="690" y="502" font-size="11" text-anchor="start" fill="#e8e8e8" font-weight="normal" font-family="monospace"></text>
 <text id="s_hist_l" x="560" y="520" font-size="11" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">histórico paradas:</text>
 <text id="s_hist" x="690" y="520" font-size="11" text-anchor="start" fill="#e8e8e8" font-weight="normal" font-family="monospace"></text>
+<script><![CDATA[// Fila unica com confirmacao B. Reenvios conservam o numero: entregar e
+// idempotente, inclusive se uma resposta chegar depois de outra tentativa.
+(() => {
+    const el = id => document.getElementById(id);
+    const painel = el('simulacao');
+    const cabine = el('cabine_animada');
+    const fila = [];
+    const gestos = new Map();
+    let sequencia = 0;
+    let executando = false;
+    let agora = 0;
+    let anterior = performance.now();
+    let segundo = 1000;
+    let passo = 1500;
+    let trecho = null;
+
+    function animar() {
+        const delta = Number(cabine.getAttribute('data-delta'));
+        const andar = el('vi_num').textContent;
+        if (!delta) {
+            if (trecho) passo = agora + 1500;
+            trecho = null;
+            cabine.removeAttribute('transform');
+        } else {
+            if (!trecho || trecho.andar !== andar || trecho.delta !== delta) {
+                trecho = {andar, delta, inicio: agora};
+                passo = agora + 6000;
+            }
+            cabine.setAttribute('transform', 'translate(0 ' +
+                Math.min(1, (agora - trecho.inicio) / 6000) * delta + ')');
+        }
+    }
+
+    function enviar(id, temporal = false, confirmar = null) {
+        fila.push({id, temporal, confirmar, numero: null, tentativa: -Infinity});
+        bombear();
+    }
+
+    function bombear() {
+        if (painel.getAttribute('data-pronto') !== 'sim') return;
+        const confirmado = Number(painel.getAttribute('data-confirmado'));
+        sequencia = Math.max(sequencia, confirmado);
+        const evento = fila[0];
+        if (!evento) return;
+        if (evento.numero !== null && confirmado >= evento.numero) {
+            fila.shift();
+            animar();
+            if (evento.confirmar) evento.confirmar();
+            // Outro ciclo permite que o VisB termine a atualizacao do DOM.
+            return;
+        }
+        // Um tick ja enviado termina atomicamente, inclusive ao pausar.
+        // Seu reenvio idempotente nao pode bloquear a soltura atras dele.
+        if (evento.temporal && !executando && evento.numero === null) return;
+        if (evento.numero === null) evento.numero = ++sequencia;
+        if (performance.now() - evento.tentativa < 250) return;
+        evento.tentativa = performance.now();
+        window.visb_vars = window.visb_vars || {};
+        window.visb_vars.evento = String(evento.numero);
+        el('evento_' + evento.id).dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    }
+
+    function atualizar() {
+        const real = performance.now();
+        // A simulacao espera a ponte: latencia nao cria rajadas de ticks nem
+        // encurta trechos. Pausa congela todos os tempos simulados.
+        if (executando && !fila.length && painel.getAttribute('data-pronto') === 'sim') {
+            agora += real - anterior;
+        }
+        anterior = real;
+        bombear();
+        animar();
+        if (!executando || fila.length || painel.getAttribute('data-pronto') !== 'sim') return;
+        // Nao use a fracao de segundo anterior a uma pressao para cancelar.
+        // O vencimento global e preservado: a fracao volta a contar na soltura.
+        const limites = [...gestos.values()]
+            .filter(g => g.inicio !== null && g.botao.id !== 'segurar_porta')
+            .map(g => g.inicio + Math.floor((agora - g.inicio) / 1000) * 1000);
+        const limite = Math.min(agora, ...limites);
+        if (limite >= segundo) {
+            segundo += 1000;
+            enviar('btn_tick', true);
+        } else if (agora >= passo) {
+            passo = agora + 1500;
+            if (painel.getAttribute('data-passo') === 'sim') enviar('btn_passo', true);
+        }
+        const inicios = [...gestos.values()].map(g => g.inicio).filter(t => t !== null);
+        el('tempo_retencao').textContent = inicios.length ?
+            Math.floor((agora - Math.min(...inicios)) / 1000) + ' s' : '—';
+    }
+
+    function soltar(pointerId) {
+        const gesto = gestos.get(pointerId);
+        if (!gesto) return;
+        atualizar();
+        gestos.delete(pointerId);
+        enviar(gesto.botao.dataset.liberar);
+        if (!gestos.size) el('tempo_retencao').textContent = '—';
+    }
+    function soltarTodos() {
+        [...gestos.keys()].forEach(soltar);
+    }
+
+    document.addEventListener('pointerdown', evento => {
+        const botao = evento.target.closest('[data-liberar]');
+        if (evento.button !== 0 || !botao || gestos.has(evento.pointerId) ||
+            [...gestos.values()].some(g => g.botao === botao)) return;
+        if (botao.getAttribute('data-habilitado') === 'nao' ||
+            Number(botao.getAttribute('data-fase') || 0) < 0) return;
+        evento.preventDefault();
+        atualizar();
+        const gesto = {botao, inicio: null};
+        gestos.set(evento.pointerId, gesto);
+        if (botao.setPointerCapture && evento.isTrusted) botao.setPointerCapture(evento.pointerId);
+        enviar('pressionar_' + botao.id, false, () => { gesto.inicio = agora; });
+    });
+    window.addEventListener('pointerup', e => soltar(e.pointerId), true);
+    window.addEventListener('pointercancel', e => soltar(e.pointerId), true);
+    document.addEventListener('lostpointercapture', e => soltar(e.pointerId), true);
+    window.addEventListener('blur', soltarTodos);
+    window.addEventListener('pagehide', soltarTodos);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) soltarTodos();
+    });
+
+    ['btn_abrir', 'btn_fechar', 'btn_chave', 'btn_chave2', 'btn_peso0', 'btn_peso1'].forEach(id => {
+        el(id).addEventListener('click', () => { atualizar(); enviar(id); });
+    });
+    el('alternar_tempo').addEventListener('click', () => {
+        atualizar();
+        executando = !executando;
+        // Eventos temporais ainda nao enviados nao podem bloquear uma soltura.
+        if (!executando) {
+            for (let i = fila.length - 1; i >= 0; i--) {
+                if (fila[i].temporal && fila[i].numero === null) fila.splice(i, 1);
+            }
+        }
+        anterior = performance.now();
+        el('acao_tempo').textContent = executando ? 'Ⅱ Pausar tempo' : '▶ Passar tempo';
+        el('estado_tempo').textContent = executando ? 'Em execução' : 'Pausado';
+    });
+    setInterval(atualizar, 40);
+})();
+]]></script>
 </svg>

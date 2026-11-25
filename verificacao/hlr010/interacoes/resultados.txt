@@ -1,21 +1,21 @@
-manutencao_recusa_interno_0: OK
-cancelamento_interno_0: OK
-liberacao_no_limite_interno_0: OK
-manutencao_recusa_interno_1: OK
-cancelamento_interno_1: OK
-liberacao_no_limite_interno_1: OK
-manutencao_recusa_interno_2: OK
-cancelamento_interno_2: OK
-liberacao_no_limite_interno_2: OK
-manutencao_recusa_interno_3: OK
-cancelamento_interno_3: OK
-liberacao_no_limite_interno_3: OK
-manutencao_recusa_interno_4: OK
-cancelamento_interno_4: OK
-liberacao_no_limite_interno_4: OK
-manutencao_recusa_externo_subida_0: OK
-cancelamento_externo_subida_0: OK
-liberacao_no_limite_externo_subida_0: OK
+manutencao_recusa_interno_0: FALHOU
+cancelamento_interno_0: FALHOU
+liberacao_no_limite_interno_0: FALHOU
+manutencao_recusa_interno_1: FALHOU
+cancelamento_interno_1: FALHOU
+liberacao_no_limite_interno_1: FALHOU
+manutencao_recusa_interno_2: FALHOU
+cancelamento_interno_2: FALHOU
+liberacao_no_limite_interno_2: FALHOU
+manutencao_recusa_interno_3: FALHOU
+cancelamento_interno_3: FALHOU
+liberacao_no_limite_interno_3: FALHOU
+manutencao_recusa_interno_4: FALHOU
+cancelamento_interno_4: FALHOU
+liberacao_no_limite_interno_4: FALHOU
+manutencao_recusa_externo_subida_0: FALHOU
+cancelamento_externo_subida_0: FALHOU
+liberacao_no_limite_externo_subida_0: FALHOU
 manutencao_recusa_externo_subida_1: OK
 cancelamento_externo_subida_1: OK
 liberacao_no_limite_externo_subida_1: OK
@@ -45,4 +45,4 @@ saida_manutencao_reaceita_todos_botoes: OK
 repeticao_botao_nao_duplica_pedido: OK
 recusa_nao_reinicia_piscada: OK
 liberar_recusa_permite_novo_ciclo: OK
-47/47 cenarios aprovados.
+29/47 cenarios aprovados.

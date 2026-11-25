@@ -42,7 +42,7 @@ operação se sua `PRE` não for satisfeita.
 | Cabine | `andar`, `direcao`, `deslocamento` | Posição atual, movimento e quantidade acumulada de andares percorridos. |
 | Cabine | `sentido_atendimento`, `parada_pendente` | Memória da varredura e pedido para cessar movimento no próximo andar. |
 | Cabine | `parada_por_cancelamento` | Motivo de parada do HLR-006, preservado ao remover a chave; `parada_pendente` reúne esse motivo e `manutencao_pendente`. |
-| Porta | `porta`, `segundos_porta_aberta` | Estado físico e contador usado no alerta após dois minutos. |
+| Porta | `porta`, `porta_retida`, `segundos_porta_aberta` | Estado físico e contador usado no alerta após dois minutos. |
 | Carga | `peso`, `limite_peso_atingido` | Peso lido e alerta derivado de `peso > 450`. |
 | Manutenção | `chave_manutencao`, `manutencao`, `manutencao_pendente` | Chave inserida, modo ativo e solicitação aguardando a próxima parada. |
 | Visitas | `ultima_visita` | Função parcial que associa cada andar visitado ao deslocamento acumulado na última visita. |
@@ -94,7 +94,7 @@ fases de LED, o temporizador da porta e a animação dos botões abrir/fechar.
 Para cancelar uma chamada, pressione e mantenha o botão pressionado durante
 três chamadas a `passar_tempo`. Se ele for liberado antes, o pedido continua.
 Chamadas externas expiradas são removidas. Pedidos internos também são
-removidos, salvo quando eles constituem o último pedido interno: nesse caso o
+removidos, salvo quando seu cancelamento deixaria o sistema sem qualquer pedido interno ou externo: nesse caso o
 menor andar selecionado permanece, é marcado como recusado e seu LED pisca
 duas vezes antes de voltar a acender.
 
@@ -206,3 +206,29 @@ de execuções infinitas, nem que o percurso é globalmente mínimo. Esses são 
 limites conhecidos do HLR-010. As fontes atuais incluem alterações posteriores,
 portanto as provas nativas precisam ser regeneradas. Consulte `docs/validacao.md` para resultados e
 reprodução, e `docs/decisões.md` para as hipóteses de modelagem.
+
+## Demonstração da animação — HLR-001 a HLR-009
+
+Abra `elevador/animacao.mch` no ProB2 UI com `andar_maximo = 4`. O controlador
+manual continua em `elevador.mch`. Todos os tempos indicados no SVG são simulados;
+a pausa suspende ticks, movimento, cancelamentos e piscadas.
+
+1. Abra a porta e mantenha **Segurar porta** pressionado com o relógio em execução.
+   Durante a pressão, cada tick do relógio aplica dez segundos simulados
+   em uma transição B, e o contador visível salta 10, 20, 30…
+   Confira que Fechar não atua e que é possível registrar outro pedido.
+2. Observe o contador: em 120 não há alerta; em 121 surge o aviso externo.
+   Um pedido no andar atual é atendido sem zerar esse contador.
+3. Solte o controle ou tire o foco da janela. No próximo passo elegível a porta
+   fecha e o contador zera; reabrir começa de zero.
+4. Repita a retenção e insira a chave. A retenção e os pedidos são limpos, mas o
+   contador continua. Manutenção e porta aberta podem aparecer juntas sem ocultar
+   andar/direção. Botões de pedido piscam; o controle ambiental fica indisponível.
+5. Teste cancelamento antes de três segundos e no terceiro segundo simulado;
+   recusa do último pedido interno produz duas piscadas. Uma chamada externa ativa
+   continua permitindo cancelar o único interno.
+6. Confira 450 kg versus 525 kg e retomada após reduzir peso; cancele o último
+   pedido externo em trajeto e confira parada no próximo andar. O trecho dura
+   seis segundos simulados e o visor muda somente na chegada.
+
+Execuções automatizadas e limites estão em `verificacao/animacao/README.md`.

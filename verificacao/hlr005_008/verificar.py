@@ -23,6 +23,8 @@ cases = [
  ('liberacao', ['pressionar_externo_subida(int(2)).']+tick*2+['liberar_subida(int(2)).']+tick*3, '2 : pedidos_subida & segurando_subida = {} & segurando_subida_1 = {} & segurando_subida_2 = {}'),
  ('parada', ['pressionar_externo_subida(int(3)).','passo.']+tick*3+['passo.'], 'andar = 1 & direcao = parado & pedidos_subida = {}'),
  ('simultaneos', ['pressionar_interno(int(1)).','pressionar_interno(int(3)).']+tick*3, 'pedidos_internos = {1} & 1 : piscando_interno1 & interno_recusado = {1}'),
+ ('externo_descida_mesmo_andar', ['pressionar_externo_descida(int(1)).','liberar_descida(int(1)).','pressionar_interno(int(1)).']+tick*3, 'pedidos_internos = {} & pedidos_descida = {1} & interno_recusado = {}'),
+ ('externo_subida_outro_andar', ['pressionar_externo_subida(int(0)).','liberar_subida(int(0)).','pressionar_interno(int(1)).']+tick*3, 'pedidos_internos = {} & pedidos_subida = {0} & interno_recusado = {}'),
  ('outro_interno', ['pressionar_interno(int(1)).','liberar_interno(int(1)).','pressionar_interno(int(3)).']+tick*3, 'pedidos_internos = {1}'),
  ('manutencao_movimento', ['pressionar_interno(int(4)).','passo.','inserir_chave.','passo.'], 'manutencao = TRUE & andar = 1 & pedidos_internos = {}'),
  ('saida_manutencao', ['inserir_chave.','remover_chave_manutencao.','pressionar_interno(int(2)).'], 'chave_manutencao = FALSE & manutencao = FALSE & manutencao_pendente = FALSE & parada_pendente = FALSE & parada_por_cancelamento = FALSE & pedidos_internos = {2}'),
@@ -80,7 +82,8 @@ for maintenance in [False, True]:
 with instancia_prob(args.andar_maximo) as (instance_root, machine):
  for name, ops, pred in cases:
   trace=OUTPUT/(name+'.trace');trace.write_text(base+'\n'.join(ops)+'\n')
-  r=subprocess.run([prob,str(machine),'-trace_replay','prolog',str(trace.resolve()),'-eval',pred],cwd=instance_root,capture_output=True,text=True,timeout=60)
+  # Desativa cores ANSI para manter as mensagens de sucesso analisáveis.
+  r=subprocess.run([prob,str(machine),'-no_color','-trace_replay','prolog',str(trace.resolve()),'-eval',pred],cwd=instance_root,capture_output=True,text=True,timeout=60)
   (OUTPUT/(name+'.log')).write_text(r.stdout+r.stderr)
   if r.returncode or 'Trace checking successful !' not in r.stdout or 'Predicate is TRUE' not in r.stdout: raise RuntimeError(name)
   print(name+': OK',flush=True)

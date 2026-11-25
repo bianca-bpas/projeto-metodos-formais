@@ -1,6 +1,13 @@
 # Auditoria dos requisitos — controle de elevador
 
-## Estado da auditoria — 2026-11-11
+## Atualização da animação — 2026-11-25
+
+A retenção ambiental, a continuidade do contador e a entrega confirmada dos eventos
+foram implementadas. Evidências atuais, separadas do histórico abaixo, estão em
+[verificação da animação](../verificacao/animacao/README.md). HLR-010 permanece fora
+desta implementação; a interpretação atual de HLR-005 foi preservada.
+
+## Estado histórico da auditoria — 2026-11-11
 
 Em 2026-11-11, passaram **28/28 cenários HLR-005/008, 14/14 HLR-010,
 13/13 de borda e 47/47 de interação no ProB**, todos com
@@ -18,8 +25,7 @@ das provas não correspondem às fontes atuais após as alterações recentes em
 HLR-005/008 foram implementados na abstração atual. Os cenários atuais conferem o cancelamento automático e as quatro fases de LED.
 **Não há cumprimento total de HLR-010:** justiça temporal e minimização global
 permanecem pendentes. Invariantes provados não demonstram vivacidade nem ótimo
-global. A exceção de cancelamento do último pedido interno também depende da
-interpretação documentada dos requisitos.
+global.
 
 ## Rastreabilidade
 
@@ -27,11 +33,11 @@ interpretação documentada dos requisitos.
 |---|---|---|
 | HLR-001 — visor externo | Atendido na abstração | `consultar_visores` e `consultar_estado` expõem andar/direção. Uma única saída representa a informação comum a todos os visores; não há dispositivos separados. |
 | HLR-002 — botões externos | Atendido | `configuracao.painel_externo` permite subir em `0..(andar_maximo - 1)` e descer em `1..andar_maximo`; operações externas exigem pavimento e associação válidos. |
-| HLR-003 — painel interno e porta | Atendido na abstração | Botões internos em `0..andar_maximo`; abrir/fechar só atuam com cabine parada. `direcao /= parado => porta = fechada` é invariante. |
+| HLR-003 — painel interno e porta | Atendido na abstração | Botões internos em `0..andar_maximo`; abrir/fechar só atuam com cabine parada. Retenção ambiental impede fechamento manual/automático e não abre a porta. `direcao /= parado => porta = fechada` é invariante. |
 | HLR-004 — LED do pedido | Atendido como estado lógico | `consultar_leds` incorpora as quatro fases ligado/desligado/ligado/desligado e o estado estável, conferidos pelos cenários. |
-| HLR-005 — cancelamento após três segundos | Implementado na abstração | Cancelamento automático no terceiro tick, usando conjuntos `segurando_*`; recusa do último interno em `interno_recusado`. Interpretação restrita a pedidos internos permanece uma ressalva. |
-| HLR-006 — parar no próximo andar após último cancelamento | Atendido quando o cancelamento é executado | Cancelamentos externos marcam `parada_por_cancelamento` e `parada_pendente`; `subir`/`descer` avançam um andar e param. A remoção da chave preserva essa parada, mesmo com novo pedido. O último pedido interno não pode ser cancelado pela interpretação adotada. |
-| HLR-007 — aviso após dois minutos | Atendido com relógio abstrato | Tempo satura em 121; aviso é `segundos_porta_aberta > 120`; fechamento zera o contador. Depende de cada `passar_tempo` corresponder a um segundo. |
+| HLR-005 — cancelamento após três segundos | Implementado na abstração | Cancelamento automático no terceiro tick, usando conjuntos `segurando_*`; recusa do último interno em `interno_recusado`. Chamadas externas que continuam ativas permitem cancelar o último interno. |
+| HLR-006 — parar no próximo andar após último cancelamento | Atendido quando o cancelamento é executado | Cancelamentos externos marcam `parada_por_cancelamento` e `parada_pendente`; `subir`/`descer` avançam um andar e param. A remoção da chave preserva essa parada, mesmo com novo pedido. Se nenhum outro pedido sobreviver ao tick, um pedido interno é preservado. |
+| HLR-007 — aviso após dois minutos | Atendido com relógio abstrato | Tempo contínuo durante retenção/manutenção, sem reinício por pedido no mesmo andar; satura em 121, aviso é `segundos_porta_aberta > 120` e fechamento zera o contador. Depende de cada `passar_tempo` corresponder a um segundo. |
 | HLR-008 — manutenção | Implementado na abstração | Chave com cabine parada cancela imediatamente; em movimento, para no próximo andar e cancela. Remover a chave antes da parada cancela a manutenção pendente e somente seu motivo de parada. Durante a manutenção, novos pedidos são recusados, avisos são expostos e a remoção libera manutenção. As quatro fases e os LEDs de porta são conferidos pelos cenários ProB. |
 | HLR-009 — limite de 450 kg | Atendido na abstração | Sobrecarga somente se peso > 450; iniciar movimento e avançar exigem ausência de sobrecarga. Alterações de peso só são aceitas com cabine parada. Não há contagem de pessoas; seis pessoas é tratado como justificativa dos 450 kg. |
 | HLR-010 — justiça e minimização | Não demonstrado integralmente; ótimo global refutado | Há política de varredura e escolha inicial pelo pedido mais próximo. Não há prova de vivacidade. Existe percurso não mínimo mesmo sem novas chamadas. |
@@ -40,9 +46,7 @@ interpretação documentada dos requisitos.
 
 ### Interpretação do último pedido interno
 
-A recusa de cancelamento preserva o último pedido interno, mesmo quando há
-pedidos externos. Essa interpretação de “outro botão associado a um pavimento
-selecionado” precisa ser aceita na avaliação dos requisitos.
+Uma chamada externa de subida ou descida conta como outro botão selecionado, inclusive no mesmo pavimento. Se ela continuar ativa no terceiro tick, o último pedido interno pode ser cancelado.
 
 ### Não há garantia de percurso mínimo
 

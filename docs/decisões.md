@@ -29,9 +29,9 @@
   representam a pressão e os dois primeiros ticks. O terceiro cancela
   automaticamente; `interno_recusado` registra a recusa até a liberação.
 - Pedidos externos podem ser cancelados mesmo quando forem o único pedido.
-- O último pedido interno não pode ser cancelado: ele permanece ativo e passa
+- Se o cancelamento deixar o sistema sem pedidos internos ou externos, o último interno é preservado: ele permanece ativo e passa
   por quatro fases (ligado, desligado, ligado, desligado), retornando aceso.
-- Se todos os internos completarem três segundos juntos, o menor pavimento
+- Se todos os internos completarem três segundos juntos e nenhuma chamada externa continuar ativa, o menor pavimento
   permanece ativo; os demais são cancelados.
 - Se o último pedido em curso for cancelado durante o movimento, a cabine para
   no próximo pavimento.
@@ -55,8 +55,7 @@
 
 - Os botões `pressionar_abrir` e `pressionar_fechar` só alteram a porta quando
   a cabine está parada.
-- O próximo `passo` do controlador fecha uma porta aberta; o botão de fechar
-  permite antecipar essa ação.
+- O próximo `passo` elegível fecha uma porta aberta, salvo durante `porta_retida`. O botão Fechar respeita a mesma restrição. Pedidos no andar atual podem ser atendidos sem reiniciar o contador.
 - Se o ambiente avançar o tempo por mais de 120 segundos antes do fechamento,
   o aviso de porta aberta aparece somente nos visores externos.
 - Andar e direção aparecem nos visores internos e externos; manutenção aparece
@@ -78,3 +77,23 @@
   botão inicia quatro fases de piscada (ligado, desligado, ligado, desligado) e o LED
   volta a permanecer apagado.
 - Inserir novamente uma chave já inserida não é uma operação válida.
+
+## Retenção e relógio da animação — 2026-11-25
+
+`porta_retida` representa uma pessoa impedindo o fechamento. `segurar_porta` e
+`liberar_porta` são operações do ambiente expostas pelo controlador; não acrescentam
+botões aos painéis previstos nos HLR. A manutenção limpa a retenção e torna esse
+controle indisponível. A contagem continua durante retenção e manutenção, satura
+em 121 e só zera no fechamento. Os avisos externos são independentes entre si e
+do andar/direção.
+
+A máquina `animacao` é um adaptador de entrega idempotente, sem política de atendimento.
+O relógio e o deslocamento visual usam tempo de simulação e aguardam confirmação
+B antes de avançar a fila. A pausa congela esse tempo após concluir eventual operação
+em voo. Durante a retenção confirmada, cada tick do relógio executa dez avanços B
+numa única transição e o contador visível salta de 10 em 10. Ao soltar, cada
+tick volta a executar um avanço. Pressão e soltura usam Pointer Events, incluindo cancelamento e perda de foco.
+
+Preservamos a interpretação de HLR-005: uma chamada externa ainda ativa permite
+cancelar o único destino interno. Esta alteração não modifica a política de
+atendimento nem estabelece justiça temporal ou otimização de HLR-010.

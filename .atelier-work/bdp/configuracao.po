@@ -1,0 +1,10 @@
+THEORY ProofList
+END
+&
+THEORY Formulas
+END
+&
+THEORY EnumerateX IS
+DIRECOES == {subindo,descendo,parado};
+PORTAS == {aberta,fechada}
+END

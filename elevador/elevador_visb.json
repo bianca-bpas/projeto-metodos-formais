@@ -12,6 +12,21 @@
    "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
   },
   {
+   "id": "aviso_manut_0",
+   "attr": "visibility",
+   "value": "IF manutencao = TRUE or manutencao_pendente = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_peso_0",
+   "attr": "visibility",
+   "value": "IF limite_peso_atingido = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_porta_0",
+   "attr": "text",
+   "value": "IF segundos_porta_aberta > 120 THEN \"PORTA ABERTA > 120 s\" ELSE \"\" END"
+  },
+  {
    "id": "ext_up_0",
    "attr": "fill",
    "value": "IF (0 : pedidos_subida & 0 /: (piscando_subida1 \\/ piscando_subida2 \\/ piscando_subida3 \\/ piscando_subida4)) or 0 : piscando_subida1 or 0 : piscando_subida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
@@ -20,6 +35,16 @@
    "id": "ext_up_0",
    "attr": "stroke",
    "value": "IF 0 : segurando_subida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "ext_up_0",
+   "attr": "data-fase",
+   "value": "IF not(0 < andar_maximo) THEN -1 ELSE IF manutencao = TRUE THEN IF 0 : piscando_subida1 THEN 5 ELSE 4 END ELSE IF 0 : segurando_subida_2 THEN 3 ELSE IF 0 : segurando_subida_1 THEN 2 ELSE IF 0 : segurando_subida THEN 1 ELSE 0 END END END END END"
+  },
+  {
+   "id": "ext_up_0",
+   "attr": "stroke-width",
+   "value": "IF 0 : segurando_subida_2 THEN 4 ELSE IF 0 : segurando_subida_1 THEN 3 ELSE IF 0 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "vnum_1",
@@ -32,6 +57,21 @@
    "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
   },
   {
+   "id": "aviso_manut_1",
+   "attr": "visibility",
+   "value": "IF manutencao = TRUE or manutencao_pendente = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_peso_1",
+   "attr": "visibility",
+   "value": "IF limite_peso_atingido = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_porta_1",
+   "attr": "text",
+   "value": "IF segundos_porta_aberta > 120 THEN \"PORTA ABERTA > 120 s\" ELSE \"\" END"
+  },
+  {
    "id": "ext_up_1",
    "attr": "fill",
    "value": "IF (1 : pedidos_subida & 1 /: (piscando_subida1 \\/ piscando_subida2 \\/ piscando_subida3 \\/ piscando_subida4)) or 1 : piscando_subida1 or 1 : piscando_subida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
@@ -40,6 +80,16 @@
    "id": "ext_up_1",
    "attr": "stroke",
    "value": "IF 1 : segurando_subida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "ext_up_1",
+   "attr": "data-fase",
+   "value": "IF not(1 < andar_maximo) THEN -1 ELSE IF manutencao = TRUE THEN IF 1 : piscando_subida1 THEN 5 ELSE 4 END ELSE IF 1 : segurando_subida_2 THEN 3 ELSE IF 1 : segurando_subida_1 THEN 2 ELSE IF 1 : segurando_subida THEN 1 ELSE 0 END END END END END"
+  },
+  {
+   "id": "ext_up_1",
+   "attr": "stroke-width",
+   "value": "IF 1 : segurando_subida_2 THEN 4 ELSE IF 1 : segurando_subida_1 THEN 3 ELSE IF 1 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "ext_dn_1",
@@ -52,6 +102,16 @@
    "value": "IF 1 : segurando_descida THEN \"#ffffff\" ELSE \"#888888\" END"
   },
   {
+   "id": "ext_dn_1",
+   "attr": "data-fase",
+   "value": "IF not(1 <= andar_maximo) THEN -1 ELSE IF manutencao = TRUE THEN IF 1 : piscando_descida1 THEN 5 ELSE 4 END ELSE IF 1 : segurando_descida_2 THEN 3 ELSE IF 1 : segurando_descida_1 THEN 2 ELSE IF 1 : segurando_descida THEN 1 ELSE 0 END END END END END"
+  },
+  {
+   "id": "ext_dn_1",
+   "attr": "stroke-width",
+   "value": "IF 1 : segurando_descida_2 THEN 4 ELSE IF 1 : segurando_descida_1 THEN 3 ELSE IF 1 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
+  },
+  {
    "id": "vnum_2",
    "attr": "text",
    "value": "andar"
@@ -60,6 +120,21 @@
    "id": "vdir_2",
    "attr": "text",
    "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
+  },
+  {
+   "id": "aviso_manut_2",
+   "attr": "visibility",
+   "value": "IF manutencao = TRUE or manutencao_pendente = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_peso_2",
+   "attr": "visibility",
+   "value": "IF limite_peso_atingido = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_porta_2",
+   "attr": "text",
+   "value": "IF segundos_porta_aberta > 120 THEN \"PORTA ABERTA > 120 s\" ELSE \"\" END"
   },
   {
    "id": "ext_up_2",
@@ -72,6 +147,16 @@
    "value": "IF 2 : segurando_subida THEN \"#ffffff\" ELSE \"#888888\" END"
   },
   {
+   "id": "ext_up_2",
+   "attr": "data-fase",
+   "value": "IF not(2 < andar_maximo) THEN -1 ELSE IF manutencao = TRUE THEN IF 2 : piscando_subida1 THEN 5 ELSE 4 END ELSE IF 2 : segurando_subida_2 THEN 3 ELSE IF 2 : segurando_subida_1 THEN 2 ELSE IF 2 : segurando_subida THEN 1 ELSE 0 END END END END END"
+  },
+  {
+   "id": "ext_up_2",
+   "attr": "stroke-width",
+   "value": "IF 2 : segurando_subida_2 THEN 4 ELSE IF 2 : segurando_subida_1 THEN 3 ELSE IF 2 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
+  },
+  {
    "id": "ext_dn_2",
    "attr": "fill",
    "value": "IF (2 : pedidos_descida & 2 /: (piscando_descida1 \\/ piscando_descida2 \\/ piscando_descida3 \\/ piscando_descida4)) or 2 : piscando_descida1 or 2 : piscando_descida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
@@ -80,6 +165,16 @@
    "id": "ext_dn_2",
    "attr": "stroke",
    "value": "IF 2 : segurando_descida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "ext_dn_2",
+   "attr": "data-fase",
+   "value": "IF not(2 <= andar_maximo) THEN -1 ELSE IF manutencao = TRUE THEN IF 2 : piscando_descida1 THEN 5 ELSE 4 END ELSE IF 2 : segurando_descida_2 THEN 3 ELSE IF 2 : segurando_descida_1 THEN 2 ELSE IF 2 : segurando_descida THEN 1 ELSE 0 END END END END END"
+  },
+  {
+   "id": "ext_dn_2",
+   "attr": "stroke-width",
+   "value": "IF 2 : segurando_descida_2 THEN 4 ELSE IF 2 : segurando_descida_1 THEN 3 ELSE IF 2 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "vnum_3",
@@ -92,6 +187,21 @@
    "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
   },
   {
+   "id": "aviso_manut_3",
+   "attr": "visibility",
+   "value": "IF manutencao = TRUE or manutencao_pendente = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_peso_3",
+   "attr": "visibility",
+   "value": "IF limite_peso_atingido = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_porta_3",
+   "attr": "text",
+   "value": "IF segundos_porta_aberta > 120 THEN \"PORTA ABERTA > 120 s\" ELSE \"\" END"
+  },
+  {
    "id": "ext_up_3",
    "attr": "fill",
    "value": "IF (3 : pedidos_subida & 3 /: (piscando_subida1 \\/ piscando_subida2 \\/ piscando_subida3 \\/ piscando_subida4)) or 3 : piscando_subida1 or 3 : piscando_subida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
@@ -100,6 +210,16 @@
    "id": "ext_up_3",
    "attr": "stroke",
    "value": "IF 3 : segurando_subida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "ext_up_3",
+   "attr": "data-fase",
+   "value": "IF not(3 < andar_maximo) THEN -1 ELSE IF manutencao = TRUE THEN IF 3 : piscando_subida1 THEN 5 ELSE 4 END ELSE IF 3 : segurando_subida_2 THEN 3 ELSE IF 3 : segurando_subida_1 THEN 2 ELSE IF 3 : segurando_subida THEN 1 ELSE 0 END END END END END"
+  },
+  {
+   "id": "ext_up_3",
+   "attr": "stroke-width",
+   "value": "IF 3 : segurando_subida_2 THEN 4 ELSE IF 3 : segurando_subida_1 THEN 3 ELSE IF 3 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "ext_dn_3",
@@ -112,6 +232,16 @@
    "value": "IF 3 : segurando_descida THEN \"#ffffff\" ELSE \"#888888\" END"
   },
   {
+   "id": "ext_dn_3",
+   "attr": "data-fase",
+   "value": "IF not(3 <= andar_maximo) THEN -1 ELSE IF manutencao = TRUE THEN IF 3 : piscando_descida1 THEN 5 ELSE 4 END ELSE IF 3 : segurando_descida_2 THEN 3 ELSE IF 3 : segurando_descida_1 THEN 2 ELSE IF 3 : segurando_descida THEN 1 ELSE 0 END END END END END"
+  },
+  {
+   "id": "ext_dn_3",
+   "attr": "stroke-width",
+   "value": "IF 3 : segurando_descida_2 THEN 4 ELSE IF 3 : segurando_descida_1 THEN 3 ELSE IF 3 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
+  },
+  {
    "id": "vnum_4",
    "attr": "text",
    "value": "andar"
@@ -122,6 +252,21 @@
    "value": "IF manutencao = TRUE THEN \"M\" ELSE IF segundos_porta_aberta > 120 THEN \"X\" ELSE IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END END END"
   },
   {
+   "id": "aviso_manut_4",
+   "attr": "visibility",
+   "value": "IF manutencao = TRUE or manutencao_pendente = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_peso_4",
+   "attr": "visibility",
+   "value": "IF limite_peso_atingido = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "aviso_porta_4",
+   "attr": "text",
+   "value": "IF segundos_porta_aberta > 120 THEN \"PORTA ABERTA > 120 s\" ELSE \"\" END"
+  },
+  {
    "id": "ext_dn_4",
    "attr": "fill",
    "value": "IF (4 : pedidos_descida & 4 /: (piscando_descida1 \\/ piscando_descida2 \\/ piscando_descida3 \\/ piscando_descida4)) or 4 : piscando_descida1 or 4 : piscando_descida3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
@@ -130,6 +275,21 @@
    "id": "ext_dn_4",
    "attr": "stroke",
    "value": "IF 4 : segurando_descida THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "ext_dn_4",
+   "attr": "data-fase",
+   "value": "IF not(4 <= andar_maximo) THEN -1 ELSE IF manutencao = TRUE THEN IF 4 : piscando_descida1 THEN 5 ELSE 4 END ELSE IF 4 : segurando_descida_2 THEN 3 ELSE IF 4 : segurando_descida_1 THEN 2 ELSE IF 4 : segurando_descida THEN 1 ELSE 0 END END END END END"
+  },
+  {
+   "id": "ext_dn_4",
+   "attr": "stroke-width",
+   "value": "IF 4 : segurando_descida_2 THEN 4 ELSE IF 4 : segurando_descida_1 THEN 3 ELSE IF 4 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
+  },
+  {
+   "id": "cabine_animada",
+   "attr": "data-delta",
+   "value": "IF direcao = subindo THEN -92 ELSE IF direcao = descendo THEN 92 ELSE 0 END END"
   },
   {
    "id": "cab",
@@ -182,14 +342,19 @@
    "value": "IF direcao = subindo THEN \"▲\" ELSE IF direcao = descendo THEN \"▼\" ELSE \"■\" END END"
   },
   {
-   "id": "vi_alerta",
-   "attr": "text",
-   "value": "IF manutencao = TRUE THEN \"MANUTENÇÃO\" ELSE IF limite_peso_atingido = TRUE THEN \"EXCESSO DE PESO\" ELSE IF manutencao_pendente = TRUE THEN \"MANUT. PENDENTE\" ELSE \"\" END END END"
+   "id": "vi_manutencao",
+   "attr": "visibility",
+   "value": "IF manutencao = TRUE or manutencao_pendente = TRUE THEN \"visible\" ELSE \"hidden\" END"
+  },
+  {
+   "id": "vi_peso",
+   "attr": "visibility",
+   "value": "IF limite_peso_atingido = TRUE THEN \"visible\" ELSE \"hidden\" END"
   },
   {
    "id": "int_0",
    "attr": "fill",
-   "value": "IF (0 : pedidos_internos & 0 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 0 : piscando_interno1 or 0 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+   "value": "IF 0 : interno_recusado THEN \"#ffd400\" ELSE IF (0 : pedidos_internos & 0 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 0 : piscando_interno1 or 0 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END END"
   },
   {
    "id": "int_0",
@@ -197,9 +362,14 @@
    "value": "IF 0 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
   },
   {
+   "id": "int_0",
+   "attr": "stroke-width",
+   "value": "IF 0 : segurando_interno_2 THEN 4 ELSE IF 0 : segurando_interno_1 THEN 3 ELSE IF 0 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+  },
+  {
    "id": "int_1",
    "attr": "fill",
-   "value": "IF (1 : pedidos_internos & 1 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 1 : piscando_interno1 or 1 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+   "value": "IF 1 : interno_recusado THEN \"#ffd400\" ELSE IF (1 : pedidos_internos & 1 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 1 : piscando_interno1 or 1 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END END"
   },
   {
    "id": "int_1",
@@ -207,9 +377,14 @@
    "value": "IF 1 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
   },
   {
+   "id": "int_1",
+   "attr": "stroke-width",
+   "value": "IF 1 : segurando_interno_2 THEN 4 ELSE IF 1 : segurando_interno_1 THEN 3 ELSE IF 1 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+  },
+  {
    "id": "int_2",
    "attr": "fill",
-   "value": "IF (2 : pedidos_internos & 2 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 2 : piscando_interno1 or 2 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+   "value": "IF 2 : interno_recusado THEN \"#ffd400\" ELSE IF (2 : pedidos_internos & 2 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 2 : piscando_interno1 or 2 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END END"
   },
   {
    "id": "int_2",
@@ -217,9 +392,14 @@
    "value": "IF 2 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
   },
   {
+   "id": "int_2",
+   "attr": "stroke-width",
+   "value": "IF 2 : segurando_interno_2 THEN 4 ELSE IF 2 : segurando_interno_1 THEN 3 ELSE IF 2 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+  },
+  {
    "id": "int_3",
    "attr": "fill",
-   "value": "IF (3 : pedidos_internos & 3 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 3 : piscando_interno1 or 3 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+   "value": "IF 3 : interno_recusado THEN \"#ffd400\" ELSE IF (3 : pedidos_internos & 3 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 3 : piscando_interno1 or 3 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END END"
   },
   {
    "id": "int_3",
@@ -227,14 +407,24 @@
    "value": "IF 3 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
   },
   {
+   "id": "int_3",
+   "attr": "stroke-width",
+   "value": "IF 3 : segurando_interno_2 THEN 4 ELSE IF 3 : segurando_interno_1 THEN 3 ELSE IF 3 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+  },
+  {
    "id": "int_4",
    "attr": "fill",
-   "value": "IF (4 : pedidos_internos & 4 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 4 : piscando_interno1 or 4 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+   "value": "IF 4 : interno_recusado THEN \"#ffd400\" ELSE IF (4 : pedidos_internos & 4 /: (piscando_interno1 \\/ piscando_interno2 \\/ piscando_interno3 \\/ piscando_interno4)) or 4 : piscando_interno1 or 4 : piscando_interno3 THEN \"#ffd400\" ELSE \"#3a3a3a\" END END"
   },
   {
    "id": "int_4",
    "attr": "stroke",
    "value": "IF 4 : segurando_interno \\/ interno_recusado THEN \"#ffffff\" ELSE \"#888888\" END"
+  },
+  {
+   "id": "int_4",
+   "attr": "stroke-width",
+   "value": "IF 4 : segurando_interno_2 THEN 4 ELSE IF 4 : segurando_interno_1 THEN 3 ELSE IF 4 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "btn_abrir",
@@ -255,6 +445,31 @@
    "id": "peso_txt",
    "attr": "text",
    "value": "peso"
+  },
+  {
+   "id": "simulacao",
+   "attr": "data-confirmado",
+   "value": "ultimo_evento"
+  },
+  {
+   "id": "simulacao",
+   "attr": "data-pronto",
+   "value": "IF andar >= 0 THEN \"sim\" ELSE \"nao\" END"
+  },
+  {
+   "id": "simulacao",
+   "attr": "data-passo",
+   "value": "IF manutencao = FALSE & (pedidos_internos /= {} or pedidos_subida /= {} or pedidos_descida /= {} or direcao /= parado or porta = aberta or sentido_atendimento /= parado) THEN \"sim\" ELSE \"nao\" END"
+  },
+  {
+   "id": "segurar_porta",
+   "attr": "fill",
+   "value": "IF porta_retida = TRUE THEN \"#ffd400\" ELSE \"#3a3a3a\" END"
+  },
+  {
+   "id": "segurar_porta",
+   "attr": "data-habilitado",
+   "value": "IF manutencao = FALSE & direcao = parado & porta = aberta THEN \"sim\" ELSE \"nao\" END"
   },
   {
    "id": "s_porta",
@@ -294,461 +509,327 @@
  ],
  "events": [
   {
-   "id": "ext_up_0",
-   "event": "pressionar_externo_subida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_ext_up_0",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=4",
     "alvo=0"
    ]
   },
   {
-   "id": "lib_up_0",
-   "event": "liberar_subida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_up_0",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=5",
     "alvo=0"
    ]
   },
   {
-   "id": "ext_up_1",
-   "event": "pressionar_externo_subida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_ext_up_1",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=4",
     "alvo=1"
    ]
   },
   {
-   "id": "lib_up_1",
-   "event": "liberar_subida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_up_1",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=5",
     "alvo=1"
    ]
   },
   {
-   "id": "ext_dn_1",
-   "event": "pressionar_externo_descida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_ext_dn_1",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=6",
     "alvo=1"
    ]
   },
   {
-   "id": "lib_dn_1",
-   "event": "liberar_descida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_dn_1",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=7",
     "alvo=1"
    ]
   },
   {
-   "id": "ext_up_2",
-   "event": "pressionar_externo_subida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_ext_up_2",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=4",
     "alvo=2"
    ]
   },
   {
-   "id": "lib_up_2",
-   "event": "liberar_subida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_up_2",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=5",
     "alvo=2"
    ]
   },
   {
-   "id": "ext_dn_2",
-   "event": "pressionar_externo_descida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_ext_dn_2",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=6",
     "alvo=2"
    ]
   },
   {
-   "id": "lib_dn_2",
-   "event": "liberar_descida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_dn_2",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=7",
     "alvo=2"
    ]
   },
   {
-   "id": "ext_up_3",
-   "event": "pressionar_externo_subida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_ext_up_3",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=4",
     "alvo=3"
    ]
   },
   {
-   "id": "lib_up_3",
-   "event": "liberar_subida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_up_3",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=5",
     "alvo=3"
    ]
   },
   {
-   "id": "ext_dn_3",
-   "event": "pressionar_externo_descida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_ext_dn_3",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=6",
     "alvo=3"
    ]
   },
   {
-   "id": "lib_dn_3",
-   "event": "liberar_descida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_dn_3",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=7",
     "alvo=3"
    ]
   },
   {
-   "id": "ext_dn_4",
-   "event": "pressionar_externo_descida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_ext_dn_4",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=6",
     "alvo=4"
    ]
   },
   {
-   "id": "lib_dn_4",
-   "event": "liberar_descida",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_dn_4",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=7",
     "alvo=4"
    ]
   },
   {
-   "id": "int_0",
-   "event": "pressionar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_int_0",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=2",
     "alvo=0"
    ]
   },
   {
-   "id": "lib_int_0",
-   "event": "liberar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_int_0",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=3",
     "alvo=0"
    ]
   },
   {
-   "id": "int_1",
-   "event": "pressionar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_int_1",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=2",
     "alvo=1"
    ]
   },
   {
-   "id": "lib_int_1",
-   "event": "liberar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_int_1",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=3",
     "alvo=1"
    ]
   },
   {
-   "id": "int_2",
-   "event": "pressionar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_int_2",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=2",
     "alvo=2"
    ]
   },
   {
-   "id": "lib_int_2",
-   "event": "liberar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_int_2",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=3",
     "alvo=2"
    ]
   },
   {
-   "id": "int_3",
-   "event": "pressionar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_int_3",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=2",
     "alvo=3"
    ]
   },
   {
-   "id": "lib_int_3",
-   "event": "liberar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_int_3",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=3",
     "alvo=3"
    ]
   },
   {
-   "id": "int_4",
-   "event": "pressionar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_pressionar_int_4",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=2",
     "alvo=4"
    ]
   },
   {
-   "id": "lib_int_4",
-   "event": "liberar_interno",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_lib_int_4",
+   "event": "entregar",
    "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=3",
     "alvo=4"
    ]
   },
   {
-   "id": "btn_abrir",
-   "event": "pressionar_abrir",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ]
-  },
-  {
-   "id": "btn_fechar",
-   "event": "pressionar_fechar",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ]
-  },
-  {
-   "id": "btn_chave",
-   "event": "inserir_chave",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ]
-  },
-  {
-   "id": "btn_chave2",
-   "event": "remover_chave_manutencao",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ]
-  },
-  {
-   "id": "btn_peso0",
-   "event": "ajustar_peso",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_btn_abrir",
+   "event": "entregar",
    "predicates": [
-    "delta=75"
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=8",
+    "alvo=0"
    ]
   },
   {
-   "id": "btn_peso1",
-   "event": "ajustar_peso",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
-   ],
+   "id": "evento_btn_fechar",
+   "event": "entregar",
    "predicates": [
-    "delta=-75"
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=9",
+    "alvo=0"
    ]
   },
   {
-   "id": "btn_tick",
-   "event": "passar_tempo",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
+   "id": "evento_btn_chave",
+   "event": "entregar",
+   "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=10",
+    "alvo=0"
    ]
   },
   {
-   "id": "btn_passo",
-   "event": "passo",
-   "hovers": [
-    {
-     "attr": "stroke-width",
-     "enter": "3.5",
-     "leave": "1.5"
-    }
+   "id": "evento_btn_chave2",
+   "event": "entregar",
+   "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=11",
+    "alvo=0"
+   ]
+  },
+  {
+   "id": "evento_btn_peso0",
+   "event": "entregar",
+   "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=12",
+    "alvo=75"
+   ]
+  },
+  {
+   "id": "evento_btn_peso1",
+   "event": "entregar",
+   "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=12",
+    "alvo=-75"
+   ]
+  },
+  {
+   "id": "evento_btn_tick",
+   "event": "entregar",
+   "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=0",
+    "alvo=0"
+   ]
+  },
+  {
+   "id": "evento_btn_passo",
+   "event": "entregar",
+   "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=1",
+    "alvo=0"
+   ]
+  },
+  {
+   "id": "evento_pressionar_segurar_porta",
+   "event": "entregar",
+   "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=13",
+    "alvo=0"
+   ]
+  },
+  {
+   "id": "evento_lib_porta",
+   "event": "entregar",
+   "predicates": [
+    "evento=STRING_TO_INT(VISB_CLICK_META_INFOS'jsVars(\"evento\"))",
+    "comando=14",
+    "alvo=0"
    ]
   }
  ]

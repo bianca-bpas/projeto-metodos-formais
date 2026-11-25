@@ -1,5 +1,10 @@
 # Validação do modelo
 
+## Revisão da animação — 2026-11-25
+
+A execução atual e seus limites estão em [verificação da animação](../verificacao/animacao/README.md). Foram confirmados 17 cenários ProB novos, 30 de regressão HLR-005/008, 11 testes da ponte e a integração VisB anterior à troca dos avisos por ícones. As obrigações B da revisão foram regeneradas e provadas (1096/1096); os artefatos históricos abaixo continuam identificados como históricos. O salto de 10 s simulados por tick com a porta retida foi testado no ProB; a ponte confirma cada transição e a latência pode alongar o intervalo observado entre saltos.
+
+
 ## Estado das evidências — 2026-11-11
 
 As fontes foram atualizadas desde a execução nativa registrada abaixo. Os
@@ -76,8 +81,7 @@ no estado estável. Cada tick representa um segundo. A recusa permanece em
 as obrigações geradas do modelo, não a completude dos requisitos.
 HLR-010 permanece pendente quanto à justiça temporal e minimização global;
 não há prova de atendimento eventual e a política local não garante percurso
-ótimo. A interpretação da exceção de cancelamento permanece restrita ao último
-pedido interno.
+ótimo. Uma chamada externa que continue ativa permite cancelar o último pedido interno.
 
 ## Cenários da política HLR-010 — 2026-11-11
 

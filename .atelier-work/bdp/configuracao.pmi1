@@ -1,0 +1,16 @@
+THEORY BalanceX IS
+configuracao,0,0,0,0,0,0,0
+END
+&
+THEORY ProofState
+END
+&
+THEORY MethodList
+END
+&
+THEORY PassList
+END
+&
+THEORY Status IS
+configuracao,0,0,0,0,0,0
+END

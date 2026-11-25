@@ -7,6 +7,7 @@ ABSTRACT_VARIABLES
     direcao ,
     deslocamento ,
     porta ,
+    porta_retida ,
     sentido_atendimento ,
     parada_pendente ,
     parada_por_cancelamento ,
@@ -23,6 +24,7 @@ INVARIANT
     direcao : DIRECOES &
     deslocamento : NATURAL &
     porta : PORTAS &
+    porta_retida : BOOL &
     sentido_atendimento : DIRECOES &
     ( direcao = subindo => sentido_atendimento = subindo ) &
     ( direcao = descendo => sentido_atendimento = descendo ) &
@@ -42,6 +44,10 @@ INVARIANT
     ran ( ultima_visita ) <: 0 .. deslocamento &
     chave_manutencao : BOOL &
     manutencao : BOOL &
+    ( porta_retida = TRUE => porta = aberta ) &
+    ( porta = fechada => porta_retida = FALSE ) &
+    ( porta_retida = TRUE => direcao = parado ) &
+    ( porta_retida = TRUE => manutencao = FALSE ) &
     manutencao_pendente : BOOL &
     ( manutencao = TRUE => chave_manutencao = TRUE ) &
     ( manutencao = TRUE => direcao = parado ) &
@@ -58,6 +64,7 @@ INITIALISATION
     direcao := parado ||
     deslocamento := 0 ||
     porta := fechada ||
+    porta_retida := FALSE ||
     sentido_atendimento := parado ||
     parada_pendente := FALSE ||
     parada_por_cancelamento := FALSE ||
@@ -76,7 +83,7 @@ OPERATIONS
         PRE chave_manutencao = FALSE THEN
             chave_manutencao := TRUE ||
             IF direcao = parado THEN
-                manutencao := TRUE || manutencao_pendente := FALSE || segundos_porta_aberta := 0
+                manutencao := TRUE || manutencao_pendente := FALSE || porta_retida := FALSE
             ELSE
                 manutencao_pendente := TRUE ||
                 parada_pendente := TRUE
@@ -114,10 +121,16 @@ OPERATIONS
             END
         END ;
 
-    zerar_tempo_porta =
-        PRE manutencao = TRUE THEN
-            segundos_porta_aberta := 0
+    /* Controle do ambiente: nao abre a porta nem registra pedidos. */
+    segurar_porta =
+        BEGIN
+            IF direcao = parado & porta = aberta & manutencao = FALSE THEN
+                porta_retida := TRUE
+            END
         END ;
+
+    liberar_porta =
+        BEGIN porta_retida := FALSE END ;
 
     /* MOVIMENTAÇÃO E SEGURANÇA (HLR-006) */
     /* A politica de pedidos pertence ao controlador; aqui ficam as segurancas. */
@@ -200,7 +213,7 @@ OPERATIONS
         END ;
 
     fechar_porta =
-        PRE porta = aberta THEN
+        PRE porta = aberta & porta_retida = FALSE THEN
             porta := fechada || segundos_porta_aberta := 0
         END ;
 
@@ -210,7 +223,6 @@ OPERATIONS
             p_int <: 0 .. andar_maximo & p_sub <: 0 .. ( andar_maximo - 1 ) & p_des <: 1 .. andar_maximo &
             direcao = parado & porta = aberta & manutencao = FALSE
         THEN
-            segundos_porta_aberta := 0 ||
             IF sentido_atendimento = parado & andar : p_sub THEN sentido_atendimento := subindo
             ELSIF sentido_atendimento = parado & andar : p_des THEN sentido_atendimento := descendo END
         END ;
@@ -256,7 +268,7 @@ OPERATIONS
     visitados , nunca_visitados , marcas <-- consultar_visitas =
         BEGIN
             visitados := dom ( ultima_visita ) ||
-            nunca_visitados := ( 0 .. andar_maximo ) - dom ( ultima_visita ) ||
+            nunca_visitados := { aa | aa : 0 .. andar_maximo & aa /: dom ( ultima_visita ) } ||
             marcas := ran ( ultima_visita )
         END
 END

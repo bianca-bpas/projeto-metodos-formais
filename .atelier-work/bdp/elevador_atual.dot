@@ -1,0 +1,10 @@
+digraph {
+cabine_movimento [ label=" cabine_movimento " shape= box ]
+configuracao [ label=" configuracao " shape= box ]
+elevador [ label=" elevador " shape= box ]
+painel_pedidos [ label=" painel_pedidos " shape= box ]
+
+"cabine_movimento" -> "configuracao" [style= dotted ]
+"elevador" -> "configuracao" [style= dotted ]
+"painel_pedidos" -> "configuracao" [style= dotted ]
+}

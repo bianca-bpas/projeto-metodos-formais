@@ -81,3 +81,11 @@ A projeção Python verificou exaustivamente **311.296 estados iniciais** com
 pedidos fixos, sem bloqueios ambientais; isso não é exaustividade do modelo B
 completo. Escopo, logs e instruções em
 [verificacao/hlr010/README.md](verificacao/hlr010/README.md).
+
+## Animação com retenção de porta
+
+Abra `elevador/animacao.mch` no ProB2 UI para usar a ponte confirmada de eventos.
+O controle **Segurar porta**, os tempos simulados e os roteiros estão em
+[elevador/README.md](elevador/README.md). Evidências da revisão de 2026-11-25
+ficam em [verificacao/animacao](verificacao/animacao/README.md), separadas dos
+resultados históricos acima. HLR-010 não foi alterado.

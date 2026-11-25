@@ -32,7 +32,8 @@ def main():
         for name, ops, predicate in cases:
             trace = OUTPUT / (name + '.trace')
             trace.write_text(BASE + '\n'.join(ops) + '\n')
-            command = [probcli, str(machine), '-trace_replay',
+            # A saída é analisada como texto; cores ANSI interrompem as mensagens.
+            command = [probcli, str(machine), '-no_color', '-trace_replay',
                        'prolog', str(trace.resolve()), '-eval', predicate]
             try:
                 run = subprocess.run(command, cwd=instance_root, capture_output=True,
