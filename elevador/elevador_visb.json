@@ -44,7 +44,7 @@
   {
    "id": "ext_up_0",
    "attr": "stroke-width",
-   "value": "IF 0 : segurando_subida_2 THEN 4 ELSE IF 0 : segurando_subida_1 THEN 3 ELSE IF 0 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 0 : segurando_subida_2 THEN 4.0 ELSE IF 0 : segurando_subida_1 THEN 3.0 ELSE IF 0 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "vnum_1",
@@ -89,7 +89,7 @@
   {
    "id": "ext_up_1",
    "attr": "stroke-width",
-   "value": "IF 1 : segurando_subida_2 THEN 4 ELSE IF 1 : segurando_subida_1 THEN 3 ELSE IF 1 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 1 : segurando_subida_2 THEN 4.0 ELSE IF 1 : segurando_subida_1 THEN 3.0 ELSE IF 1 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "ext_dn_1",
@@ -109,7 +109,7 @@
   {
    "id": "ext_dn_1",
    "attr": "stroke-width",
-   "value": "IF 1 : segurando_descida_2 THEN 4 ELSE IF 1 : segurando_descida_1 THEN 3 ELSE IF 1 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 1 : segurando_descida_2 THEN 4.0 ELSE IF 1 : segurando_descida_1 THEN 3.0 ELSE IF 1 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "vnum_2",
@@ -154,7 +154,7 @@
   {
    "id": "ext_up_2",
    "attr": "stroke-width",
-   "value": "IF 2 : segurando_subida_2 THEN 4 ELSE IF 2 : segurando_subida_1 THEN 3 ELSE IF 2 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 2 : segurando_subida_2 THEN 4.0 ELSE IF 2 : segurando_subida_1 THEN 3.0 ELSE IF 2 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "ext_dn_2",
@@ -174,7 +174,7 @@
   {
    "id": "ext_dn_2",
    "attr": "stroke-width",
-   "value": "IF 2 : segurando_descida_2 THEN 4 ELSE IF 2 : segurando_descida_1 THEN 3 ELSE IF 2 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 2 : segurando_descida_2 THEN 4.0 ELSE IF 2 : segurando_descida_1 THEN 3.0 ELSE IF 2 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "vnum_3",
@@ -219,7 +219,7 @@
   {
    "id": "ext_up_3",
    "attr": "stroke-width",
-   "value": "IF 3 : segurando_subida_2 THEN 4 ELSE IF 3 : segurando_subida_1 THEN 3 ELSE IF 3 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 3 : segurando_subida_2 THEN 4.0 ELSE IF 3 : segurando_subida_1 THEN 3.0 ELSE IF 3 : segurando_subida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "ext_dn_3",
@@ -239,7 +239,7 @@
   {
    "id": "ext_dn_3",
    "attr": "stroke-width",
-   "value": "IF 3 : segurando_descida_2 THEN 4 ELSE IF 3 : segurando_descida_1 THEN 3 ELSE IF 3 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 3 : segurando_descida_2 THEN 4.0 ELSE IF 3 : segurando_descida_1 THEN 3.0 ELSE IF 3 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "vnum_4",
@@ -284,7 +284,7 @@
   {
    "id": "ext_dn_4",
    "attr": "stroke-width",
-   "value": "IF 4 : segurando_descida_2 THEN 4 ELSE IF 4 : segurando_descida_1 THEN 3 ELSE IF 4 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 4 : segurando_descida_2 THEN 4.0 ELSE IF 4 : segurando_descida_1 THEN 3.0 ELSE IF 4 : segurando_descida THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "cabine_animada",
@@ -364,7 +364,7 @@
   {
    "id": "int_0",
    "attr": "stroke-width",
-   "value": "IF 0 : segurando_interno_2 THEN 4 ELSE IF 0 : segurando_interno_1 THEN 3 ELSE IF 0 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 0 : segurando_interno_2 THEN 4.0 ELSE IF 0 : segurando_interno_1 THEN 3.0 ELSE IF 0 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "int_1",
@@ -379,7 +379,7 @@
   {
    "id": "int_1",
    "attr": "stroke-width",
-   "value": "IF 1 : segurando_interno_2 THEN 4 ELSE IF 1 : segurando_interno_1 THEN 3 ELSE IF 1 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 1 : segurando_interno_2 THEN 4.0 ELSE IF 1 : segurando_interno_1 THEN 3.0 ELSE IF 1 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "int_2",
@@ -394,7 +394,7 @@
   {
    "id": "int_2",
    "attr": "stroke-width",
-   "value": "IF 2 : segurando_interno_2 THEN 4 ELSE IF 2 : segurando_interno_1 THEN 3 ELSE IF 2 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 2 : segurando_interno_2 THEN 4.0 ELSE IF 2 : segurando_interno_1 THEN 3.0 ELSE IF 2 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "int_3",
@@ -409,7 +409,7 @@
   {
    "id": "int_3",
    "attr": "stroke-width",
-   "value": "IF 3 : segurando_interno_2 THEN 4 ELSE IF 3 : segurando_interno_1 THEN 3 ELSE IF 3 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 3 : segurando_interno_2 THEN 4.0 ELSE IF 3 : segurando_interno_1 THEN 3.0 ELSE IF 3 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "int_4",
@@ -424,7 +424,7 @@
   {
    "id": "int_4",
    "attr": "stroke-width",
-   "value": "IF 4 : segurando_interno_2 THEN 4 ELSE IF 4 : segurando_interno_1 THEN 3 ELSE IF 4 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
+   "value": "IF 4 : segurando_interno_2 THEN 4.0 ELSE IF 4 : segurando_interno_1 THEN 3.0 ELSE IF 4 : segurando_interno THEN 2.5 ELSE 1.5 END END END"
   },
   {
    "id": "btn_abrir",

@@ -14,8 +14,6 @@
 <g display="none"><g id="pressionar_ext_up_0"/><g id="lib_up_0"/></g>
 <circle id="ext_up_0" data-liberar="lib_up_0" cx="290" cy="468" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="ut_0" x="290" y="473" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▲</text>
-<g display="none"><g id="pressionar_lib_up_0"/><g id="lib_up_0"/></g>
-<circle id="lib_up_0" data-liberar="lib_up_0" cx="290" cy="500" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_ext_up_0"/></g>
 <g display="none"><g id="evento_lib_up_0"/></g>
 <line x1="20" y1="438" x2="440" y2="438" stroke="#444"/>
@@ -29,15 +27,11 @@
 <g display="none"><g id="pressionar_ext_up_1"/><g id="lib_up_1"/></g>
 <circle id="ext_up_1" data-liberar="lib_up_1" cx="290" cy="376" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="ut_1" x="290" y="381" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▲</text>
-<g display="none"><g id="pressionar_lib_up_1"/><g id="lib_up_1"/></g>
-<circle id="lib_up_1" data-liberar="lib_up_1" cx="290" cy="408" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_ext_up_1"/></g>
 <g display="none"><g id="evento_lib_up_1"/></g>
 <g display="none"><g id="pressionar_ext_dn_1"/><g id="lib_dn_1"/></g>
 <circle id="ext_dn_1" data-liberar="lib_dn_1" cx="330" cy="376" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="dt_1" x="330" y="381" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▼</text>
-<g display="none"><g id="pressionar_lib_dn_1"/><g id="lib_dn_1"/></g>
-<circle id="lib_dn_1" data-liberar="lib_dn_1" cx="330" cy="408" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_ext_dn_1"/></g>
 <g display="none"><g id="evento_lib_dn_1"/></g>
 <line x1="20" y1="346" x2="440" y2="346" stroke="#444"/>
@@ -51,15 +45,11 @@
 <g display="none"><g id="pressionar_ext_up_2"/><g id="lib_up_2"/></g>
 <circle id="ext_up_2" data-liberar="lib_up_2" cx="290" cy="284" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="ut_2" x="290" y="289" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▲</text>
-<g display="none"><g id="pressionar_lib_up_2"/><g id="lib_up_2"/></g>
-<circle id="lib_up_2" data-liberar="lib_up_2" cx="290" cy="316" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_ext_up_2"/></g>
 <g display="none"><g id="evento_lib_up_2"/></g>
 <g display="none"><g id="pressionar_ext_dn_2"/><g id="lib_dn_2"/></g>
 <circle id="ext_dn_2" data-liberar="lib_dn_2" cx="330" cy="284" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="dt_2" x="330" y="289" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▼</text>
-<g display="none"><g id="pressionar_lib_dn_2"/><g id="lib_dn_2"/></g>
-<circle id="lib_dn_2" data-liberar="lib_dn_2" cx="330" cy="316" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_ext_dn_2"/></g>
 <g display="none"><g id="evento_lib_dn_2"/></g>
 <line x1="20" y1="254" x2="440" y2="254" stroke="#444"/>
@@ -73,15 +63,11 @@
 <g display="none"><g id="pressionar_ext_up_3"/><g id="lib_up_3"/></g>
 <circle id="ext_up_3" data-liberar="lib_up_3" cx="290" cy="192" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="ut_3" x="290" y="197" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▲</text>
-<g display="none"><g id="pressionar_lib_up_3"/><g id="lib_up_3"/></g>
-<circle id="lib_up_3" data-liberar="lib_up_3" cx="290" cy="224" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_ext_up_3"/></g>
 <g display="none"><g id="evento_lib_up_3"/></g>
 <g display="none"><g id="pressionar_ext_dn_3"/><g id="lib_dn_3"/></g>
 <circle id="ext_dn_3" data-liberar="lib_dn_3" cx="330" cy="192" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="dt_3" x="330" y="197" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▼</text>
-<g display="none"><g id="pressionar_lib_dn_3"/><g id="lib_dn_3"/></g>
-<circle id="lib_dn_3" data-liberar="lib_dn_3" cx="330" cy="224" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_ext_dn_3"/></g>
 <g display="none"><g id="evento_lib_dn_3"/></g>
 <line x1="20" y1="162" x2="440" y2="162" stroke="#444"/>
@@ -95,11 +81,8 @@
 <g display="none"><g id="pressionar_ext_dn_4"/><g id="lib_dn_4"/></g>
 <circle id="ext_dn_4" data-liberar="lib_dn_4" cx="330" cy="100" r="11" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="dt_4" x="330" y="105" font-size="11" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">▼</text>
-<g display="none"><g id="pressionar_lib_dn_4"/><g id="lib_dn_4"/></g>
-<circle id="lib_dn_4" data-liberar="lib_dn_4" cx="330" cy="132" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_ext_dn_4"/></g>
 <g display="none"><g id="evento_lib_dn_4"/></g>
-<text id="legenda_lib" x="360" y="90" font-size="10" text-anchor="start" fill="#9aa" font-weight="normal" font-family="monospace">○ pequeno = soltar botão</text>
 <g id="cabine_animada" data-delta="0">
 <rect id="cab" x="132" y="448" width="106" height="72" rx="3" fill="#2d3a55" stroke="#8fb8ff" stroke-width="1.5" />
 <rect id="porta_e" x="132" y="448" width="53" height="72" rx="0" fill="#9aa7bd" stroke="#9aa7bd" stroke-width="1.5" />
@@ -117,36 +100,26 @@
 <g display="none"><g id="pressionar_int_0"/><g id="lib_int_0"/></g>
 <circle id="int_0" data-liberar="lib_int_0" cx="578" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_0" x="578" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">0</text>
-<g display="none"><g id="pressionar_lib_int_0"/><g id="lib_lib_int_0"/></g>
-<circle id="lib_int_0" data-liberar="lib_lib_int_0" cx="578" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_int_0"/></g>
 <g display="none"><g id="evento_lib_int_0"/></g>
 <g display="none"><g id="pressionar_int_1"/><g id="lib_int_1"/></g>
 <circle id="int_1" data-liberar="lib_int_1" cx="618" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_1" x="618" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">1</text>
-<g display="none"><g id="pressionar_lib_int_1"/><g id="lib_lib_int_1"/></g>
-<circle id="lib_int_1" data-liberar="lib_lib_int_1" cx="618" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_int_1"/></g>
 <g display="none"><g id="evento_lib_int_1"/></g>
 <g display="none"><g id="pressionar_int_2"/><g id="lib_int_2"/></g>
 <circle id="int_2" data-liberar="lib_int_2" cx="658" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_2" x="658" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">2</text>
-<g display="none"><g id="pressionar_lib_int_2"/><g id="lib_lib_int_2"/></g>
-<circle id="lib_int_2" data-liberar="lib_lib_int_2" cx="658" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_int_2"/></g>
 <g display="none"><g id="evento_lib_int_2"/></g>
 <g display="none"><g id="pressionar_int_3"/><g id="lib_int_3"/></g>
 <circle id="int_3" data-liberar="lib_int_3" cx="698" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_3" x="698" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">3</text>
-<g display="none"><g id="pressionar_lib_int_3"/><g id="lib_lib_int_3"/></g>
-<circle id="lib_int_3" data-liberar="lib_lib_int_3" cx="698" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_int_3"/></g>
 <g display="none"><g id="evento_lib_int_3"/></g>
 <g display="none"><g id="pressionar_int_4"/><g id="lib_int_4"/></g>
 <circle id="int_4" data-liberar="lib_int_4" cx="738" cy="184" r="14" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <text id="it_4" x="738" y="189" font-size="13" text-anchor="middle" fill="#fff" font-weight="normal" font-family="monospace">4</text>
-<g display="none"><g id="pressionar_lib_int_4"/><g id="lib_lib_int_4"/></g>
-<circle id="lib_int_4" data-liberar="lib_lib_int_4" cx="738" cy="208" r="5" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer;touch-action:none"/>
 <g display="none"><g id="evento_pressionar_int_4"/></g>
 <g display="none"><g id="evento_lib_int_4"/></g>
 <rect id="btn_abrir" x="560" y="226" width="96" height="28" rx="6" fill="#3a3a3a" stroke="#888" stroke-width="1.5" style="cursor:pointer"/>

@@ -48,7 +48,7 @@ held = lambda f, s: f'IF {f} : {s} THEN "#ffffff" ELSE "#888888" END'
 
 def estado_externo(i, f, grupo, valido):
     item(i, 'data-fase', f'IF not({valido}) THEN -1 ELSE IF manutencao = TRUE THEN IF {f} : piscando_{grupo}1 THEN 5 ELSE 4 END ELSE IF {f} : segurando_{grupo}_2 THEN 3 ELSE IF {f} : segurando_{grupo}_1 THEN 2 ELSE IF {f} : segurando_{grupo} THEN 1 ELSE 0 END END END END END')
-    item(i, 'stroke-width', f'IF {f} : segurando_{grupo}_2 THEN 4 ELSE IF {f} : segurando_{grupo}_1 THEN 3 ELSE IF {f} : segurando_{grupo} THEN 2.5 ELSE 1.5 END END END')
+    item(i, 'stroke-width', f'IF {f} : segurando_{grupo}_2 THEN 4.0 ELSE IF {f} : segurando_{grupo}_1 THEN 3.0 ELSE IF {f} : segurando_{grupo} THEN 2.5 ELSE 1.5 END END END')
 
 def aviso(i,x,y,titulo,cond):
     if 'peso' in i:
@@ -88,7 +88,6 @@ for f in range(N + 1):
     bx = SX + SW + 40
     if f < N:
         circ(f'ext_up_{f}', bx, y + 30); txt(f'ut_{f}', bx, y + 35, '▲', 11, 'middle', '#fff')
-        circ(f'lib_up_{f}', bx, y + 62, 5)
         item(f'ext_up_{f}', 'fill', led(0, f, pis('subida'), 0, 'pedidos_subida'))
         item(f'ext_up_{f}', 'stroke', held(f, 'segurando_subida'))
         estado_externo(f'ext_up_{f}',f,'subida',f'{f} < andar_maximo')
@@ -96,13 +95,11 @@ for f in range(N + 1):
         ev(f'lib_up_{f}', 'liberar_subida', [f'alvo={f}'])
     if f > 0:
         circ(f'ext_dn_{f}', bx + 40, y + 30); txt(f'dt_{f}', bx + 40, y + 35, '▼', 11, 'middle', '#fff')
-        circ(f'lib_dn_{f}', bx + 40, y + 62, 5)
         item(f'ext_dn_{f}', 'fill', led(0, f, pis('descida'), 0, 'pedidos_descida'))
         item(f'ext_dn_{f}', 'stroke', held(f, 'segurando_descida'))
         estado_externo(f'ext_dn_{f}',f,'descida',f'{f} <= andar_maximo')
         ev(f'pressionar_ext_dn_{f}', 'pressionar_externo_descida', [f'alvo={f}'])
         ev(f'lib_dn_{f}', 'liberar_descida', [f'alvo={f}'])
-txt('legenda_lib', SX + SW + 110, TOP + 20, '○ pequeno = soltar botão', 10, fill='#9aa')
 
 # ---------- 4. cabine (posição, porta) ----------
 add('<g id="cabine_animada" data-delta="0">')
@@ -135,10 +132,9 @@ txt('ib_t', PX, TOP + 92, 'Destinos', 11, fill='#9aa')
 for f in range(N + 1):
     cx = PX + 18 + f * 40
     circ(f'int_{f}', cx, TOP + 114, 14); txt(f'it_{f}', cx, TOP + 119, str(f), 13, 'middle', '#fff')
-    circ(f'lib_int_{f}', cx, TOP + 138, 5)
     item(f'int_{f}', 'fill', f'IF {f} : interno_recusado THEN "{ON}" ELSE {led(0, f, pis("interno"), 0, "pedidos_internos")} END')
     item(f'int_{f}', 'stroke', held(f, 'segurando_interno \\/ interno_recusado'))
-    item(f'int_{f}', 'stroke-width', f'IF {f} : segurando_interno_2 THEN 4 ELSE IF {f} : segurando_interno_1 THEN 3 ELSE IF {f} : segurando_interno THEN 2.5 ELSE 1.5 END END END')
+    item(f'int_{f}', 'stroke-width', f'IF {f} : segurando_interno_2 THEN 4.0 ELSE IF {f} : segurando_interno_1 THEN 3.0 ELSE IF {f} : segurando_interno THEN 2.5 ELSE 1.5 END END END')
     ev(f'pressionar_int_{f}', 'pressionar_interno', [f'alvo={f}']); ev(f'lib_int_{f}', 'liberar_interno', [f'alvo={f}'])
 for i, (nome, lab, op, var) in enumerate([('abrir', '◀▶ abrir', 'pressionar_abrir', 'piscando_abrir'), ('fechar', '▶◀ fechar', 'pressionar_fechar', 'piscando_fechar')]):
     x = PX + i * 110
