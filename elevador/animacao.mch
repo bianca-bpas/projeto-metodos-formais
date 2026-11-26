@@ -15,11 +15,13 @@ OPERATIONS
             IF evento > ultimo_evento THEN
                 ultimo_evento := evento ||
                 CASE comando OF
-                    EITHER 0 THEN
-                        IF porta_retida = TRUE THEN
-                            passar_tempo; passar_tempo; passar_tempo; passar_tempo; passar_tempo;
-                            passar_tempo; passar_tempo; passar_tempo; passar_tempo; passar_tempo
-                        ELSE passar_tempo END
+                    EITHER 0 THEN passar_tempo
+                  // essa parte era necessário para avançãr o tempo mais rápido, porém o atelier não deixa (Sequential (';') substitution is not allowed in a specification.)
+                  //EITHER 0 THEN
+                      //IF porta_retida = TRUE THEN
+                          //passar_tempo; passar_tempo; passar_tempo; passar_tempo; passar_tempo;
+                          //passar_tempo; passar_tempo; passar_tempo; passar_tempo; passar_tempo
+                        //ELSE passar_tempo END
                     OR 1 THEN
                         IF manutencao = FALSE & ((# pp.(pp : pedidos_internos \/ pedidos_subida \/ pedidos_descida)) or
                            direcao /= parado or porta = aberta or sentido_atendimento /= parado)
