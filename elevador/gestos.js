@@ -53,7 +53,7 @@
         // Seu reenvio idempotente nao pode bloquear a soltura atras dele.
         if (evento.temporal && !executando && evento.numero === null) return;
         if (evento.numero === null) evento.numero = ++sequencia;
-        if (performance.now() - evento.tentativa < 250) return;
+        if (performance.now() - evento.tentativa < 750) return;
         evento.tentativa = performance.now();
         window.visb_vars = window.visb_vars || {};
         window.visb_vars.evento = String(evento.numero);
@@ -139,5 +139,5 @@
         el('acao_tempo').textContent = executando ? 'Ⅱ Pausar tempo' : '▶ Passar tempo';
         el('estado_tempo').textContent = executando ? 'Em execução' : 'Pausado';
     });
-    setInterval(atualizar, 40);
+    setInterval(atualizar, 16);
 })();
