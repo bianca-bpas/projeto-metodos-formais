@@ -1,6 +1,9 @@
 MACHINE animacao
 /* Adaptador de entrega do VisB. Todas as decisoes pertencem a elevador. */
-DEFINITIONS VISB_JSON_FILE == "elevador_visb.json"
+DEFINITIONS
+    VISB_JSON_FILE == "elevador_visb.json";
+    MAX_OPERATIONS_entregar == 1;
+    SET_PREF_MAX_INITIALISATIONS == 5
 SEES configuracao
 INCLUDES elevador
 VARIABLES ultimo_evento
